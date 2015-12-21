@@ -53,14 +53,10 @@
 
 
 <script type="text/javascript">
-
 if (sessionStorage.getItem("loggedusername") == null) {
     window.location.href = "/";
 }
-
-
 var icon = "";
-
 var locations = [{
         "title": 'San Francisco',
         "lat": '37.757815',
@@ -92,21 +88,15 @@ var locations = [{
         "lng": '-122.2726887',
         "description": 'Oakland'
     },
-
-
-
 ]
-
 var iconcolor = [
     'http://www.google.com/mapfiles/ms/micons/green-dot.png',
     'http://www.google.com/mapfiles/ms/micons/ltblue-dot.png',
     'http://www.google.com/mapfiles/ms/micons/red-dot.png',
     'http://www.google.com/mapfiles/ms/micons/yellow-dot.png',
-
     'http://www.google.com/mapfiles/ms/micons/orange-dot.png',
     'http://www.google.com/mapfiles/ms/micons/pink-dot.png',
     'http://www.google.com/mapfiles/ms/micons/purple-dot.png',
-
 ];
 var marker, map;
 var markers = [];
@@ -117,9 +107,7 @@ var latlngbounds = new google.maps.LatLngBounds();
 var infoWindow = new google.maps.InfoWindow();
 var markerId;
 var myID;
-
 function initialize() {
-
     var mapOptions = {
         zoom: 9,
         center: new google.maps.LatLng(37.585192, -122.199926),
@@ -132,471 +120,295 @@ function initialize() {
         map: map,
         title: "Center"
     });
-
 }
-
-
 function loadMarkers(markerindex, data) {
-
     var myLatlng = new google.maps.LatLng(data.lat, data.lng);
     var marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
         title: data.title
     });
-
     markers[markerindex] = marker;
-
     if (colorindex < markers.length) {
         iconFile = iconcolor[colorindex];
-
         marker.setIcon(iconFile);
         colorindex++;
     } else {
         colorindex = 0;
         iconFile = iconcolor[colorindex];
-
         marker.setIcon(iconFile);
         colorindex++;
     }
-
-
 }
-
-
-
 $(document).ready(function() {
-
     var usernamelogout = sessionStorage.getItem("loggedusername");
-
     var containerObject = document.getElementById("tabs");
-
     var profilelogout = sessionStorage.getItem("loggedprofile");
-
     window.onload = function() {
         getTabEvents(true, false, false);
     }
-
-
     var emaillogout;
-
     var emailorgname;
-
     var FlagActiveValue;
     var FlagExpiredValue;
     var FlagAwaitingValue;
-
     var LocationValue;
-
     var CategoryValue;
-
-
-
+    var count=0;
+    var count1=0;
     if (sessionStorage.getItem("loggedprofile") == 'Student') {
-
         $("#createEventButton").hide('fast');
         $('#orgname').hide('fast');
-
         $('#orgurl').hide('fast');
         $('#desc').hide('fast');
-
         $('#tab2').hide('fast');
         $('#tab3').hide('fast');
-
         $('[href="#tab2"]').closest('li').hide('fast');
         $('[href="#tab3"]').closest('li').hide('fast');
-
-
+          $('#button12').hide('fast');
+         $('#button13').hide('fast');
+          $('#button15').hide('fast');
+           $('#button5').hide('fast');
+            $('#button6').hide('fast');
 
     } else if (sessionStorage.getItem("loggedprofile") == 'Ngo') {
-
         $("#createEventButton").show('fast');
         $('#orgname').show('fast');
-
-
-
-
         $('#orgurl').show('fast');
         $('#desc').show('fast');
+      //  $('#button9').hide('fast');
+        // $('#button10').hide('fast');
+         $('#button12').hide('fast');
+         $('#button13').hide('fast');
 
     } else {
-
         $("#createEventButton").show('fast');
-
         $('#editprofile').hide('fast');
-
         $('#divider').hide('fast');
-
+            $('#button9').hide('fast');
+         $('#button10').hide('fast');
     }
-
-
     alert(usernamelogout);
     alert(profilelogout);
     alert(typeof(profilelogout));
-
     document.getElementById("user_logged").innerHTML = usernamelogout;
-
     google.maps.event.addDomListener(window, 'load', initialize);
-
     $('#logout').click(function() {
-
-
         $.ajax({
             type: 'POST',
             url: '/logout',
             contentType: "application/json",
-
             data: JSON.stringify({
-
-
                 'username': usernamelogout.toString(),
                 'userType': profilelogout.toString().toLowerCase()
-
             }),
-
-
-
             success: function(data) {
                 //	console.log(data);
-
                 //	console.log(data.responseJSON);
                 var txt2 = data.responseJSON;
-
-
                 sessionStorage.clear();
                 alert('successful logout');
-
                 window.location.href = "http://localhost:8000/";
-
-
             },
             error: function(data) {
-
                 //console.log(data);
                 //console.log(data.responseJSON);
-
-
-
             }
-
         });
-
     });
-
-
-
     $("#advsearchbutton").click(function() {
-
         $("#advsearchcontainer").toggle("slow");
-
         $('input:checkbox').removeAttr('checked');
-
-
         ClearAllMarkers();
-
-
     });
-
-
-
-
     $("#sanfrancisco").click(function() {
-
         if ($('#sanfrancisco').is(':checked')) {
-
             if ($("#paloalto").prop('checked') == true) {
                 $('#palto').prop('checked', false);
                 DeleteMarker(1);
             }
-
             if ($("#mountainview").prop('checked') == true) {
                 $('#mountainview').prop('checked', false);
                 DeleteMarker(2);
             }
-
             if ($("#santaclara").prop('checked') == true) {
                 $('#santaclara').prop('checked', false);
                 DeleteMarker(3);
             }
-
             if ($("#sanjose").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(4);
             }
-
             if ($("#oakland").prop('checked') == true) {
                 $('#oakland').prop('checked', false);
                 DeleteMarker(5);
             }
-
             loadMarkers(0, locations[0]);
-
-
         } else {
-
             DeleteMarker(0);
-
         }
-
-
     });
-
     $("#paloalto").click(function() {
-
-
-
-
         if ($('#paloalto').is(':checked')) {
-
             if ($("#sanfrancisco").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(0);
             }
-
             if ($("#mountainview").prop('checked') == true) {
                 $('#mountainview').prop('checked', false);
                 DeleteMarker(2);
             }
-
             if ($("#santaclara").prop('checked') == true) {
                 $('#santaclara').prop('checked', false);
                 DeleteMarker(3);
             }
-
             if ($("#sanjose").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(4);
             }
-
             if ($("#oakland").prop('checked') == true) {
                 $('#oakland').prop('checked', false);
                 DeleteMarker(5);
             }
-
             loadMarkers(1, locations[1]);
-
-
-
         } else {
             DeleteMarker(1);
-
         }
-
-
     });
-
     $("#mountainview").click(function() {
         if ($('#mountainview').is(':checked')) {
-
             if ($("#sanfrancisco").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(0);
             }
-
             if ($("#paloalto").prop('checked') == true) {
                 $('#paloalto').prop('checked', false);
                 DeleteMarker(1);
             }
-
             if ($("#santaclara").prop('checked') == true) {
                 $('#santaclara').prop('checked', false);
                 DeleteMarker(3);
             }
-
             if ($("#sanjose").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(4);
             }
-
             if ($("#oakland").prop('checked') == true) {
                 $('#oakland').prop('checked', false);
                 DeleteMarker(5);
             }
-
             loadMarkers(2, locations[2]);
-
-
-
         } else {
-
             DeleteMarker(2);
-
-
         }
-
     });
-
     $("#santaclara").click(function() {
         if ($('#santaclara').is(':checked')) {
-
             if ($("#sanfrancisco").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(0);
             }
-
             if ($("#mountainview").prop('checked') == true) {
                 $('#mountainview').prop('checked', false);
                 DeleteMarker(2);
             }
-
             if ($("#paloalto").prop('checked') == true) {
                 $('#paloalto').prop('checked', false);
                 DeleteMarker(1);
             }
-
             if ($("#sanjose").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(4);
             }
-
             if ($("#oakland").prop('checked') == true) {
                 $('#oakland').prop('checked', false);
                 DeleteMarker(5);
             }
-
             loadMarkers(3, locations[3]);
-
-
-
         } else {
-
             DeleteMarker(3);
-
-
         }
-
     });
-
     $("#sanjose").click(function() {
-
         if ($('#sanjose').is(':checked')) {
-
             if ($("#sanfrancisco").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(0);
             }
-
             if ($("#mountainview").prop('checked') == true) {
                 $('#mountainview').prop('checked', false);
                 DeleteMarker(2);
             }
-
             if ($("#santaclara").prop('checked') == true) {
                 $('#santaclara').prop('checked', false);
                 DeleteMarker(3);
             }
-
             if ($("paloalto").prop('checked') == true) {
                 $('#paloalto').prop('checked', false);
                 DeleteMarker(1);
             }
-
             if ($("#oakland").prop('checked') == true) {
                 $('#oakland').prop('checked', false);
                 DeleteMarker(5);
             }
-
-
             loadMarkers(4, locations[4]);
-
-
         } else {
-
             DeleteMarker(4);
-
         }
-
-
     });
-
-
-
     $("#oakland").click(function() {
         if ($('#oakland').is(':checked')) {
-
             if ($("#sanfrancisco").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(0);
             }
-
             if ($("#mountainview").prop('checked') == true) {
                 $('#mountainview').prop('checked', false);
                 DeleteMarker(2);
             }
-
             if ($("#santaclara").prop('checked') == true) {
                 $('#santaclara').prop('checked', false);
                 DeleteMarker(3);
             }
-
             if ($("#sanjose").prop('checked') == true) {
                 $('#sanfrancisco').prop('checked', false);
                 DeleteMarker(4);
             }
-
             if ($("#paloalto").prop('checked') == true) {
                 $('#paloalto').prop('checked', false);
                 DeleteMarker(1);
             }
-
             loadMarkers(5, locations[5]);
-
-
         } else {
-
             DeleteMarker(5);
-
         }
-
     });
-
-
-
-
     function DeleteMarker(markerindex) {
         //Find and remove the marker from the Array
-
-
         markers[markerindex].setMap(null);
     };
-
     function ClearAllMarkers() {
-
         for (var markerindex = 0; markerindex < (markers.length); markerindex++) {
             if (typeof markers[markerindex] !== 'undefined') {
                 // does not exist
                 markers[markerindex].setMap(null);
             }
-
         }
-
-
-
     };
     /*
 		    $('.datepicker').datetpicker({
 		         format: 'MM/DD/YYYY' ,
 		         //    maxDate: new Date(currentMonth, currentDate, currentYear, 0, 0, 0, 0)
 		         //    autoclose: true
-
-
-
 		       });
 				*/
-
-
-
-
     $('#createEventForm').bootstrapValidator({
-
         // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
         feedbackIcons: {
             valid: ' ',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh',
-
         },
-
         fields: {
             eventname: {
                 validators: {
@@ -619,8 +431,6 @@ $(document).ready(function() {
                     }
                 }
             },
-
-
             category: {
                 validators: {
                     notEmpty: {
@@ -628,8 +438,6 @@ $(document).ready(function() {
                     }
                 }
             },
-
-
             eventlocnearby: {
                 validators: {
                     notEmpty: {
@@ -637,7 +445,6 @@ $(document).ready(function() {
                     }
                 }
             },
-
             eventdesc: {
                 validators: {
                     notEmpty: {
@@ -653,34 +460,8 @@ $(document).ready(function() {
                     integer: {
                         message: 'Please enter a valid integer.'
                     }
-
                 }
             },
-
-            event_volunteersreq: {
-                validators: {
-                    notEmpty: {
-                        message: 'The number of participants required for the event is required.'
-                    },
-                    integer: {
-                        message: 'Please enter a valid integer.'
-                    }
-
-                }
-            },
-
-            event_volunteersreq: {
-                validators: {
-                    notEmpty: {
-                        message: 'The number of participants required for the event is required.'
-                    },
-                    integer: {
-                        message: 'Please enter a valid integer.'
-                    }
-
-                }
-            },
-
             startdate: {
                 validators: {
                     date: {
@@ -690,7 +471,6 @@ $(document).ready(function() {
                     notEmpty: {
                         message: 'The start date can not be empty'
                     },
-
                 }
             },
             enddate: {
@@ -704,186 +484,108 @@ $(document).ready(function() {
                     }
                 }
             }
-
         }
     });
-
-
-
     $('#createEventForm').on('success.form.bv', function(e) {
         //alert('rt1');
         // Prevent submit form
         e.preventDefault();
-
         var $form = $(e.target);
         validator = $form.data('bootstrapValidator');
         // alert('rt2');
         //  $('#createEventForm').bootstrapValidator('resetForm', true);
         //
-
-
-
-
         if ($('input[name=startdate]').val() == $('input[name=enddate]').val()) {
             //console.log($('input[name=startdate]').val());
             // console.log( $('input[name=enddate]').val());
             //alert('equal');
             //console.log('eqal');
         } else if ($('input[name=startdate]').val() >= $('input[name=enddate]').val()) {
-
             // console.log($('input[name=startdate]').val());
             //console.log( $('input[name=enddate]').val());
             //alert('greater');
             //console.log('greater');
         } else {
-
             //console.log($('input[name=startdate]').val());
             //console.log( $('input[name=enddate]').val());
             //alert('less');
             ///console.log('less');
-
         }
-
         if ($('input[name=startdate]').val() > $('input[name=enddate]').val()) {
-
             //alert('hh');
-
             $('#msgevent').removeClass('alert-success').addClass('alert-danger').html("Start Date is Greater than End Date").show();
-
             //$('#createEventForm').data('bootstrapValidator').updateStatus('startdate','INVALID',' ')
-
-
             $('#createEventForm').data('bootstrapValidator').updateStatus('enddate', 'INVALID', ' ')
-
             e.preventDefault();
-
             $('#button5').removeAttr('enabled');
-
-
-
-
         } else {
-
             if ($('input[name=startdate]').val() < $('input[name=enddate]').val()) {
-
                 getDateComparisonFunction();
-
-
             } else {
-
                 getDateComparisonFunction();
-
-
             }
-
-
-
         }
     });
-
-
     $('#create_event_modal-1').on('hide.bs.modal', function() {
         $('#msgevent').removeClass('alert-danger alert-success').html('').attr('style', 'display:none');
         $('#createEventForm').bootstrapValidator('resetForm', true);
     });
-
-
     $('#createEventButton').click(function() {
-
         $('#createEventForm').bootstrapValidator('resetForm', true);
-
         $('#msgevent').removeClass('alert-danger alert-success').html('').attr('style', 'display:none');
-
-
-
         $.ajax({
             type: 'POST',
             url: '/populateEditProfile',
             contentType: "application/json",
-
             data: JSON.stringify({
-
-
                 'username': usernamelogout.toString(),
                 'userType': profilelogout.toString().toLowerCase(),
                 //'emailId': emaillogout.toString()
-
-
-
             }),
-
-
-
             success: function(data) {
-
-
                 //console.log(data.message);
-
-
                 $('#orgname_event').val(data.message.organizationName);
-
             },
             error: function(data) {
-
-
                 //console.log(data.responseJSON.message);
-
-
             }
-
         });
-
-
     });
-
     $('#button6').click(function() {
         $('#createEventForm').bootstrapValidator('resetForm', true);
-
     });
-
-
     $('#editProfileForm').bootstrapValidator({
-
-
         // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
         feedbackIcons: {
             valid: ' ',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh',
-
         },
-
         fields: {
-
             firstname: {
                 // message: 'The firstname is not valid',
                 validators: {
-
                     notEmpty: {
                         message: 'Please enter your first name.'
                     },
-
                     regexp: {
                         regexp: /^[a-zA-Z_\.]+$/,
                         message: 'The firsname can only consist of alphabetical, underscore and period.'
                     },
                 }
             },
-
             lastname: {
                 //   message: 'The lastname is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Please enter your lastname.'
                     },
-
                     regexp: {
                         regexp: /^[a-zA-Z_\.]+$/,
                         message: 'The lastname can only consist of alphabetical, underscore and period.'
                     },
                 }
             },
-
             username: {
                 //  message: 'The username is not valid',
                 validators: {
@@ -903,10 +605,8 @@ $(document).ready(function() {
                         field: 'password',
                         message: 'The username and password cannot be the same as each other'
                     },
-
                 }
             },
-
             password: {
                 validators: {
                     notEmpty: {
@@ -921,31 +621,20 @@ $(document).ready(function() {
                         max: 15,
                         message: 'The password must be between 8 and 15 characters.'
                     },
-
                     regexp: {
                         regexp: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9].*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$/,
-
                         message: 'Password should be a string that has at least 1 uppercase alphabet,' +
                             '1 lowercase alphabet, 2 digits and 1 special character.',
                     }
-
                 }
             },
-
             gender: {
-
                 validators: {
                     notEmpty: {
                         message: 'Please select your gender.'
                     },
-
-
                 }
             },
-
-
-
-
             emailstudent: {
                 validators: {
                     notEmpty: {
@@ -953,13 +642,10 @@ $(document).ready(function() {
                     },
                     regexp: {
                         regexp: /^[a-zA-Z0-9_\.]+$/,
-
                         message: 'The Student ID can consists of alphabets, number, dot and underscore only',
                     }
-
                 }
             },
-
             emailngo: {
                 validators: {
                     notEmpty: {
@@ -967,15 +653,10 @@ $(document).ready(function() {
                     },
                     regexp: {
                         regexp: /^[-a-z0-9~!$%^&*_=+}{\?]+(\.[-a-z0-9~!$%^&*_=+}{\?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/,
-
                         message: 'Please enter a valid NGO Email ID',
                     }
-
                 }
             },
-
-
-
             phonenumber: {
                 validators: {
                     notEmpty: {
@@ -986,12 +667,10 @@ $(document).ready(function() {
                         max: 10,
                         message: 'The phone number must have at 10 digits.'
                     },
-
                     regexp: {
                         regexp: /^[0-9]+$/,
                         message: 'Phone number should not have alphabets',
                     }
-
                 }
             },
             website: {
@@ -999,10 +678,8 @@ $(document).ready(function() {
                     notEmpty: {
                         message: 'Please enter your website'
                     },
-
                     regexp: {
                         regexp: /^(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$/,
-
                         message: 'The website address is not valid'
                     }
                 }
@@ -1035,22 +712,14 @@ $(document).ready(function() {
                     }
                 }
             },
-
         }
-
-
     });
-
-
     $('#editProfileForm').on('success.form.bv', function(e) {
         // Prevent submit form
         e.preventDefault();
-
         alert('hi');
         var $form = $(e.target);
         validator = $form.data('bootstrapValidator');
-
-
         var firstnamebackend = $('input[name=firstname]').val();
         var lastnamebackend = $('input[name=lastname]').val();
         var genderbackend = $("#gender").find(":selected").val();
@@ -1060,16 +729,11 @@ $(document).ready(function() {
         var orgnamebackend = $('input[name=organizationname]').val();
         var orgdescbackend = $('textarea#description').val();
         var orgurlbackend = $('input[name=website]').val();
-
-
         $.ajax({
             type: 'POST',
             url: '/updateProfile',
             contentType: "application/json",
-
             data: JSON.stringify({
-
-
                 'username': usernamelogout.toString(),
                 'emailId': emaillogout.toString(),
                 'userType': profilelogout.toString().toLowerCase(),
@@ -1082,176 +746,85 @@ $(document).ready(function() {
                 'organizationName': orgnamebackend.toString(),
                 'description': orgdescbackend.toString(),
                 'website': orgurlbackend.toString()
-
-
             }),
-
-
-
             success: function(data) {
                 //console.log(data);
-
                 //console.log(data.message);
-
                 var txt2 = data.message;
-
                 $form.find('#msgprofile').removeClass('alert-danger').addClass('alert-success').html(txt2).show();
-
             },
             error: function(data) {
-
                 //console.log(data);
                 //console.log(data.responseJSON.message);
-
                 var txt2 = data.responseJSON.message;
-
                 $form.find('#msgprofile').removeClass('alert-success').addClass('alert-danger').html(txt2).show();
-
-
                 $('#button7').removeAttr('disabled');
-
-
             }
-
         });
-
-
-
-
     });
-
     $('#button8').click(function() {
-
         $('#msgprofile').removeClass('alert-danger alert-success').html('').attr('style', 'display:none');
-
         <!--	$('#editProfileForm').bootstrapValidator('resetForm', true); -->
-
     });
-
-
     $('#editprofile').click(function() {
-
         $('#msgprofile').removeClass('alert-danger alert-success').html('').attr('style', 'display:none');
-
-
         $.ajax({
             type: 'POST',
             url: '/populateEditProfile',
             contentType: "application/json",
-
             data: JSON.stringify({
-
                 'username': usernamelogout.toString(),
                 'userType': profilelogout.toString().toLowerCase(),
                 //'emailId': emaillogout.toString()
-
             }),
-
             success: function(data) {
-
-
                 getEmailFunction(data);
-
-
-
             },
             error: function(data) {
-
-
                 //console.log(data.responseJSON.message);
-
-
             }
-
         });
-
     });
-
-
     function getDateComparisonFunction() {
-
         var eventnamebackend = $('input[name=eventname]').val();
-
         var orgnamebackend = $('input[name=orgname_event]').val();
-
         var startdatebackend = $('input[name=startdate]').val();
-
-
         var enddatebackend = $('input[name=enddate]').val();
-
         //	console.log(startdatebackend);
-
         //	console.log(enddatebackend);
-
-
         var eventlocbackend = $('input[name=eventloc]').val();
-
         var eventlocationnearbybackend = $("#eventlocnearby").find(":selected").val();
-
         var eventdescbackend = $('textarea#eventdesc').val();
-
         var categorybackend = $("#category").find(":selected").val();
-
         var volunteersrequiredbackend = $('input[name=event_volunteersreq]').val();
-
         var expiredbackend = '';
-
         //	console.log(profilelogout.toString().toLowerCase());
-
-
-
         //$('#createEventForm').data('bootstrapValidator').updateStatus('startdate','VALID','null')
-
-
         $('#createEventForm').data('bootstrapValidator').updateStatus('enddate', 'VALID', 'null')
-
         $('#msgevent').removeClass('alert-danger alert-success').html('').attr('style', 'display:none')
-
-
         $.ajax({
             type: 'POST',
             url: '/createEvent',
             contentType: "application/json",
-
             data: JSON.stringify({
-
-
-
                 "eventName": eventnamebackend.toString(),
                 "description": eventdescbackend.toString(),
                 "organization": orgnamebackend.toString(),
-
                 "from": startdatebackend.toString(),
-
                 "to": enddatebackend.toString(),
                 "location": eventlocbackend.toString(),
                 "locationNearby": eventlocationnearbybackend.toString(),
                 "category": categorybackend.toString(),
-
                 "volunteersParticipating": volunteersrequiredbackend.toString(),
                 "usersParticipating": '0',
                 "volunteersInterested": '0',
-
-
                 "userType": profilelogout.toString().toLowerCase(),
-
-
-
             }),
-
-
-
             success: function(data) {
                 //console.log(data);
-
                 //console.log(data.message);
-
                 var txt2 = data.message;
-
                 $('#msgevent').removeClass('alert-danger').addClass('alert-success').html(txt2).show();
-
-
-
                 var newCarouselItem = document.createElement("div");
                 newCarouselItem.className = "item";
                 var insideCarousel = document.createElement("div");
@@ -1260,254 +833,135 @@ $(document).ready(function() {
                 var pCar = document.createElement("p");
                 pCar.innerHTML = "WORKING WOLA";
                 /*
-
                 anchorCar.appendChild(pCar);
                 insideCarousel.appendChild(anchorCar);
                 newCarouselItem.appendChild(insideCarousel);
-
                 var categorybackend = $( "#category" ).find(":selected").val();
-
                 var catCarousel = categorybackend+' Awaiting Approval';
-
                 var carouselInner = document.getElementById(catCarousel);
-
                 carouselInner.appendChild(newCarouselItem);
                 */
-
-
-
-
                 <!-- $('#createEventForm').bootstrapValidator('resetForm', true);-->
-
             },
             error: function(data) {
-
                 //console.log(data);
                 //console.log(data.responseJSON.message);
-
                 var txt2 = data.responseJSON.message;
-
                 $('#msgevent').removeClass('alert-success').addClass('alert-danger').html(txt2).show();
-
                 $('#button5').removeAttr('disabled');
-
-
             }
-
         });
-
-
     }
-
     function getEmailFunction(data) {
-
         emaillogout = data.message.emailId;
-
         emailorgname = data.message.organizationName;
-
         //console.log(data.message);
-
         //console.log(data.message.securityQuestion);
-
         //console.log(data.message.organizationName+ 'uu' + data.message.website);
-
         $('#firstname').val(data.message.firstName);
-
         $('#lastname').val(data.message.lastName);
-
         $("#gender").find(":selected").text(data.message.gender);
-
         $('#phonenumber').val(data.message.phoneNumber);
-
-
         $("#question").find(":selected").text(data.message.securityQuestion);
-
         $('#answer').val(data.message.answer);
-
         $('#organizationname').val(data.message.organizationName);
-
         $('#website').val(data.message.website);
-
         $('textarea#description').val(data.message.description);
-
-
-
     }
-
-
-
-
     /*
     								$('#myCarouselAnimalActive').carousel({
     								  interval: 4000,
     								  interval: false
     								})
-
     								$('#myCarouselChildrenActive').carousel({
     								  interval: 4000,
     								  interval: false
     								})
-
-
-
     								$('#myCarouselAnimalAwaitingApproval').carousel({
     								  interval: 4000,
     								  interval: false
     								})
-
     								$('#myCarouselChildrenAwaitingApproval').carousel({
     								  interval: 4000,
     								  interval: false
     								})
-
-
     								$('#myCarouselAnimalArchived').carousel({
     								  interval: 4000,
     								  interval: false
     								})
-
     								$('#myCarouselChildrenArchived').carousel({
     								  interval: 4000,
     								  interval: false
     								})
-
     								*/
-
     $('.carousel .item').each(function() {
         var next = $(this).next();
         if (!next.length) {
             next = $(this).siblings(':first');
         }
         next.children(':first-child').clone().appendTo($(this));
-
         for (var i = 0; i < 2; i++) {
             next = next.next();
             if (!next.length) {
                 next = $(this).siblings(':first');
             }
-
             next.children(':first-child').clone().appendTo($(this));
         }
     });
-
-
-
     ///////////////////////Active Events
-
     $('#Active').click(function() {
         // console.log('gello');
-
         FlagActiveValue = "true";
         FlagExpiredValue = "false";
         FlagAwaitingValue = "false";
-
         getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
-
-
     });
-
-
-
     //// Awatiing for Aproval
-
-
-
     $('#AwaitingAcceptance').click(function() {
-
         FlagActiveValue = "false";
         FlagExpiredValue = "false";
         FlagAwaitingValue = "true";
-
         getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
-
     });
-
-
-
-
     //////Archive
-
-
-
     $('#Archive').click(function() {
         //console.log('gello');
-
-
         FlagActiveValue = "false";
         FlagExpiredValue = "true";
         FlagAwaitingValue = "false";
-
         getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
         //LoadingCarDom(FlagActiveValue, FlagExpiredValue ,FlagAwaitingValue, data);
-
-
-
     });
-
     function getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue) {
-
         $.ajax({
             type: 'POST',
             url: '/populateEditProfile',
             contentType: "application/json",
-
             data: JSON.stringify({
-
-
                 'username': usernamelogout.toString(),
                 'userType': profilelogout.toString().toLowerCase(),
-
-
-
             }),
-
-
-
             success: function(data) {
-
-
                 //	console.log(data.message);
-
-
                 //console.log(data.message.organizationName);
-
                 LoadingCarDom(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, data);
-
-
-
-
             },
             error: function(data) {
-
-
                 //console.log(data.responseJSON.message);
-
-
                 //getEvents(FlagActiveValue, FlagExpiredValue ,FlagAwaitingValue , data);
-
             }
-
         });
-
-
-
-
     }
-
     function LoadingCarDom(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, data) {
-
         var eventsAnimalObject = getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, "Animal", data);
         console.log(eventsAnimalObject);
         var eventsChildObject = getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, "Children", data);
         var eventsDSObject = getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, "DisasterRelief", data);
         var eventsSeniorObject = getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, "Seniors", data);
-
     }
-
     function renderEventsIntoCarousel(categoryObjectArray) {
         // var categoryObjectArray = [eventsAnimalObject, eventsChildObject, eventsDSObject, eventsSeniorObject];
         var categoryArray = ["Animal", "Children", "Disaster Relief", "Seniors"];
-
         var tabName = "";
         if (FlagActiveValue) {
             tabName = "Active";
@@ -1516,39 +970,48 @@ $(document).ready(function() {
         } else {
             tabName = "Awaiting Approval";
         }
-
         var sibling = document.getElementById('tabs');
         var parent = sibling.parentElement;
-
         for (i = 0; i < categoryObjectArray.length; i++) {
-
             var newEventItem = document.createElement("div");
-
             newEventItem.className = "eventItem";
-
-            newEventItem.innerHTML = categoryObjectArray[i].eventName;
-
+			var event = new Event(categoryObjectArray[i].eventName, categoryObjectArray[i].category,
+			    categoryObjectArray[i].organization,categoryObjectArray[i].usersParticipating,
+			    categoryObjectArray[i].volunteersRequired, categoryObjectArray[i].locationNearby);
+			displayEvent(event, newEventItem);
             parent.appendChild(newEventItem);
-
         }
     }
-
+    function Event(e_title, e_category, e_organization, e_usersParticipating, e_volunteersRequired, e_location) {
+		this.event_title = e_title;
+		this.category = e_category;
+		this.organization = e_organization;
+		this.usersParticipating = e_usersParticipating;
+		this.volunteersRequired = e_volunteersRequired;
+		this.location = e_location;
+		var red = Math.round(Math.random()*(255));
+    	var blue = Math.round(Math.random()*(255));
+    	var green = Math.round(Math.random()*(255));
+		this.color = 'rgb(' + [red,green,blue].join(',') + ')';
+    }
+    function displayEvent(Event, newEventItem) {
+    	newEventItem.innerHTML =
+    	 "<div style='height:inherit;width:inherit;background-color:" + Event.color + "'>" + "<div class = 'event_shade'>" +
+    	 "<h3 class = 'event_title'>"+Event.event_title +"</h3>"+ "<div class = event_desc> Category: "+Event.category + "</div>" + "<br>"+
+    	 "<div class = event_desc> Organization: " + Event.organization + "</div>" + "<br>"+"<div class = event_desc> Participants: " + Event.usersParticipating + "</div>" + "<br>"+
+    	 "<div class = event_desc> Requires " + Event.volunteersRequired + " volunteers</div>" + "</div>" + "</div>";
+    }
     function getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, category, data) {
-
         orgnamelogout = data.message.organizationName;
         var userType = profilelogout.toString().toLowerCase();
-
         if (userType === "ngo") {
-
             $.ajax({
                 type: 'POST',
                 url: '/viewEvents',
                 contentType: "application/json",
-
                 data: JSON.stringify({
                     'organization': orgnamelogout.toString()
                 }),
-
                 success: function(data) {
                     renderEventsIntoCarousel(data.message);
                 },
@@ -1561,11 +1024,9 @@ $(document).ready(function() {
                 type: 'POST',
                 url: '/viewEvents',
                 contentType: "application/json",
-
                 data: JSON.stringify({
                     'isActive': 'true'
                 }),
-
                 success: function(data) {
                     renderEventsIntoCarousel(data.message);
                 },
@@ -1578,11 +1039,9 @@ $(document).ready(function() {
                 type: 'POST',
                 url: '/viewEvents',
                 contentType: "application/json",
-
                 data: JSON.stringify({
                     'isDenied': 'false'
                 }),
-
                 success: function(data) {
                     renderEventsIntoCarousel(data.message);
                 },
@@ -1591,454 +1050,323 @@ $(document).ready(function() {
                 }
             });
         }
-
         return data.message;
     }
-
     ///Volunteer Event
-    $('#button9').click(function() {
+$('#button9').click(function(){
 
 
-        $.ajax({
-            type: 'POST',
-            url: '/populateEditProfile',
-            contentType: "application/json",
 
-            data: JSON.stringify({
+		$.ajax({
+			type:'POST',
+			url:'/populateEditProfile',
+			contentType: "application/json",
 
+			data:JSON.stringify({
+			'username': usernamelogout.toString(),
+			'userType': profilelogout.toString().toLowerCase(),
+			}),
 
-                'username': usernamelogout.toString(),
-                'userType': profilelogout.toString().toLowerCase(),
+			success: function(data){
+			if(count1 == 0){
+			EventVolunteerAction(data);
 
+			$('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Volunteering for this Event").show();
+			count1+=1;
+			}
+			else{
+	        $('#msgevent').removeClass('alert-success').addClass('alert-danger').html("You are already Volunteering for this Event").show();
 
+	        }
+			},
+			error:function(data){
+			//console.log(data.responseJSON.message);
+			EventVolunteerAction(data);
+			}
+			});
 
-            }),
 
 
 
-            success: function(data) {
+});
 
 
-                EventVolunteerAction(data);
+ function EventVolunteerAction(data) {
+    emaillogout = data.message.emailId;
+   orgnamelogout = data.message.organizationName;
+   var eventnamebackend = $('input[name=eventname]').val();
 
 
-                $('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Volunteering for this Event").show();
+							$.ajax({
+							type:'POST',
+							url:'/volunteerForEvent',
+							contentType: "application/json",
 
+							data:JSON.stringify({
 
+							"organization": orgnamelogout.toString(),
+							"eventName" : eventnamebackend.toString(),
 
+    						"emailId" : emaillogout.toString(),
 
-            },
-            error: function(data) {
+    						"username": usernamelogout.toString(),
+							"userType": profilelogout.toString().toLowerCase()
 
+							}),
 
-                //console.log(data.responseJSON.message);
+							success: function(){
+                            getvolusercount( eventnamebackend, orgnamelogout);
+                            },
+							error:function(data){
+                            //	console.log(data);
+                            }
+                       });
+				}
 
-                EventVolunteerAction(data);
 
 
+/////Attend Event
+$('#button10').click(function(){
 
 
-            }
+            orgnamelogout = $('input[name=orgname_event]').val();
+            var eventnamebackend = $('input[name=eventname]').val();
 
-        });
 
+		$.ajax({
+			type:'POST',
+			url:'/populateEditProfile',
+			contentType: "application/json",
 
+			data:JSON.stringify({
+			'username': usernamelogout.toString(),
+			'userType': profilelogout.toString().toLowerCase(),
+			}),
 
-    });
+			success: function(data){
+			if(count==0){
+			EventAttendAction(data);
+			$('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Attending in this Event").show();
+			count+=1;
+			}
+			else{
+			$('#msgevent').removeClass('alert-success').addClass('alert-danger').html("You are already attending in this Event").show();
 
+			}
+			},
+			error:function(data){
+			//console.log(data.responseJSON.message);
+			EventAttendAction(data);
+			}
+			});
 
-    ///////
 
 
-    function EventVolunteerAction(data) {
+});
 
-        emaillogout = data.message.emailId;
 
-        orgnamelogout = data.message.organizationName;
 
-        var eventnamebackend = $('input[name=eventname]').val();
+function EventAttendAction(data) {
 
+    emaillogout = data.message.emailId;
+   orgnamelogout = data.message.organizationName;
+   var eventnamebackend = $('input[name=eventname]').val();
 
-        $.ajax({
-            type: 'POST',
-            url: '/volunteerForEvent',
-            contentType: "application/json",
 
-            data: JSON.stringify({
+							$.ajax({
+							type:'POST',
+							url:'/attendEvent',
+							contentType: "application/json",
 
-                "organization": orgnamelogout.toString(),
-                "eventName": eventnamebackend.toString(),
+							data:JSON.stringify({
 
-                "emailId": emaillogout.toString(),
+							"organization": orgnamelogout.toString(),
+							"eventName" : eventnamebackend.toString(),
+							"userType": profilelogout.toString().toLowerCase()
 
-                "username": usernamelogout.toString(),
-                "userType": profilelogout.toString().toLowerCase()
+							}),
 
-            }),
+							success: function(){
+                            getvolusercount( eventnamebackend, orgnamelogout);
+                            },
+							error:function(data){
+                            //	console.log(data);
+                            }
+                             });
+				}
 
-            success: function() {
 
 
-                getvolusercount(eventnamebackend, orgnamelogout);
+function getvolusercount( eventnamebackend, orgnamelogout){
+						$.ajax({
+								type:'POST',
+								url:'/viewEvents',
+								contentType: "application/json",
+								data:JSON.stringify({
+								"organization": orgnamelogout.toString(),
+								"eventName" : eventnamebackend.toString(),
+							}),
+								success: function(data){
+									console.log(data.message[0].volunteersInterested);
+									$('#event_volunteersinterested').val(data.message[0].volunteersInterested);
+									$('#event_userparticipating').val(data.message[0].usersParticipating);
+									},
+								error:function(data){
+									}
+							 });
+}
 
 
-            },
-            error: function(data) {
-
-
-                //	console.log(data);
-
-
-            }
-
-        });
-    }
-
-
-
-    /////Attend Event
-
-
-    $('#button10').click(function() {
-
-
-        orgnamelogout = $('input[name=orgname_event]').val();
-
-        var eventnamebackend = $('input[name=eventname]').val();
-
-
-        $.ajax({
-            type: 'POST',
-            url: '/attendEvent',
-            contentType: "application/json",
-
-            data: JSON.stringify({
-
-                "organization": orgnamelogout.toString(),
-                "eventName": eventnamebackend.toString(),
-
-
-                "userType": "student"
-
-            }),
-
-            success: function() {
-
-
-                //console.log(usercount);
-
-
-
-                $('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Participating in this Event").show();
-
-
-                getvolusercount(eventnamebackend, orgnamelogout);
-            },
-            error: function(data) {
-
-
-                //	console.log(data);
-
-
-            }
-
-        });
-
-
-
-
-    });
-
-
-
-    function getvolusercount(eventnamebackend, orgnamelogout) {
-
-        $.ajax({
-            type: 'POST',
-            url: '/viewEvents',
-            contentType: "application/json",
-
-            data: JSON.stringify({
-
-                "organization": orgnamelogout.toString(),
-                "eventName": eventnamebackend.toString(),
-
-            }),
-
-            success: function(data) {
-
-                console.log(data.message[0].volunteersInterested);
-
-                $('#event_volunteersinterested').val(data.message[0].volunteersInterested);
-
-
-                $('#event_userparticipating').val(data.message[0].usersParticipating);
-
-
-            },
-            error: function(data) {
-
-
-            }
-
-        });
-
-
-    }
-
-
-
-
-    ///APPROVE EVENT
-
-
-
-
+///APPROVE EVENT
     $('#button12').click(function() {
-
-
         orgnamelogout = $('input[name=orgname_event]').val();
-
         var eventnamebackend = $('input[name=eventname]').val();
-
-
-
-
         $.ajax({
             type: 'POST',
             url: '/approveEvent',
             contentType: "application/json",
-
             data: JSON.stringify({
-
-
                 "eventName": eventnamebackend.toString(),
                 //'userType': profilelogout.toString().toLowerCase(),
                 'userType': 'admin',
                 'organization': orgnamelogout.toString()
-
-
-
             }),
-
-
-
             success: function(data) {
-
-
                 //console.log(data.message);
-
-
                 $('#msgevent').removeClass('alert-danger').addClass('alert-success').html(data.message).show();
-
-
-
             },
             error: function(data) {
-
-
                 //console.log(data.responseJSON.message);
-
-
-
-
             }
-
         });
-
-
-
     });
-
-
-
     ///////DENY EVENT
-
-
-
-
     $('#button13').click(function() {
-
-
         orgnamelogout = $('input[name=orgname_event]').val();
-
         var eventnamebackend = $('input[name=eventname]').val();
-
-
-
-
         $.ajax({
             type: 'POST',
             url: '/denyEvent',
             contentType: "application/json",
-
             data: JSON.stringify({
-
-
                 "eventName": eventnamebackend.toString(),
                 //'userType': profilelogout.toString().toLowerCase(),
                 'userType': 'admin',
                 'organization': orgnamelogout.toString()
-
-
-
             }),
-
-
-
             success: function(data) {
-
-
                 //	console.log(data.message);
-
-
                 $('#msgevent').removeClass('alert-success').addClass('alert-danger').html(data.message).show();
-
-
-
             },
             error: function(data) {
-
-
                 //	console.log(data.responseJSON.message);
-
-
-
-
             }
-
         });
-
-
-
     });
-
-
     ///////////Delete Event
-
     $('#button15').click(function() {
-
-
         orgnamelogout = $('input[name=orgname_event]').val();
-
         var eventnamebackend = $('input[name=eventname]').val();
-
         var startdatebackend = $('input[name=startdate]').val();
-
-
         var enddatebackend = $('input[name=enddate]').val();
-
-
-
-
         $.ajax({
             type: 'POST',
             url: '/deleteEvent',
             contentType: "application/json",
-
             data: JSON.stringify({
-
-
                 "eventName": eventnamebackend.toString(),
-
                 'userType': 'admin',
                 'organization': orgnamelogout.toString(),
                 "from": startdatebackend.toString(),
-
                 "to": enddatebackend.toString(),
-
-
-
             }),
-
-
-
             success: function(data) {
-
-
                 //	console.log(data.message);
-
-
                 $('#msgevent').removeClass('alert-success').addClass('alert-danger').html(data.message).show();
-
-
-
             },
             error: function(data) {
-
-
                 //console.log(data.responseJSON.message);
-
-
-
-
             }
-
         });
-
-
-
     });
-
-
-
     /////// Search
-
-
     $('#search').click(function() {
-
         var searchText = $('input[name=search]').val();
-
         //console.log(searchText);
-
         $.ajax({
             type: 'POST',
             url: '/searchEvent',
-
             dataType: "text",
             contentType: "text",
             data: searchText,
-
-
             success: function(data) {
-
-
                 //console.log(data);
-
                 alert('data' + sarch);
-
-
-
-
             },
             error: function(data) {
-
-
                 //console.log(data);
-
-
-
-
             }
-
         });
-
-
-
     });
-
     $('.myCheckbox').click(function() {
         $(this).siblings('input:checkbox').prop('checked', false);
     });
 
-});
+    //category
 
+       $('#cat1').click(function() {
+       console.log('cat1was selecte0d');
+    });
+
+     $('#cat2').click(function() {
+       console.log('cat2was selected');
+    });
+
+     $('#cat3').click(function() {
+       console.log('cat3was selected');
+    });
+
+     $('#cat4').click(function() {
+       console.log('cat4was selected');
+    });
+     $('#cat5').click(function() {
+       console.log('cat5was selected');
+    });
+     $('#cat6').click(function() {
+       console.log('cat6was selected');
+    });
+
+
+          $('#cat7').click(function() {
+       console.log('cat7was selected');
+    });
+
+     $('#cat8').click(function() {
+       console.log('cat8was selected');
+    });
+
+     $('#cat9').click(function() {
+       console.log('cat9 was selected');
+    });
+
+     $('#cat10').click(function() {
+       console.log('cat10was selected');
+    });
+     $('#cat11').click(function() {
+       console.log('cat11was selected');
+    });
+     $('#cat12').click(function() {
+       console.log('cat12was selected');
+    });
+
+
+
+});
 </script>
 
 
 <style>
 	body { padding-top: 25px; }
-
 	html,
 	body,
 	.container.advsearch{
@@ -2046,7 +1374,6 @@ $(document).ready(function() {
 	max-width: none;
 	border-color:green;
 	},
-
 	#map-canvas {
 	height: 83%;
 	max-width: none;
@@ -2056,103 +1383,119 @@ $(document).ready(function() {
 	padding: 0px;
 	border-color:red;
 	}
-
+	.eventItem {
+	width:300px;
+	height:238px;
+	margin:10px;
+	display:inline-block !important;
+	}
+	.event_body {
+	padding 5px 15px;
+	font-size: 15px;
+	line-height: 22px;
+	font-weight: 400;
+	letter-spacing: .5px;
+	font-family: "Benton Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+	}
+	.event_title {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	white-space: normal;
+	overflow: hidden;
+	margin:0px;
+	color: #9b9ea7;
+	font-size: 15px;
+	line-height: 18px;
+	height: 36px;
+	max-height: 36px;
+	font-weight: 700;
+	letter-spacing: 0;
+	padding: 0;
+	}
+	.event_desc {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	color: #9b9ea7;
+	font-size: 12px;
+	line-height: 18px;
+	padding: 5px 0 0;
+	}
+	.event_shade {
+	background: rgba(0, 0, 0, 0.5);
+	padding: 15px;
+	}
 	.jumbotron{
 	padding:1em 1em;
 	}
-
 	.jbbg {
 	background-color: green ;
 	}
-
-
 	#topnav{
 	min-height:40px !important;
 	background-color: darkgreen ;
 	}
-
 	.navbar-brand .nb{
 	color: white;
 	}
-
 	#brand {
 	text-align: center;
 	padding-top:60px;
 	}
-
 	#brand h1{
-
 	color: white;
 	font-size: 40px;
-
 	}
 	.tooltip > .tooltip-inner {background-color: grey;}
-
 	.has-success .form-control{ border-color:grey !important;}
 	.has-success .form-control:focus { border-color:grey !important;}
-
 	.has-success .control-label{ color:black !important;}
-
 	.ui-datepicker-today {
 	background: #fcc !important;
 	}
-
 	#resetForm{
 	margin: 0 auto;
 	width:80%
 	}
-
 	#modtitle_event, #modtitle_profile{
 	padding-top:30px;
 	text-align:center;
 	}
-
 	.close{
 	position:absolute;
 	top:10px;
 	right: 10px;
 	font-weight: bold;
 	}
-
 	.c2{
 	background-color:#01401e;
 	color:white;
 	margin-left: auto ;
 	margin-right: auto ;
 	border-radius: 6px;
-
 	}
-
-
-
 	#createEventButton, #advsearchbutton{
 	background: green !important;
 	color: white !important;
 	border-radius: 24px;
 	}
-
 	.places{
 	background: pink !important;
 	}
-
 	.form-group.locmap{
 	background: red !important;
 	}
-
 	#gear{
 	font-size:25px;
 	}
-
-
 	#options
 	{
 	text-align: right;
 	}
-
 	.nav .navbar-nav .navbar-right{
 	float:right;
 	}
-
 	.btn-circle {
 	width: 30px;
 	height: 30px;
@@ -2162,8 +1505,6 @@ $(document).ready(function() {
 	line-height: 1.428571429;
 	border-radius: 15px;
 	}
-
-
 	.btn-circle.btn-xl {
 	width: 70px;
 	height: 70px;
@@ -2174,156 +1515,102 @@ $(document).ready(function() {
 	background-image: url('http://www.servicedogstories.com/images/small_paw.gif');
 	background-repeat: no-repeat;
 	}
-
 	#cat1{
 	background-image: url('http://img.static.reliefweb.int/sites/reliefweb.int/files/styles/attachment-large/public/topics-icon---storms.png?itok=YlSx_48V');
 	background-repeat: no-repeat;
 	background-size: 65px 60px;
 	background-position: 1px 5px;
-
+    background-color:white;
 	}
-
 	#cat2{
 	background-image: url('http://www.las-cruces.org/~/media/lcpublicwebdev2/site%20images/department%20block%20images/animalshelterdeptblocksvg.ashx?h=525&la=en&w=700');
 	background-repeat: no-repeat;
 	background-size: 90px 60px;
-
 	background-position: top 5px right 55%;
 	background-color:white;
 	}
-
-
 	#cat3{
 	background-image: url('https://www.wedontwaste.org/wp-content/uploads/2014/09/wdw-logo-icon-color-whitebg.jpg');
 	background-repeat: no-repeat;
 	background-size: 70px 65px;
-
 	background-position: top 1px right 55%;
 	background-color:white;
-
 	}
-
-
 	#cat4{
 	background-image: url('http://www.etsu.edu/com/cme/images/HandicapLogoDecal.JPG');
 	background-repeat: no-repeat;
 	background-size: 60px 60px;
-
 	background-position: top 5px right 55%;
 	background-color:white;
-
 	}
-
-
 	#cat5{
 	background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2f/Seniors_icon.png');
 	background-repeat: no-repeat;
 	background-size: 60px 60px;
-
 	background-position: top 5px right 55%;
 	background-color:white;
-
 	}
-
 	#cat6{
 	background-image: url('http://usich.gov/resources/uploads/page_img/Logos_USICH_CTAcampaign.JPG');
 	background-repeat: no-repeat;
 	background-size: 90px 65px;
-
-
 	background-color:white;
-
 	}
-
-
 	#cat7{
 	background-image: url('http://www.ladyfatemahtrust.org/lft/wp-content/uploads/2015/05/icon2tiff.jpg');
 	background-repeat: no-repeat;
 	background-size: 60px 60px;
-
-
 	background-color:white;
-
 	}
-
 	#cat8{
 	background-image: url('http://www.happyafricafoundation.org/themes/2/icon-education.gif');
 	background-repeat: no-repeat;
 	background-size: 70px 70px;
-
-
 	background-color:white;
-
 	}
-
-
 	#cat9{
 	background-image: url('http://sustainability.umw.edu/dot/files/2011/06/UMW_environment_dot.jpg');
 	background-repeat: no-repeat;
 	background-size: 70px 70px;
-
-
 	background-color:white;
-
 	}
-
 	#cat10{
 	background-image: url('https://cdn0.iconfinder.com/data/icons/customicondesign-office6-shadow/256/basketball.png');
 	background-repeat: no-repeat;
 	background-size: 75px 75px;
-
 	background-position: top 2px right 55%;
 	background-color:white;
-
 	}
-
-
 	#cat11{
 	background-image: url('http://www1.toronto.ca/AYA-ArtsCulture-ICON_150.jpg');
 	background-repeat: no-repeat;
 	background-size: 70px 70px;
-
-
 	background-color:white;
-
 	}
-
 	#cat12{
 	background-image: url('http://www.wisafricana.com/wp-content/uploads/2015/07/community-icon.png');
 	background-repeat: no-repeat;
 	background-size: 70px 70px;
-
-
 	background-color:white;
-
 	}
-
 	.helppills .active a,
 	.helppills .active a:hover {
 	background-color: green !important;
-
 	}
-
 	.helppills  a:hover {
 	background-color: lightgreen !important;
-
 	}
-
 	.btn.btn-default.btn-md.createEventS,.btn.btn-default.btn-md.VolunteerEvent, .btn.btn-default.btn-md.AttendEvent,.btn.btn-default.btn-md.Search,
 	.btn.btn-default.btn-md.ApproveEvent, .btn.btn-default.btn-md.editProfileS{
 	background: green !important;
 	color: white !important;
 	border-radius: 24px;
 	}
-
-
 	.btn.btn-default.btn-mdclose.createEventClose, .btn.btn-default.btn-md.DenyEvent,.btn.btn-default.btn-md.DeleteEvent,.btn.btn-default.btn-mdclose.editProfileClose{
 	background: red !important;
 	color: white !important;
 	border-radius: 24px;
 	}
-
-
 </style>
 
 <body>
@@ -2392,6 +1679,8 @@ $(document).ready(function() {
 				<button id='createEventButton'  type="button" class="btn btn-default btn-md create_event  pull-right" data-toggle="modal"  data-target="#create_event_modal-1" >Create Event</button>
 			</div>
 
+          
+
 
 			<div id="advsearchcontainer"  >
 				<div >
@@ -2443,11 +1732,11 @@ $(document).ready(function() {
 
 							<div class="col-md-4" style="padding:10px 2px 10px 22px;">
 
-								<button type="button" id="cat1" class="btn btn-default btn-circle btn-xl" title="Disaster Relief"></button>
+								<button type="button" id="cat1" class="btn btn-primary btn-circle btn-xl" title="Disaster Relief"></button>
 
 								<button type="button" id="cat2" class="btn btn-primary btn-circle btn-xl" title="Animals"></button>
 
-								<button type="button" id="cat3" class="btn btn-default btn-circle btn-xl" title="Hunger"></button>
+								<button type="button" id="cat3" class="btn btn-primary btn-circle btn-xl" title="Hunger"></button>
 
 								<button type="button" id="cat4" class="btn btn-primary btn-circle btn-xl" title="People with Disabilities"></button>
 
@@ -2455,11 +1744,11 @@ $(document).ready(function() {
 
 							<div class="col-md-4" style="padding:10px 2px 10px 22px;">
 
-								<button type="button" id="cat5" class="btn btn-default btn-circle btn-xl" title="Seniors"></button>
+								<button type="button" id="cat5" class="btn btn-primary btn-circle btn-xl" title="Seniors"></button>
 
 								<button type="button" id="cat6" class="btn btn-primary btn-circle btn-xl" title="Service for Homeless"></button>
 
-								<button type="button" id="cat7" class="btn btn-default btn-circle btn-xl" title="Children"></button>
+								<button type="button" id="cat7" class="btn btn-primary btn-circle btn-xl" title="Children"></button>
 
 								<button type="button" id="cat8" class="btn btn-primary btn-circle btn-xl" title="Education"></button>
 
@@ -2467,11 +1756,11 @@ $(document).ready(function() {
 
 							<div class="col-md-4" style="padding:10px 2px 10px 22px;">
 
-								<button type="button" id="cat9" class="btn btn-default btn-circle btn-xl" title="Environment"></button>
+								<button type="button" id="cat9" class="btn btn-primary btn-circle btn-xl" title="Environment"></button>
 
 								<button type="button" id="cat10" class="btn btn-primary btn-circle btn-xl" title="Sports"></button>
 
-								<button type="button" id="cat11" class="btn btn-default btn-circle btn-xl" title="Creativity Arts"></button>
+								<button type="button" id="cat11" class="btn btn-primary btn-circle btn-xl" title="Creativity Arts"></button>
 
 								<button type="button" id="cat12" class="btn btn-primary btn-circle btn-xl" title="Community"></button>
 
@@ -2535,16 +1824,12 @@ $(document).ready(function() {
 										<input type="date" id="startdate" class="form-control" name="startdate" placeholder="date">
 
 										<!--
-
                                                                         <div class='input-group date' id='startdate'>
                                                                             <input type='text' class="form-control" />
                                                                                 <span class="input-group-addon">
                                                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                                                 </span>
                                                                         </div>
-
-
-
                                                                                                         <div class='input-group date' id='startdate' name="startdate">
                                                                                                             <input type='text' class="form-control" name="startdatetext"/>
                                                                                         <span class="input-group-addon">
@@ -2570,7 +1855,6 @@ $(document).ready(function() {
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
                                         </div>
-
                         <!--
                             <div class='input-group date' id='enddate' name="enddate">
                                 <input type='text' class="form-control" name="enddatetext"/>
@@ -2899,7 +2183,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 
-			<div class="col-md-12 text-center"><h3>Bootstrap 3 Multiple Slide Carousel</h3></div>
+			<!--<div class="col-md-12 text-center"><h3>Bootstrap 3 Multiple Slide Carousel</h3></div>-->
 			<div class="col-md-6 col-md-offset-3">
 
 			</div>
