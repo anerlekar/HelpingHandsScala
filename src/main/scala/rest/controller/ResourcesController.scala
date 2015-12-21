@@ -32,6 +32,34 @@ class ResourcesController {
     new FileInputStream("src/main/scala/rest/view/home.html")
   }
 
+  @GET
+  @Path("/home/owl.carousel/owl-carousel/owl.carousel.css")
+  @Produces(Array("text/css"))
+  def cssPage(): InputStream = {
+    new FileInputStream("src/main/scala/rest/view/owl.carousel/owl-carousel/owl.carousel.css")
+  }
+
+  @GET
+  @Path("/home/owl.carousel/owl-carousel/owl.theme.css")
+  @Produces(Array("text/css"))
+  def themePage(): InputStream = {
+    new FileInputStream("src/main/scala/rest/view/owl.carousel/owl-carousel/owl.theme.css")
+  }
+
+  @GET
+  @Path("/home/owl.carousel/owl-carousel/owl.carousel.js")
+  @Produces(Array("text/javascript"))
+  def jsPage(): InputStream = {
+    new FileInputStream("src/main/scala/rest/view/owl.carousel/owl-carousel/owl.carousel.js")
+  }
+
+  @GET
+  @Path("/home/owl.carousel/owl-carousel/owl.transitions.css")
+  @Produces(Array("text/css"))
+  def transitionsPage(): InputStream = {
+    new FileInputStream("src/main/scala/rest/view/owl.carousel/owl-carousel/owl.transitions.css")
+  }
+
 
   @POST
   @Path("/register")
