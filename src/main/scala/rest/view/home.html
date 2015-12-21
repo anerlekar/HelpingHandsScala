@@ -1085,20 +1085,15 @@ $('#button9').click(function(){
 			}),
 
 			success: function(data){
-			if(count1 == 0){
+
 			EventVolunteerAction(data);
 
 			$('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Volunteering for this Event").show();
-			count1+=1;
-			}
-			else{
-	        $('#msgevent').removeClass('alert-success').addClass('alert-danger').html("You are already Volunteering for this Event").show();
 
-	        }
 			},
 			error:function(data){
 			//console.log(data.responseJSON.message);
-			EventVolunteerAction(data);
+
 			}
 			});
 
@@ -1133,6 +1128,7 @@ $('#button9').click(function(){
 
 							success: function(){
                             getvolusercount( eventnamebackend, orgnamelogout);
+                             console.log(getvolusercount( eventnamebackend, orgnamelogout));
                             },
 							error:function(data){
                             //	console.log(data);
@@ -1161,19 +1157,15 @@ $('#button10').click(function(){
 			}),
 
 			success: function(data){
-			if(count==0){
-			EventAttendAction(data);
-			$('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Attending in this Event").show();
-			count+=1;
-			}
-			else{
-			$('#msgevent').removeClass('alert-success').addClass('alert-danger').html("You are already attending in this Event").show();
 
-			}
+			$('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Attending in this Event").show();
+            EventAttendAction(data);
+
+
 			},
 			error:function(data){
 			//console.log(data.responseJSON.message);
-			EventAttendAction(data);
+
 			}
 			});
 
@@ -1185,7 +1177,7 @@ $('#button10').click(function(){
 
 function EventAttendAction(data) {
 
-    emaillogout = data.message.emailId;
+   // emaillogout = data.message.emailId;
    orgnamelogout = data.message.organizationName;
    var eventnamebackend = $('input[name=eventname]').val();
 
@@ -1205,6 +1197,7 @@ function EventAttendAction(data) {
 
 							success: function(){
                             getvolusercount( eventnamebackend, orgnamelogout);
+                            console.log(getvolusercount( eventnamebackend, orgnamelogout));
                             },
 							error:function(data){
                             //	console.log(data);
@@ -1224,7 +1217,9 @@ function getvolusercount( eventnamebackend, orgnamelogout){
 								"eventName" : eventnamebackend.toString(),
 							}),
 								success: function(data){
+								    console.log(data);
 									console.log(data.message[0].volunteersInterested);
+									console.log(data.message[0].usersParticipating);
 									$('#event_volunteersinterested').val(data.message[0].volunteersInterested);
 									$('#event_userparticipating').val(data.message[0].usersParticipating);
 									},
@@ -1674,7 +1669,7 @@ function getvolusercount( eventnamebackend, orgnamelogout){
 
 <div class="container" >
 	<div class="jumbotron c2">
-		<h1 style="text-align:center">STATIC TEXT OF ITU</h1>
+		<h1 style="text-align:left;font-size:18px">Helping Hands is a community service application, designed specially for the ITUs. It will open doors for the ITUs, to volunteer for different community service activities and drives organized by the NGOs in the Bay Area. ITU and its SGA organizes several drives and community service activities every year. Helping Hands will help them in acquiring more information about the upcoming events and will be able to be help the society in more efficient manner!</h1>
 	</div>
 
 
