@@ -1581,8 +1581,11 @@ $(document).ready(function() {
             newEventItem.className = "eventItem";
 
 			var event = new Event(categoryObjectArray[i].eventName, categoryObjectArray[i].category,
-			    categoryObjectArray[i].organization, categoryObjectArray[i].description,categoryObjectArray[i].from,categoryObjectArray[i].to, categoryObjectArray[i].usersParticipating,
-			    categoryObjectArray[i].volunteersParticipating, categoryObjectArray[i].locationNearby);
+			    categoryObjectArray[i].organization, categoryObjectArray[i].description,
+			    categoryObjectArray[i].from,categoryObjectArray[i].to,
+			    categoryObjectArray[i].volunteersRequired,
+			    categoryObjectArray[i].usersParticipating, categoryObjectArray[i].volunteersParticipating,
+			    categoryObjectArray[i].locationNearby, categoryObjectArray[i].location );
 
 			displayEvent(event, newEventItem);
             parent.appendChild(newEventItem);
@@ -1590,13 +1593,15 @@ $(document).ready(function() {
         }
     }
 
-    function Event(e_title, e_category, e_organization, e_desc, e_start, e_end, e_usersParticipating, e_volunteersRequired, e_location) {
+    function Event(e_title, e_category, e_organization, e_desc, e_start, e_end, e_volunteersRequired, e_usersParticipating, e_volunteersParticipating, e_location_nearby, e_location) {
 		this.event_title = e_title;
 		this.category = e_category;
 		this.organization = e_organization;
 		this.usersParticipating = e_usersParticipating;
 		this.volunteersRequired = e_volunteersRequired;
+		this.volunteersParticipating = e_volunteersParticipating;
 		this.event_location = e_location;
+		this.event_location_nearby = e_location_nearby;
 		this.desc = e_desc;
 		this.startDate = e_start;
 		this.endDate = e_end;
@@ -1626,12 +1631,14 @@ $(document).ready(function() {
 			$('#eventloc').val(Event.event_location);
 			$("#eventlocnearby").find(":selected").text(Event.event_location);
 
-			$("#category").find(":selected").text(Event.category);
+			$("#category").val(Event.category);
 			$('textarea#eventdesc').val(Event.desc);
 
 			$('#event_volunteersreq').val(Event.volunteersRequired);
 
-			$('#event_volunteersinterested').val(Event.usersParticipating);
+			$('#event_volunteersinterested').val(Event.volunteersParticipating);
+
+			$('#event_userparticipating').val(Event.usersParticipating);
 
 			if (userType === "student") {
 				document.getElementById("modtitle_event").textContent="RSVP";
@@ -2782,9 +2789,9 @@ $(document).ready(function() {
 								</div>
 
 								<div class="form-group">
-									<label class="col-lg-5 control-label">Location Near By<sup>*</sup></label>
+									<label class="col-lg-5 control-label hidden">Location Near By<sup>*</sup></label>
 									<div class="col-lg-6">
-										<select class="form-control" id='eventlocnearby'  name="eventlocnearby">
+										<select class="form-control hidden" id='eventlocnearby'  name="eventlocnearby">
 
 											<option value=" "></option>
 
@@ -2808,7 +2815,7 @@ $(document).ready(function() {
 								</div>
 
 
-								<div class="form-group">
+								<div class="form-group hidden">
 									<label class="col-lg-5 control-label">Number of Volunteers Required<sup>*</sup></label>
 									<div class="col-lg-6">
 										<input id='event_volunteersreq' type="number" min = '0' class="form-control" name="event_volunteersreq" />
@@ -2840,7 +2847,6 @@ $(document).ready(function() {
 										<select class="form-control" id='category'  name="category">
 
 											<option value=" "></option>
-
 											<option value="Disaster Relief">Disaster Relief</option>
 											<option value="Seniors">Seniors</option>
 											<option value="Environment">Environment</option>
