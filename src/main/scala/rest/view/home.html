@@ -382,7 +382,10 @@ $(document).ready(function() {
 
     $("#sanfrancisco").click(function() {
 
+
+
     	LocationValue = "San Francisco";
+
 
     	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
@@ -450,7 +453,7 @@ $(document).ready(function() {
             }
 
             if ($("#sanjose").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
+                $('#sanjose').prop('checked', false);
                 DeleteMarker(4);
             }
 
@@ -494,7 +497,7 @@ $(document).ready(function() {
             }
 
             if ($("#sanjose").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
+                $('#sanjose').prop('checked', false);
                 DeleteMarker(4);
             }
 
@@ -538,7 +541,7 @@ $(document).ready(function() {
             }
 
             if ($("#sanjose").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
+                $('#sanjose').prop('checked', false);
                 DeleteMarker(4);
             }
 
@@ -886,7 +889,27 @@ $(document).ready(function() {
     });
 
 
+
     $('#createEventButton').click(function() {
+
+        $('#button5').show('fast');
+
+        $('#volunteers_interested').show('fast');
+
+         $('#button6').show('fast');
+
+         $('#button14').hide('fast');
+
+          $('#button15').hide('fast');
+
+        document.getElementById("modtitle_event").innerHTML="Create Event";
+
+
+
+        var editableFields = $('#createEventForm .form-control');
+				for (var i = 0; i < editableFields.length; i++) {
+					editableFields[i].removeAttribute("readonly");
+				}
 
     	var userType = profilelogout.toString().toLowerCase();
 
@@ -917,7 +940,7 @@ $(document).ready(function() {
             success: function(data) {
 
 				userData = data;
-                //console.log(data.message);
+                console.log(data.message);
 
 
                 $('#orgname_event').val(data.message.organizationName);
@@ -1291,7 +1314,11 @@ $(document).ready(function() {
 
         var categorybackend = $("#category").find(":selected").val();
 
+
+
         var volunteersrequiredbackend = $('input[name=event_volunteersreq]').val();
+
+        console.log(volunteersrequiredbackend);
 
         var expiredbackend = '';
 
@@ -1580,12 +1607,23 @@ $(document).ready(function() {
 
             newEventItem.className = "eventItem";
 
-			var event = new Event(categoryObjectArray[i].eventName, categoryObjectArray[i].category,
-			    categoryObjectArray[i].organization, categoryObjectArray[i].description,
-			    categoryObjectArray[i].from,categoryObjectArray[i].to,
-			    categoryObjectArray[i].volunteersRequired,
-			    categoryObjectArray[i].usersParticipating, categoryObjectArray[i].volunteersParticipating,
-			    categoryObjectArray[i].locationNearby, categoryObjectArray[i].location );
+			var event = new Event(
+			    categoryObjectArray[i].eventName,
+			    categoryObjectArray[i].category,
+			    categoryObjectArray[i].organization,
+			    categoryObjectArray[i].description,
+			    categoryObjectArray[i].from,
+			    categoryObjectArray[i].to,
+			    categoryObjectArray[i].volunteersInterested,
+			    categoryObjectArray[i].usersParticipating,
+			    categoryObjectArray[i].volunteersParticipating,
+			    categoryObjectArray[i].locationNearby,
+			    categoryObjectArray[i].location
+			    /*,
+			    categoryObjectArray[i].isActive,
+			    categoryObjectArray[i].isAwaitingApproval,
+			    categoryObjectArray[i].expired*/
+			     );
 
 			displayEvent(event, newEventItem);
             parent.appendChild(newEventItem);
@@ -1593,18 +1631,22 @@ $(document).ready(function() {
         }
     }
 
-    function Event(e_title, e_category, e_organization, e_desc, e_start, e_end, e_volunteersRequired, e_usersParticipating, e_volunteersParticipating, e_location_nearby, e_location) {
+    function Event(e_title, e_category, e_organization, e_desc, e_start, e_end, e_volunteersInterested, e_usersParticipating, e_volunteersParticipating, e_location_nearby, e_location
+    /*e_isActive, e_isAwaitingApproval, e_expired*/) {
 		this.event_title = e_title;
 		this.category = e_category;
 		this.organization = e_organization;
 		this.usersParticipating = e_usersParticipating;
-		this.volunteersRequired = e_volunteersRequired;
 		this.volunteersParticipating = e_volunteersParticipating;
+		this.volunteersInterested = e_volunteersInterested;
 		this.event_location = e_location;
 		this.event_location_nearby = e_location_nearby;
 		this.desc = e_desc;
 		this.startDate = e_start;
 		this.endDate = e_end;
+		/*this.isAwaitingApproval = e_isAwaitingApproval;
+		this.isActive = e_isActive;
+		this.expired = e_expired;*/
 
 		var red = Math.round(Math.random()*(255));
     	var blue = Math.round(Math.random()*(255));
@@ -1614,11 +1656,17 @@ $(document).ready(function() {
     }
 
     function displayEvent(Event, newEventItem) {
+    console.log(Event+'updated');
     	var userType = profilelogout.toString().toLowerCase();
 
     	newEventItem.setAttribute("data-toggle", "modal");
     	newEventItem.setAttribute("data-target", "#create_event_modal-1");
     	var clickHandler =  function(event) {
+
+
+
+
+
     		$('#createEventForm').show();
 
 			$('#createEventForm').bootstrapValidator('resetForm', true);
@@ -1629,19 +1677,40 @@ $(document).ready(function() {
 			$('#enddate').val(Event.endDate);
 
 			$('#eventloc').val(Event.event_location);
-			$("#eventlocnearby").find(":selected").text(Event.event_location);
+			$("#eventlocnearby").val(Event.event_location_nearby);
+			console.log(Event);
+			console.log(Event.event_location_nearby);
+			console.log(Event.desc);
+
+            console.log(Event.category);
+            console.log(Event.volunteersParticipating);
+            console.log(Event.volunteersInterested);
+            console.log(Event.usersParticipating);
+
+			//$("#question").find(":selected").text(data.message.securityQuestion);
 
 			$("#category").val(Event.category);
 			$('textarea#eventdesc').val(Event.desc);
 
-			$('#event_volunteersreq').val(Event.volunteersRequired);
+			$('#event_volunteersreq').val(Event.volunteersParticipating);
 
-			$('#event_volunteersinterested').val(Event.volunteersParticipating);
+			$('#event_volunteersinterested').val(Event.volunteersInterested);
 
 			$('#event_userparticipating').val(Event.usersParticipating);
 
+			if(Event.volunteersParticipating == '0'){
+			$('#volunteers_interested').hide('fast');
+			$('#button9').hide('fast');
+
+			}
+			else{
+			$('#volunteers_interested').show('fast');
+			$('#button9').show('fast');
+
+			}
+
 			if (userType === "student") {
-				document.getElementById("modtitle_event").textContent="RSVP";
+				document.getElementById("modtitle_event").innerHTML="RSVP";
 				$('#button5').hide('fast');
 				$('#button6').hide('fast');
 				$('#button12').hide('fast');
@@ -1649,27 +1718,40 @@ $(document).ready(function() {
 				$('#button15').hide('fast');
 				var readonlyFields = $('#createEventForm .form-control');
 				for (var i = 0; i < readonlyFields.length; i++) {
-					readonlyFields[i].setAttribute("readonly","readonly");
+					readonlyFields[i].setAttribute("readOnly","true");
 				}
 			}
 			if (userType === "ngo") {
-				document.getElementById("modtitle_event").textContent="Edit Event";
+				document.getElementById("modtitle_event").innerHTML="View Event";
+				$('#button5').hide('fast');
 				$('#button6').hide('fast');
 				$('#button9').hide('fast');
 				$('#button10').hide('fast');
 				$('#button12').hide('fast');
 				$('#button13').hide('fast');
+				$('#button14').show('fast');
+				$('#button15').show('fast');
+
+				var readonlyFields = $('#createEventForm .form-control');
+				for (var i = 0; i < readonlyFields.length; i++) {
+					readonlyFields[i].setAttribute("readOnly","true");
+				}
 			}
 
 		}
+
+
+
+
 
     	newEventItem.innerHTML =
     	 "<div style='height:inherit;width:inherit;background-color:" + Event.color + "'>" + "<div class = 'event_shade'>" +
     	 "<h3 class = 'event_title'>"+Event.event_title +"</h3>"+ "<div class = event_desc> Category: "+Event.category + "</div>" + "<br>"+"<div class = event_desc> Location: "+Event.event_location + "</div>" + "<br>"+
     	 "<div class = event_desc> Organization: " + Event.organization + "</div>" + "<br>"+"<div class = event_desc> Participants: " + Event.usersParticipating + "</div>" + "<br>"+
-    	 "<div class = event_desc> Requires " + Event.volunteersRequired + " volunteers</div>" + "</div>" + "</div>";
+    	 "<div class = event_desc> Requires " + Event.volunteersParticipating + " volunteers</div>" + "</div>" + "</div>";
 
     	 newEventItem.addEventListener("click", clickHandler, false);
+
     }
 
 
@@ -1688,10 +1770,11 @@ $(document).ready(function() {
 			$('#button15').hide('fast');
 			var readonlyFields = $('#createEventForm .form-control');
 			for (var i = 0; i < readonlyFields.length; i++) {
-				readonlyFields[i].setAttribute("readonly","readonly");
+				readonlyFields[i].setAttribute("readOnly","true");
 			}
 		}
 		if (userType === "ngo") {
+		$('#button5').hide('fast');
 			$('#button6').hide('fast');
 			$('#button9').hide('fast');
 			$('#button10').hide('fast');
@@ -1769,6 +1852,7 @@ $(document).ready(function() {
     ///Volunteer Event
     $('#button9').click(function() {
 		var organizationName = $('#orgname_event').val();
+
         EventVolunteerAction(userData, organizationName);
         alert("Your response has been recorded. Thank you!");
 
@@ -1779,6 +1863,8 @@ $(document).ready(function() {
 
 
     function EventVolunteerAction(data, orgName) {
+
+            console.log(data.message);
 
         emaillogout = data.message.emailId;
 
@@ -1792,7 +1878,7 @@ $(document).ready(function() {
 
             data: JSON.stringify({
 
-                "organization": orgName,
+                "organization": orgName.toString(),
                 "eventName": eventnamebackend.toString(),
 
                 "emailId": emaillogout.toString(),
@@ -1820,12 +1906,7 @@ $(document).ready(function() {
         });
     }
 
-
-
-    /////Attend Event
-
-
-    $('#button10').click(function() {
+        $('#button10').click(function() {
 
 		var organizationName = $('#orgname_event').val();
 
@@ -1876,7 +1957,9 @@ $(document).ready(function() {
 
 
 
+
     function getvolusercount(eventnamebackend, orgnamelogout) {
+    console.log(orgnamelogout);
 
         $.ajax({
             type: 'POST',
@@ -1892,12 +1975,13 @@ $(document).ready(function() {
 
             success: function(data) {
 
-                console.log(data.message[0].volunteersInterested);
+               // console.log(data.message[0]);
+                console.log(data.message[0].volunteersInterested+'added');
 
                 $('#event_volunteersinterested').val(data.message[0].volunteersInterested);
 
 
-                $('#event_userparticipating').val(data.message[0].usersParticipating);
+              //  $('#event_userparticipating').val(data.message[0].usersParticipating);
 
 
             },
@@ -1941,6 +2025,7 @@ $(document).ready(function() {
                 //'userType': profilelogout.toString().toLowerCase(),
                 'userType': 'admin',
                 'organization': orgnamelogout.toString()
+
 
 
 
@@ -2066,7 +2151,7 @@ $(document).ready(function() {
 
                 "eventName": eventnamebackend.toString(),
 
-                'userType': 'admin',
+                'userType': profilelogout.toString().toLowerCase(),
                 'organization': orgnamelogout.toString(),
                 "from": startdatebackend.toString(),
 
@@ -2262,6 +2347,7 @@ $(document).ready(function() {
     .event_shade {
     background: rgba(0, 0, 0, 0.5);
     padding: 15px;
+    cursor: pointer;
     }
 
 	.jumbotron{
@@ -2603,7 +2689,7 @@ $(document).ready(function() {
 		<div id = "main_content">
 			<div class="col-md-12 " >
 				<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
-				<button id='advsearchbutton' type="button" class="btn btn-default btn-md advancedsearch hidden">Advanced Search</button>
+				<button id='advsearchbutton' type="button" class="btn btn-default btn-md advancedsearch">Advanced Search</button>
 
 				<button id='createEventButton'  type="button" class="btn btn-default btn-md create_event  pull-right" data-toggle="modal"  data-target="#create_event_modal-1" >Create Event</button>
 			</div>
@@ -2616,32 +2702,32 @@ $(document).ready(function() {
 							<div ><h4 style="text-align:center;font-weight:bold;background-color:#01401e ;color:white">Location</h4></div>
 							<div class="col-md-6" style="">
 								<label >
-									<input type="radio" class="myCheckbox" id="sanfrancisco" name="location" value="sanfrancisco" /> San Francisco
+									<input type="radio" class="myCheckbox" id="sanfrancisco" name="location" value="SanFrancisco" /> San Francisco
 								</label>
 
 								<label >
-									<input type="radio" id="sanjose" class="myCheckbox" name="location" value="sanjose" /> San Jose
+									<input type="radio" id="sanjose" class="myCheckbox" name="location" value="SanJose" /> San Jose
 								</label>
 								<label >
-									<input type="radio" id="santaclara" class="myCheckbox" name="location" value="santaclara" /> Santa Clara
+									<input type="radio" id="santaclara" class="myCheckbox" name="location" value="SantaClara" /> Santa Clara
 
 								</label>
 
 							</div>
 							<div class="col-md-6" style="">
 								<label >
-									<input type="radio" id="mountainview" class="myCheckbox" name="location" value="mountainview" /> Mountain View
+									<input type="radio" id="mountainview" class="myCheckbox" name="location" value="MountainView" /> Mountain View
 
 								</label>
 								<label >
-									<input type="radio" id="paloalto" class="myCheckbox" name="location" value="paloalto" /> Palo Alto
+									<input type="radio" id="paloalto" class="myCheckbox" name="location" value="PaloAlto" /> Palo Alto
 
 								</label>
 								<label >
-									<input type="radio" id="oakland" class="myCheckbox" name="location" value="oakland" /> Oakland
+									<input type="radio" id="oakland" class="myCheckbox" name="location" value="Oakland" /> Oakland
 								</label>
 								<label >
-									<input type="radio" class="myCheckbox" id="all_locations" name="location" value="all" /> All locations
+									<input type="radio" class="myCheckbox" id="all_locations" name="location" value="All" /> All locations
 								</label>
 							</div>
 						</form>
@@ -2758,7 +2844,7 @@ $(document).ready(function() {
 								<div class="form-group">
 									<label class="col-lg-5 control-label">Name of Organization <sup>*</sup></label>
 									<div class="col-lg-6">
-										<input id='orgname_event' type="text" class="form-control" name="orgname_event" readonly="readonly"/>
+										<input id='orgname_event' type="text" class="form-control" name="orgname_event" disabled/>
 									</div>
 								</div>
 
@@ -2789,17 +2875,17 @@ $(document).ready(function() {
 								</div>
 
 								<div class="form-group">
-									<label class="col-lg-5 control-label hidden">Location Near By<sup>*</sup></label>
+									<label class="col-lg-5 control-label">Location Near By<sup>*</sup></label>
 									<div class="col-lg-6">
-										<select class="form-control hidden" id='eventlocnearby'  name="eventlocnearby">
+										<select class="form-control" id='eventlocnearby'  name="eventlocnearby">
 
 											<option value=" "></option>
 
-											<option value="San Francisco">San Francisco</option>
-											<option value="San Jose">San Jose</option>
-											<option value="Santa Clara">Santa Clara</option>
-											<option value="Mountain View">Mountain View</option>
-											<option value="Palo Alto">Palo Alto</option>
+											<option value="SanFrancisco">San Francisco</option>
+											<option value="SanJose">San Jose</option>
+											<option value="SantaClara">Santa Clara</option>
+											<option value="MountainView">Mountain View</option>
+											<option value="PaloAlto">Palo Alto</option>
 											<option value="Oakland">Oakland</option>
 
 										</select>
@@ -2815,7 +2901,7 @@ $(document).ready(function() {
 								</div>
 
 
-								<div class="form-group hidden">
+								<div class="form-group ">
 									<label class="col-lg-5 control-label">Number of Volunteers Required<sup>*</sup></label>
 									<div class="col-lg-6">
 										<input id='event_volunteersreq' type="number" min = '0' class="form-control" name="event_volunteersreq" />
@@ -2830,7 +2916,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 
-								<div class="form-group">
+								<div class="form-group" id="volunteers_interested">
 									<label class="col-lg-5 control-label">Number of Volunteers Interested<sup>*</sup></label>
 									<div class="col-lg-6">
 										<input id='event_volunteersinterested' type="text" min='0' class="form-control" name="event_volunteersinterested"
@@ -2847,16 +2933,16 @@ $(document).ready(function() {
 										<select class="form-control" id='category'  name="category">
 
 											<option value=" "></option>
-											<option value="Disaster Relief">Disaster Relief</option>
+											<option value="DisasterRelief">Disaster Relief</option>
 											<option value="Seniors">Seniors</option>
 											<option value="Environment">Environment</option>
 											<option value="Animal">Animal</option>
-											<option value="Service Homeless">Service for Homeless</option>
+											<option value="ServiceHomeless">Service for Homeless</option>
 											<option value="Sports">Sports</option>
 											<option value="Hunger">Hunger</option>
 											<option value="Children">Children</option>
-											<option value="Creativity Arts">Creativity Arts</option>
-											<option value="People with Disabilities">People with Disabilities</option>
+											<option value="CreativityArts">Creativity Arts</option>
+											<option value="PeoplewithDisabilities">People with Disabilities</option>
 											<option value="Education">Education</option>
 											<option value="Community">Community</option>
 
