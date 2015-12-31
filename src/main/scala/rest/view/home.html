@@ -192,6 +192,12 @@ $(document).ready(function() {
 
     var userData;
 
+    var countVolunteers;
+
+    var attendhashmap = {};
+
+    var attendingCount = 1;
+
 
 
     if (sessionStorage.getItem("loggedprofile") == 'Student') {
@@ -917,9 +923,17 @@ $(document).ready(function() {
 
         $('#msgevent').removeClass('alert-danger alert-success').html('').attr('style', 'display:none');
 
+        getOrgName();
 
 
-        $.ajax({
+
+
+
+    });
+
+    function getOrgName(){
+
+      $.ajax({
             type: 'POST',
             url: '/populateEditProfile',
             contentType: "application/json",
@@ -942,8 +956,8 @@ $(document).ready(function() {
 				userData = data;
                 console.log(data.message);
 
-
                 $('#orgname_event').val(data.message.organizationName);
+
 
             },
             error: function(data) {
@@ -957,12 +971,16 @@ $(document).ready(function() {
         });
 
 
-    });
+
+    }
+
+
 
     $('#button6').click(function() {
         $('#createEventForm').bootstrapValidator('resetForm', true);
 
     });
+
 
 
     $('#editProfileForm').bootstrapValidator({
@@ -1384,25 +1402,15 @@ $(document).ready(function() {
                 var anchorCar = document.createElement("a");
                 var pCar = document.createElement("p");
                 pCar.innerHTML = "WORKING WOLA";
-                /*
 
-                anchorCar.appendChild(pCar);
-                insideCarousel.appendChild(anchorCar);
-                newCarouselItem.appendChild(insideCarousel);
+                  $('#eventname').focus(function() {
+							     $('#msgevent').removeClass('alert-success alert-danger').hide();
+							     $('#createEventForm').bootstrapValidator('resetForm', true);
+							     getOrgName();
+							   //  $('#orgname_event').val(data.message.organizationName);
 
-                var categorybackend = $( "#category" ).find(":selected").val();
+					});
 
-                var catCarousel = categorybackend+' Awaiting Approval';
-
-                var carouselInner = document.getElementById(catCarousel);
-
-                carouselInner.appendChild(newCarouselItem);
-                */
-
-
-
-
-                <!-- $('#createEventForm').bootstrapValidator('resetForm', true);-->
 
             },
             error: function(data) {
@@ -1618,11 +1626,13 @@ $(document).ready(function() {
 			    categoryObjectArray[i].usersParticipating,
 			    categoryObjectArray[i].volunteersParticipating,
 			    categoryObjectArray[i].locationNearby,
-			    categoryObjectArray[i].location
-			    /*,
+			    categoryObjectArray[i].location,
+
 			    categoryObjectArray[i].isActive,
+			    categoryObjectArray[i].isDenied,
 			    categoryObjectArray[i].isAwaitingApproval,
-			    categoryObjectArray[i].expired*/
+			    categoryObjectArray[i].expired,
+			    categoryObjectArray[i].volunteersContact
 			     );
 
 			displayEvent(event, newEventItem);
@@ -1632,7 +1642,7 @@ $(document).ready(function() {
     }
 
     function Event(e_title, e_category, e_organization, e_desc, e_start, e_end, e_volunteersInterested, e_usersParticipating, e_volunteersParticipating, e_location_nearby, e_location
-    /*e_isActive, e_isAwaitingApproval, e_expired*/) {
+    ,e_isActive, e_isAwaitingApproval, e_expired, e_isDenied, e_volunteersContact) {
 		this.event_title = e_title;
 		this.category = e_category;
 		this.organization = e_organization;
@@ -1644,9 +1654,11 @@ $(document).ready(function() {
 		this.desc = e_desc;
 		this.startDate = e_start;
 		this.endDate = e_end;
-		/*this.isAwaitingApproval = e_isAwaitingApproval;
+		this.isAwaitingApproval = e_isAwaitingApproval;
 		this.isActive = e_isActive;
-		this.expired = e_expired;*/
+		this.isDenied = e_isDenied;
+		this.expired = e_expired;
+		this.volunteersContact = e_volunteersContact;
 
 		var red = Math.round(Math.random()*(255));
     	var blue = Math.round(Math.random()*(255));
@@ -1682,13 +1694,6 @@ $(document).ready(function() {
 			console.log(Event.event_location_nearby);
 			console.log(Event.desc);
 
-            console.log(Event.category);
-            console.log(Event.volunteersParticipating);
-            console.log(Event.volunteersInterested);
-            console.log(Event.usersParticipating);
-
-			//$("#question").find(":selected").text(data.message.securityQuestion);
-
 			$("#category").val(Event.category);
 			$('textarea#eventdesc').val(Event.desc);
 
@@ -1698,16 +1703,72 @@ $(document).ready(function() {
 
 			$('#event_userparticipating').val(Event.usersParticipating);
 
-			if(Event.volunteersParticipating == '0'){
-			$('#volunteers_interested').hide('fast');
-			$('#button9').hide('fast');
+            console.log(Event.category);
+            console.log(Event.volunteersParticipating);
+            console.log(Event.volunteersInterested);
+            console.log(Event.usersParticipating);
+            //console.log(Event.volunteersContact.length);
 
-			}
-			else{
-			$('#volunteers_interested').show('fast');
-			$('#button9').show('fast');
 
-			}
+
+            if(Event.volunteersContact){
+
+                for(var i = 0; i < Event.volunteersContact.length ; i++ ){
+
+                // console.log(Event.volunteersContact[i].username+'retrieveing');
+
+                     if(Event.volunteersContact[i].username ==  usernamelogout || Event.volunteersParticipating == '0'){
+                    // countVolunteers = 1;
+                           //  if (countVolunteers == 1 ){
+                                $('#volunteers_interested').hide('fast');
+                                $('#button9').hide('fast');
+                                   console.log('existing');
+                             }
+                             else{
+                                 //countVolunteers = 0;
+                                $('#volunteers_interested').show('fast');
+                                $('#button9').show('fast');
+
+                             }
+                      //}
+
+
+
+                 }
+
+             }
+             else{
+
+
+                if(Event.volunteersParticipating == '0'){
+                $('#volunteers_interested').hide('fast');
+                $('#button9').hide('fast');
+
+                }
+                else{
+                $('#volunteers_interested').show('fast');
+                $('#button9').show('fast');
+
+                }
+             }
+
+
+             if(attendhashmap[Event.event_title]){
+
+               console.log('key is there');
+
+                $('#button10').hide('fast');
+             }
+             else{
+
+             console.log('key is not there');
+
+                  $('#button10').show('fast');
+
+             }
+
+
+
 
 			if (userType === "student") {
 				document.getElementById("modtitle_event").innerHTML="RSVP";
@@ -1910,17 +1971,32 @@ $(document).ready(function() {
 
 		var organizationName = $('#orgname_event').val();
 
-        var eventnamebackend = $('input[name=eventname]').val();
+
 
 		alert("Your response has been recorded. Thank you!");
-        $.ajax({
+
+		 EventAttendAction(userData, organizationName );
+
+
+
+
+
+    });
+
+
+
+    function  EventAttendAction(data, orgName ){
+
+       var eventnamebackend = $('input[name=eventname]').val();
+
+            $.ajax({
             type: 'POST',
             url: '/attendEvent',
             contentType: "application/json",
 
             data: JSON.stringify({
 
-                "organization": organizationName.toString(),
+                "organization": orgName.toString(),
                 "eventName": eventnamebackend.toString(),
 
 
@@ -1933,12 +2009,17 @@ $(document).ready(function() {
 
                 //console.log(usercount);
 
+                //  $('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Participating in this Event").show();
+
+                  attendhashmap[eventnamebackend] = usernamelogout;
 
 
-                $('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Participating in this Event").show();
+                   console.log(Object.keys(attendhashmap)+'greatattend'+attendhashmap[eventnamebackend]);
 
 
-                getvolusercount(eventnamebackend, organizationName);
+
+
+                getvolusercount(eventnamebackend, orgName);
             },
             error: function(data) {
 
@@ -1950,10 +2031,7 @@ $(document).ready(function() {
 
         });
 
-
-
-
-    });
+    }
 
 
 
@@ -1975,10 +2053,11 @@ $(document).ready(function() {
 
             success: function(data) {
 
-               // console.log(data.message[0]);
+                console.log(data.message[0]);
                 console.log(data.message[0].volunteersInterested+'added');
 
                 $('#event_volunteersinterested').val(data.message[0].volunteersInterested);
+
 
 
               //  $('#event_userparticipating').val(data.message[0].usersParticipating);
