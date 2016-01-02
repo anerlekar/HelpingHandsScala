@@ -365,7 +365,9 @@ $(document).ready(function() {
         var data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
- $("#advsearchcontainer").hide("fast");
+
+    $("#advsearchcontainer").hide("fast");
+
 
     $("#advsearchbutton").click(function() {
 
@@ -388,9 +390,9 @@ $(document).ready(function() {
 
     $("#sanfrancisco").click(function() {
 
-    	LocationValue = "San Francisco";
 
-    	console.log(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+
+    	LocationValue = "San Francisco";
 
 
     	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
@@ -1470,6 +1472,60 @@ $(document).ready(function() {
 
 
 
+    /*
+    								$('#myCarouselAnimalActive').carousel({
+    								  interval: 4000,
+    								  interval: false
+    								})
+
+    								$('#myCarouselChildrenActive').carousel({
+    								  interval: 4000,
+    								  interval: false
+    								})
+
+
+
+    								$('#myCarouselAnimalAwaitingApproval').carousel({
+    								  interval: 4000,
+    								  interval: false
+    								})
+
+    								$('#myCarouselChildrenAwaitingApproval').carousel({
+    								  interval: 4000,
+    								  interval: false
+    								})
+
+
+    								$('#myCarouselAnimalArchived').carousel({
+    								  interval: 4000,
+    								  interval: false
+    								})
+
+    								$('#myCarouselChildrenArchived').carousel({
+    								  interval: 4000,
+    								  interval: false
+    								})
+
+    								*/
+
+    $('.carousel .item').each(function() {
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        for (var i = 0; i < 2; i++) {
+            next = next.next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+
+            next.children(':first-child').clone().appendTo($(this));
+        }
+    });
+
+
 
     ///////////////////////Active Events
 
@@ -1515,8 +1571,6 @@ $(document).ready(function() {
         FlagExpiredValue = "true";
         FlagAwaitingValue = "false";
 
-        console.log(FlagActiveValue+FlagExpiredValue+FlagAwaitingValue);
-
         getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
 
     });
@@ -1545,8 +1599,7 @@ $(document).ready(function() {
 
             success: function(data) {
                 userData = data;
-                console.log(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, eventCategory, nearbyLocation+'adsfasdfs');
-                getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, eventCategory, nearbyLocation, data);
+                getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, eventCategory, LocationValue, data);
             },
             error: function(data) {
                 console.log(data.responseJSON.message);
@@ -1556,13 +1609,10 @@ $(document).ready(function() {
 
     function renderEventsIntoCarousel(categoryObjectArray) {
 
-
-
         var sibling = document.getElementById('tabs');
         var parent = sibling.parentElement;
 
         for (i = 0; i < categoryObjectArray.length; i++) {
-        console.log( categoryObjectArray[i].isAwaitingApproval+' categoryObjectArray[i].isAwaitingApproval');
 
             var newEventItem = document.createElement("div");
 
@@ -1588,7 +1638,6 @@ $(document).ready(function() {
 			    categoryObjectArray[i].volunteersContact
 			     );
 
-            console.log(categoryObjectArray[i].isAwaitingApproval,  Event.isAwaitingApproval+'decodinagds+event, newEventItem')
 			displayEvent(event, newEventItem);
             parent.appendChild(newEventItem);
 
@@ -1597,7 +1646,6 @@ $(document).ready(function() {
 
     function Event(e_title, e_category, e_organization, e_desc, e_start, e_end, e_volunteersInterested, e_usersParticipating, e_volunteersParticipating, e_location_nearby, e_location
     ,e_isActive, e_isAwaitingApproval, e_expired, e_isDenied, e_volunteersContact) {
-    console.log(e_isAwaitingApproval+'e_isAwaitingApproval');
 		this.event_title = e_title;
 		this.category = e_category;
 		this.organization = e_organization;
@@ -1615,8 +1663,6 @@ $(document).ready(function() {
 		this.expired = e_expired;
 		this.volunteersContact = e_volunteersContact;
 
-
-
 		var red = Math.round(Math.random()*(255));
     	var blue = Math.round(Math.random()*(255));
     	var green = Math.round(Math.random()*(255));
@@ -1625,7 +1671,7 @@ $(document).ready(function() {
     }
 
     function displayEvent(Event, newEventItem) {
-    console.log(Event.isAwaitingApproval+'updated');
+    console.log(Event+'updated');
     	var userType = profilelogout.toString().toLowerCase();
 
     	newEventItem.setAttribute("data-toggle", "modal");
@@ -1649,7 +1695,6 @@ $(document).ready(function() {
 			$("#eventlocnearby").val(Event.event_location_nearby);
 			console.log(Event);
 			console.log(Event.event_location_nearby);
-			console.log(Event.isAwaitingApproval+'status');
 			console.log(Event.desc);
 
 			$("#category").val(Event.category);
@@ -1729,7 +1774,6 @@ $(document).ready(function() {
 
 
 			if (userType === "student") {
-			console.log('student');
 				document.getElementById("modtitle_event").innerHTML="RSVP";
 				$('#button5').hide('fast');
 				$('#button6').hide('fast');
@@ -1742,7 +1786,6 @@ $(document).ready(function() {
 				}
 			}
 			if (userType === "ngo") {
-			console.log('ngo');
 				document.getElementById("modtitle_event").innerHTML="View Event";
 				$('#button5').hide('fast');
 				$('#button6').hide('fast');
@@ -1759,37 +1802,6 @@ $(document).ready(function() {
 				}
 			}
 
-			if (userType === "admin") {
-			console.log('admin');
-			document.getElementById("modtitle_event").innerHTML="View Event";
-            $('#button5').hide('fast');
-			$('#button6').hide('fast');
-			$('#button9').hide('fast');
-			$('#button10').hide('fast');
-            console.log(Event.isAwaitingApproval);
-			    if(Event.isAwaitingApproval === 'true'){
-
-			     $('#button12').show('fast');
-			    $('#button13').show('fast');
-			    $('#button15').hide('fast');
-
-			    }
-			    else{
-
-			    $('#button15').show('fast');
-			    $('#button12').hide('fast');
-			    $('#button13').hide('fast');
-
-			    }
-
-			    var readonlyFields = $('#createEventForm .form-control');
-				for (var i = 0; i < readonlyFields.length; i++) {
-					readonlyFields[i].setAttribute("readOnly","true");
-				}
-
-        }
-
-
 		}
 
 
@@ -1798,7 +1810,7 @@ $(document).ready(function() {
 
     	newEventItem.innerHTML =
     	 "<div style='height:inherit;width:inherit;background-color:" + Event.color + "'>" + "<div class = 'event_shade'>" +
-    	 "<h3 class = 'event_title'>"+Event.event_title +"</h3>"+ "<div class = event_desc> Category: "+Event.category + "</div>" + "<br>"+"<div class = event_desc> Location: "+Event.event_location_nearby + "</div>" + "<br>"+
+    	 "<h3 class = 'event_title'>"+Event.event_title +"</h3>"+ "<div class = event_desc> Category: "+Event.category + "</div>" + "<br>"+"<div class = event_desc> Location: "+Event.event_location + "</div>" + "<br>"+
     	 "<div class = event_desc> Organization: " + Event.organization + "</div>" + "<br>"+"<div class = event_desc> Participants: " + Event.usersParticipating + "</div>" + "<br>"+
     	 "<div class = event_desc> Requires " + Event.volunteersParticipating + " volunteers</div>" + "</div>" + "</div>";
 
@@ -1809,12 +1821,11 @@ $(document).ready(function() {
 
 
     function getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, eventCategory, nearbyLocation, data) {
-    console.log(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, eventCategory, nearbyLocation, data+'method');
         eraseResults();
         orgnamelogout = data.message.organizationName;
         var userType = profilelogout.toString().toLowerCase();
 
-       /* if (userType === "student") {
+        if (userType === "student") {
             $('#createEventButton')[0].setAttribute("style", "display:none !important");
 			document.getElementById("modtitle_event").textContent="RSVP";
 			$('#button5').hide('fast');
@@ -1834,11 +1845,6 @@ $(document).ready(function() {
 			$('#button10').hide('fast');
 			$('#button12').hide('fast');
 			$('#button13').hide('fast');
-
-			var readonlyFields = $('#createEventForm .form-control');
-			for (var i = 0; i < readonlyFields.length; i++) {
-				readonlyFields[i].setAttribute("readOnly","true");
-			}
 		}
 
         if (userType === "admin") {
@@ -1862,18 +1868,12 @@ $(document).ready(function() {
 
 			    }
 
-			    var readonlyFields = $('#createEventForm .form-control');
-			for (var i = 0; i < readonlyFields.length; i++) {
-				readonlyFields[i].setAttribute("readOnly","true");
-			}
-
-        }*/
+        }
 
         var stringifiedParams;
 
         if (userType === "ngo") {
             if ((eventCategory != null)||(nearbyLocation != null)) {
-
                 if ((nearbyLocation != null)&&(eventCategory == null)) {
                     stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'location':nearbyLocation});
                 } else if ((nearbyLocation == null)&&(eventCategory != null)) {
@@ -2361,8 +2361,6 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
         $(this).siblings('input:checkbox').prop('checked', false);
     });
 
-
-
 });
 
 </script>
@@ -2390,11 +2388,9 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 	}
 
     .categories_list {
-    //   list-style-type:none;
+        list-style-type:none;
         display:block;
         height: 200px;
-
-
     }
 
     .categories_list li {
@@ -2412,11 +2408,11 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 
     .categories_list input[type="radio"] {
     
-    z-index:999;
+    z-index:100;
     }
 
     .categories_list input[type="radio"]:checked + label {
-   // background-image: url('http://www.servicedogstories.com/images/small_paw.gif');
+    background-image: url('http://www.servicedogstories.com/images/small_paw.gif');
     }
 
     #error_message {
@@ -2515,7 +2511,7 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 	font-size: 40px;
 
 	}
-	//.tooltip > .tooltip-inner {background-color: grey;}
+	.tooltip > .tooltip-inner {background-color: grey;}
 
 	.has-success .form-control{ border-color:grey !important;}
 	.has-success .form-control:focus { border-color:grey !important;}
@@ -2592,6 +2588,19 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 	border-radius: 15px;
 	}
 
+
+	.btn-circle.btn-xl {
+	width: 70px;
+	height: 70px;
+	padding: 10px 16px;
+	font-size: 24px;
+	line-height: 1.33;
+	border-radius: 35px;
+	background-image: url('http://www.servicedogstories.com/images/small_paw.gif');
+	background-repeat: no-repeat;
+	}
+
+
     .drinkcard-cc {
     cursor: pointer;
     background-size: contain;
@@ -2627,60 +2636,61 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 
 
 
-	.cat3bckgrnd{
-	background-image: url('https://www.wedontwaste.org/wp-content/uploads/2014/09/wdw-logo-icon-color-whitebg.jpg');
-	}
+    .cat3bckgrnd{
+    background-image: url('https://www.wedontwaste.org/wp-content/uploads/2014/09/wdw-logo-icon-color-whitebg.jpg');
+    }
 
 
-	.cat4bckgrnd{
-	background-image: url('http://www.etsu.edu/com/cme/images/HandicapLogoDecal.JPG');
+    .cat4bckgrnd{
+    background-image: url('http://www.etsu.edu/com/cme/images/HandicapLogoDecal.JPG');
 
-	}
-
-
-	.cat5bckgrnd{
-	background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2f/Seniors_icon.png');
-
-	}
-
-	.cat6bckgrnd{
-	background-image: url('http://usich.gov/resources/uploads/page_img/Logos_USICH_CTAcampaign.JPG');
-
-	}
+    }
 
 
-	.cat7bckgrnd{
-	background-image: url('http://www.ladyfatemahtrust.org/lft/wp-content/uploads/2015/05/icon2tiff.jpg');
+    .cat5bckgrnd{
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2f/Seniors_icon.png');
 
-	}
+    }
 
-	.cat8bckgrnd{
-	background-image: url('http://www.happyafricafoundation.org/themes/2/icon-education.gif');
+    .cat6bckgrnd{
+    background-image: url('http://usich.gov/resources/uploads/page_img/Logos_USICH_CTAcampaign.JPG');
 
-	}
-
-
-	.cat9bckgrnd{
-	background-image: url('http://sustainability.umw.edu/dot/files/2011/06/UMW_environment_dot.jpg');
-	}
-
-	.cat10bckgrnd{
-	background-image: url('http://www.payamafraz.com/wp-content/uploads/2014/11/Small-Features-Competition-Icon.png');
+    }
 
 
-	}
+    .cat7bckgrnd{
+    background-image: url('http://www.ladyfatemahtrust.org/lft/wp-content/uploads/2015/05/icon2tiff.jpg');
+
+    }
+
+    .cat8bckgrnd{
+    background-image: url('http://www.happyafricafoundation.org/themes/2/icon-education.gif');
+
+    }
 
 
-	.cat11bckgrnd{
-	background-image: url('http://www1.toronto.ca/AYA-ArtsCulture-ICON_150.jpg');
+    .cat9bckgrnd{
+    background-image: url('http://sustainability.umw.edu/dot/files/2011/06/UMW_environment_dot.jpg');
+    }
 
-	}
-
-	.cat12bckgrnd{
-	background-image: url('http://www.wisafricana.com/wp-content/uploads/2015/07/community-icon.png');
+    .cat10bckgrnd{
+    background-image: url('http://www.payamafraz.com/wp-content/uploads/2014/11/Small-Features-Competition-Icon.png');
 
 
-	}
+    }
+
+
+    .cat11bckgrnd{
+    background-image: url('http://www1.toronto.ca/AYA-ArtsCulture-ICON_150.jpg');
+
+    }
+
+    .cat12bckgrnd{
+    background-image: url('http://www.wisafricana.com/wp-content/uploads/2015/07/community-icon.png');
+
+
+    }
+
 
 	.helppills .active a,
 	.helppills .active a:hover {
@@ -2718,7 +2728,7 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 		<ul id="welcome" class="navbar-brand nb">Welcome</ul>
         <ul id="user_logged" class="navbar-brand nb"></ul>
         <ul id="options" class="nav navbar-nav navbar-right options">
-            <li  class="dropdown-right">
+            <li id="options" class="dropdown-right">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span id="gear" class="glyphicon glyphicon-cog"></span></a>
                 <ul role="menu" class="dropdown-menu">
                     <li><a href="#" data-toggle="modal"  data-target="#edit_profile_modal-1" >Edit Profile</a></li>
@@ -2727,7 +2737,6 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
                 </ul>
             </li>
         </ul>
-		</ul>
 	</div>
 </nav>
 
@@ -2748,7 +2757,7 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 	</div>
 
 
-
+	<div>
 		<div class="form-group">
 			<div class="col-md-3 col-md-offset-4 hidden">
 				<input type="text" id="searchtext" class="form-control" placeholder="Search" name="search">
@@ -2769,13 +2778,13 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 		<div id = "main_content">
 			<div class="col-md-12 " >
 				<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
-				<button id='advsearchbutton' type="button" class="btn btn-default btn-md advancedsearch">Filter Events</button>
+				<button id='advsearchbutton' type="button" class="btn btn-default btn-md advancedsearch">Filtering Events</button>
 
 				<button id='createEventButton'  type="button" class="btn btn-default btn-md create_event  pull-right" data-toggle="modal"  data-target="#create_event_modal-1" >Create Event</button>
 			</div>
 
 
-			<div id="advsearchcontainer">
+			<div id="advsearchcontainer"  >
 				<div >
 					<div >
 						<form autocomplete="off" id="AdvSearchForm" method="post" class="form-horizontal col-md-4" action="" >
@@ -2806,14 +2815,10 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 								<label >
 									<input type="radio" id="oakland" class="myCheckbox" name="location" value="Oakland" /> Oakland
 								</label>
-
+								<label >
+									<input type="radio" class="myCheckbox" id="all_locations" name="location" value="All" /> All locations
+								</label>
 							</div>
-                            <div class="col-md-6 col-md-offset-6" style="">
-
-                            <label >
-                                <input type="radio" class="myCheckbox" id="all_locations" name="location" value="All" /> Reset
-                            </label>
-                                </div>
 						</form>
 					</div>
 
@@ -2829,67 +2834,67 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 					<form autocomplete="off" id="AdvSearchForm2" method="post" class="form-horizontal col-md-4" action="" >
 						<div><h4 style="text-align:center;font-weight:bold;background-color:#01401e;color:white ">Category</h4></div>
                             <div>
-							<ul class="categories_list" style="padding:10px 2px 10px 22px;" >
-                                <li id="cat1list">
-								<input type="radio"  id="cat1" name="category" />
-                                    <label for="cat1"  class="drinkcard-cc cat1bckgrnd" title="Disaster Relief"></label>
-                                </li>
+                                <ul class="categories_list" style="padding:10px 2px 10px 22px;" >
+                                    <li id="cat1">
+                                        <input type="radio"  id="cat1" name="category" />
+                                        <label for="cat1"  class="drinkcard-cc cat1bckgrnd" title="Disaster Relief"></label>
+                                    </li>
 
-                                <li id="cat2list">
-								<input  type="radio"  id="cat2" name="category" />
-                                    <label for="cat2" class="drinkcard-cc cat2bckgrnd" title="Animals"></label>
-                                </li>
+                                    <li id="cat2">
+                                        <input  type="radio"  id="cat2" name="category" />
+                                        <label for="cat2" class="drinkcard-cc cat2bckgrnd" title="Animals"></label>
+                                    </li>
 
 
-                                <li  id="cat3list">
-								<input type="radio" id="cat3" name="category"/>
-                                    <label for="cat3" class="drinkcard-cc cat3bckgrnd" title="Hunger"></label>
-                                </li>
-                                <li id="cat4list">
-								<input type="radio" id="cat4" name="category" />
-                                    <label for="cat4" class="drinkcard-cc cat4bckgrnd" title="People with Disabilities">></label>
-                                </li>
+                                    <li  id="cat3">
+                                        <input type="radio" id="cat3" name="category"/>
+                                        <label for="cat3" class="drinkcard-cc cat3bckgrnd" title="Hunger"></label>
+                                    </li>
+                                    <li id="cat4">
+                                        <input type="radio" id="cat4" name="category" />
+                                        <label for="cat4" class="drinkcard-cc cat4bckgrnd" title="People with Disabilities">></label>
+                                    </li>
 
-                                <li id="cat5list">
-								<input type="radio" id="cat5" name="category"/>
-                                    <label for="cat5" class="drinkcard-cc cat5bckgrnd" title="Seniors"></label>
-                                </li>
-                                <li id="cat6list">
-								<input type="radio" id="cat6" name="category"/>
-                                    <label for="cat6" class="drinkcard-cc cat6bckgrnd" title="Service for Homeless"></label>
-                                </li>
-                                <li  id="cat7list">
-								<input type="radio" id="cat7" name="category"/>
-                                    <label for="cat7" class="drinkcard-cc cat7bckgrnd" title="Children"></label>
-                                </li>
-                                <li id="cat8list">
-								<input type="radio" id="cat8" name="category"/>
-                                    <label for="cat8" class="drinkcard-cc cat8bckgrnd" title="Education"></label>
-                                </li>
+                                    <li id="cat5">
+                                        <input type="radio" id="cat5" name="category"/>
+                                        <label for="cat5" class="drinkcard-cc cat5bckgrnd" title="Seniors"></label>
+                                    </li>
+                                    <li id="cat6">
+                                        <input type="radio" id="cat6" name="category"/>
+                                        <label for="cat6" class="drinkcard-cc cat6bckgrnd" title="Service for Homeless"></label>
+                                    </li>
+                                    <li  id="cat7">
+                                        <input type="radio" id="cat7" name="category"/>
+                                        <label for="cat7" class="drinkcard-cc cat7bckgrnd" title="Children"></label>
+                                    </li>
+                                    <li id="cat8">
+                                        <input type="radio" id="cat8" name="category"/>
+                                        <label for="cat8" class="drinkcard-cc cat8bckgrnd" title="Education"></label>
+                                    </li>
 
-                                <li id="cat9list">
-								<input type="radio" id="cat9" name="category"/>
-                                    <label for="cat9" class="drinkcard-cc cat9bckgrnd" title="Environment"></label>
-                                </li>
-                                <li id="cat10list">
-								<input type="radio" id="cat10" name="category" />
-                                    <label for="cat10" class="drinkcard-cc cat10bckgrnd" title="Sports"></label>
-                                </li>
-                                <li id="cat11list">
-								<input type="radio" id="cat11" name="category"/>
-                                    <label for="cat11" class="drinkcard-cc cat11bckgrnd" title="Creativity Arts"></label>
-                                </li>
-                                <li id="cat12list">
-								<input type="radio" id="cat12" name="category"/>
-                                    <label for="cat12" class="drinkcard-cc cat12bckgrnd" title="Community"></label>
-                                </li>
+                                    <li id="cat9">
+                                        <input type="radio" id="cat9" name="category"/>
+                                        <label for="cat9" class="drinkcard-cc cat9bckgrnd" title="Environment"></label>
+                                    </li>
+                                    <li id="cat10">
+                                        <input type="radio" id="cat10" name="category" />
+                                        <label for="cat10" class="drinkcard-cc cat10bckgrnd" title="Sports"></label>
+                                    </li>
+                                    <li id="cat11">
+                                        <input type="radio" id="cat11" name="category"/>
+                                        <label for="cat11" class="drinkcard-cc cat11bckgrnd" title="Creativity Arts"></label>
+                                    </li>
+                                    <li id="cat12">
+                                        <input type="radio" id="cat12" name="category"/>
+                                        <label for="cat12" class="drinkcard-cc cat12bckgrnd" title="Community"></label>
+                                    </li>
 
-                                <li id="cat13list">
-                                    <input type="radio" id="cat13" name="category"/>
-                                    <label for="cat13" class="drinkcard-cc " title="All Categories" style="font-size:12px; ">ALL CATEGORIES</label>
+                                    <li id="cat13">
+                                        <input type="radio" id="cat13" name="category"/>
+                                        <label for="cat13" class="drinkcard-cc " title="All Categories" style="font-size:12px; ">ALL CATEGORIES</label>
 
-                                </li>
-							</ul>
+                                    </li>
+                                </ul>
                         </div>
                         <br>
 					</form>
@@ -3247,57 +3252,53 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 
 			<div style="height:50px;"><br/></div>
 
+			<div id = "tabs" >
+				<ul class="nav nav-pills helppills">
+					<li class="active" ><a href="#tab1" id="Active" data-toggle="pill">Active</a></li>
+					<li ><a href="#tab2" id="AwaitingAcceptance" data-toggle="pill">Awaiting Acceptance</a></li>
+					<li ><a href="#tab3" id="Archive" data-toggle="pill">Archive</a></li>
+				</ul>
+			</div>
+
+            <div id="error_message">It appears that you have no events under this category.</div>
+			<div  >
+				<div class="tab-content fors" >
+					<div class="tab-pane active" id="tab1" >
+
+					</div>
+
+					<div class="tab-pane" id="tab2" >
+
+					</div>
 
 
 
 
+					<div class="tab-pane" id="tab3" >
 
+					</div>
+				</div>
+			</div>
 
+			<!--<div class="col-md-12 text-center"><h3>Bootstrap 3 Multiple Slide Carousel</h3></div>-->
+			<div class="col-md-6 col-md-offset-3">
 
-
-
-
-
-
+			</div>
 
 
 
 
 		</div>
 
-
-
 	</div>
 
-<div class="container">
-
-    <div id = "tabs" >
-        <ul class="nav nav-pills helppills">
-            <li class="active"><a href="#tab1" id="Active" data-toggle="pill">Active</a></li>
-            <li ><a href="#tab2" data-toggle="pill">Awaiting Acceptance</a></li>
-            <li ><a href="#tab3" data-toggle="pill">Archive</a></li>
-        </ul>
-    </div>
-
-    <div id="error_message">It appears that you have no events under this category.</div>
-    <div  >
-        <div class="tab-content fors" >
-            <div class="tab-pane active" id="tab1" >
-
-            </div>
-
-            <div class="tab-pane" id="tab2" >
-
-            </div>
 
 
 
 
-            <div class="tab-pane" id="tab3" >
 
-            </div>
-        </div>
-    </div>
+
+</div>
 
 </div>
 
