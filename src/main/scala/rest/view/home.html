@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Helping Hands</title>
+    <meta charset="ISO-8859-1">
+    <title>Helping Hands</title>
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media='screen'>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media='screen'>
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
-	<!-- Latest compiled and minified JavaScript -->
+    <!-- Latest compiled and minified JavaScript -->
 
-	<!-- For Validation -->
-	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
+    <!-- For Validation -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.css"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.css"/>
-
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-	<script src="https://maps.googleapis.com/maps/api/js"></script>
-
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
 
 
-	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js'></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
 
-	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/additional-methods.js'></script>
-
-	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/additional-methods.min.js'></script>
-	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js'></script>
-
-
-	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" ></script>
 
 
 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js'></script>
+
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/additional-methods.js'></script>
+
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/additional-methods.min.js'></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js'></script>
+
+
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js'></script>
+
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
 
 
 
@@ -53,6 +58,8 @@
 
 
 <script type="text/javascript">
+
+
 
 if (sessionStorage.getItem("loggedusername") == null) {
     window.location.href = "/";
@@ -117,6 +124,10 @@ var latlngbounds = new google.maps.LatLngBounds();
 var infoWindow = new google.maps.InfoWindow();
 var markerId;
 var myID;
+var LocationValue ;
+var radio_id;
+var data;
+var d = new Date()
 
 function initialize() {
 
@@ -167,11 +178,24 @@ function loadMarkers(markerindex, data) {
 
 $(document).ready(function() {
 
+  $(function() {
+            $( "#dialog-4" ).dialog({
+               autoOpen: false,
+               modal: true,
+               buttons: {
+                  OK: function() {$(this).dialog("close");
+                  }
+               }
+               });
+               });
+
+
     var usernamelogout = sessionStorage.getItem("loggedusername");
 
     var containerObject = document.getElementById("tabs");
 
     var profilelogout = sessionStorage.getItem("loggedprofile");
+
 
     window.onload = function() {
         getTabEvents(true, false, false);
@@ -221,9 +245,6 @@ $(document).ready(function() {
         $("#createEventButton").show('fast');
         $('#orgname').show('fast');
 
-
-
-
         $('#orgurl').show('fast');
         $('#desc').show('fast');
 
@@ -231,9 +252,14 @@ $(document).ready(function() {
 
         $("#createEventButton").show('fast');
 
-        $('#editprofile').hide('fast');
+       /* $('#editprofile').hide('fast');
 
-        $('#divider').hide('fast');
+        $('#divider').hide('fast');*/
+
+        $('#orgname').hide('fast');
+
+        $('#orgurl').hide('fast');
+        $('#desc').hide('fast');
 
     }
 
@@ -260,9 +286,7 @@ $(document).ready(function() {
 
 
             success: function(data) {
-                //	console.log(data);
 
-                //	console.log(data.responseJSON);
                 var txt2 = data.responseJSON;
 
 
@@ -274,10 +298,6 @@ $(document).ready(function() {
             },
             error: function(data) {
 
-                //console.log(data);
-                //console.log(data.responseJSON);
-
-
 
             }
 
@@ -285,91 +305,146 @@ $(document).ready(function() {
 
     });
 
-    $('#cat1').click(function() {
+    $('#DisasterRelief').click(function() {
         CategoryValue = "DisasterRelief";
-        var nearbyLocation = null;
-        var data = null;
+
+        getLocation();
+
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
-    $('#cat2').click(function() {
-        CategoryValue = "Animals";
-        var nearbyLocation = null;
-        var data = null;
+
+    $('#Animal').click(function() {
+        CategoryValue = "Animal";
+
+        getLocation();
+
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
-    $('#cat3').click(function() {
+    $('#Hunger').click(function() {
         CategoryValue = "Hunger";
-        var nearbyLocation = null;
-        var data = null;
+
+        getLocation();
+
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
-    $('#cat4').click(function() {
-        CategoryValue = "People with Disabilities";
-        var nearbyLocation = null;
-        var data = null;
+    $('#PeoplewithDisabilities').click(function() {
+        CategoryValue = "PeoplewithDisabilities";
+
+        getLocation();
+
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
-    $('#cat5').click(function() {
+
+    $('#Seniors').click(function() {
         CategoryValue = "Seniors";
-        var nearbyLocation = null;
-        var data = null;
+
+        getLocation();
+
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
-    $('#cat6').click(function() {
-        CategoryValue = "Service for Homeless";
-        var nearbyLocation = null;
-        var data = null;
+
+    $('#ServiceforHomeless').click(function() {
+        CategoryValue = "ServiceforHomeless";
+
+       getLocation();
+
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
 
-    $('#cat7').click(function() {
+    $('#Children').click(function() {
         CategoryValue = "Children";
-        var nearbyLocation = null;
-        var data = null;
+       getLocation();
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
-    $('#cat8').click(function() {
+    $('#Education').click(function() {
         CategoryValue = "Education";
-        var nearbyLocation = null;
-        var data = null;
+        getLocation();
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
-    $('#cat9').click(function() {
+    $('#Environment').click(function() {
         CategoryValue = "Environment";
-        var nearbyLocation = null;
-        var data = null;
+        getLocation();
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
-    $('#cat10').click(function() {
+    $('#Sports').click(function() {
         CategoryValue = "Sports";
-        var nearbyLocation = null;
-        var data = null;
+        getLocation();
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
-    $('#cat11').click(function() {
-        CategoryValue = "Creativity Arts";
-        var nearbyLocation = null;
-        var data = null;
+
+    $('#CreativityArts').click(function() {
+        CategoryValue = "CreativityArts";
+        getLocation();
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
-    $('#cat12').click(function() {
+    $('#Community').click(function() {
         CategoryValue = "Community";
-        var nearbyLocation = null;
-        var data = null;
+        getLocation();
+         data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
+
+       $('#AllCategories').click(function() {
+        CategoryValue = null;
+        getLocation();
+
+        data = null;
+        getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
+    });
+
+    function getLocation(){
+         radio_id= getLocationRadioSelected();
+        if(radio_id != null && radio_id != "AllLocations" ){
+
+         LocationValue = radio_id;
+        }
+        else if(radio_id == "AllLocations"){
+
+
+        //radio_id=null;
+            LocationValue=null;
+        }
+        else{
+        LocationValue=null
+        }
+
+        return LocationValue;
+
+    };
+
+
+     function getLocationRadioSelected(){
+        var $radio = $('input[name=location]:checked');
+        var updateDay = $radio.val();
+        var id = $radio.attr('id');
+
+        return id;
+    };
+
+
 
     $("#advsearchcontainer").hide("fast");
 
-
     $("#advsearchbutton").click(function() {
+
 
         $("#advsearchcontainer").toggle("slow");
 
@@ -381,293 +456,181 @@ $(document).ready(function() {
 
     });
 
+var alllocations = document.getElementById("AllLocations");
+        var mountainview = document.getElementById("mountainview");
+        var santaclara = document.getElementById("santaclara");
+        var sanjose = document.getElementById("sanjose");
+          var oakland = document.getElementById("oakland");
 
-	$("#all_locations").click(function() {
-		LocationValue = null;
+
+	$("#AllLocations").click(function() {
+
+	    AllLoctions();
+
+	    DeletingMarkers();
+
+	 	});
+
+
+
+		 function AllLoctionsActive(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue) {
+
+       LocationValue = null;
 
     	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
-	});
-
-    $("#sanfrancisco").click(function() {
 
 
+    };
 
-    	LocationValue = "San Francisco";
+	   function AllLoctions() {
 
+       LocationValue = null;
 
     	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
-        if ($('#sanfrancisco').is(':checked')) {
 
-            if ($("#paloalto").prop('checked') == true) {
-                $('#palto').prop('checked', false);
-                DeleteMarker(1);
-            }
-
-            if ($("#mountainview").prop('checked') == true) {
-                $('#mountainview').prop('checked', false);
-                DeleteMarker(2);
-            }
-
-            if ($("#santaclara").prop('checked') == true) {
-                $('#santaclara').prop('checked', false);
-                DeleteMarker(3);
-            }
-
-            if ($("#sanjose").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
-                DeleteMarker(4);
-            }
-
-            if ($("#oakland").prop('checked') == true) {
-                $('#oakland').prop('checked', false);
-                DeleteMarker(5);
-            }
-
-            loadMarkers(0, locations[0]);
+    };
 
 
-        } else {
+    $("#SanFrancisco").click(function() {
 
-            DeleteMarker(0);
+            LocationValue = "SanFrancisco";
 
-        }
+            getCategory();
+
+
+            getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+
+            DeletingMarkers();
+
+             loadMarkers(0, locations[0]);
+     });
+
+
+
+
+
+
+    $("#PaloAlto").click(function() {
+
+    		LocationValue = "PaloAlto";
+
+    		 getCategory();
+
+
+    	    getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+
+
+            DeletingMarkers();
+
+             loadMarkers(1, locations[1]);
 
 
     });
 
-    $("#paloalto").click(function() {
+    $("#MountainView").click(function() {
 
+    	LocationValue = "MountainView";
 
-		LocationValue = "Palo Alto";
+    	 getCategory();
+
 
     	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
-        if ($('#paloalto').is(':checked')) {
+          DeletingMarkers();
 
-            if ($("#sanfrancisco").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
-                DeleteMarker(0);
-            }
-
-            if ($("#mountainview").prop('checked') == true) {
-                $('#mountainview').prop('checked', false);
-                DeleteMarker(2);
-            }
-
-            if ($("#santaclara").prop('checked') == true) {
-                $('#santaclara').prop('checked', false);
-                DeleteMarker(3);
-            }
-
-            if ($("#sanjose").prop('checked') == true) {
-                $('#sanjose').prop('checked', false);
-                DeleteMarker(4);
-            }
-
-            if ($("#oakland").prop('checked') == true) {
-                $('#oakland').prop('checked', false);
-                DeleteMarker(5);
-            }
-
-            loadMarkers(1, locations[1]);
-
-
-
-        } else {
-            DeleteMarker(1);
-
-        }
-
+         loadMarkers(2, locations[2]);
 
     });
 
-    $("#mountainview").click(function() {
-    	LocationValue = "Mountain View";
+    $("#SantaClara").click(function() {
+    	LocationValue = "SantaClara";
+
+    	 getCategory();
+
 
     	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
-        if ($('#mountainview').is(':checked')) {
+       DeletingMarkers();
 
-            if ($("#sanfrancisco").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
-                DeleteMarker(0);
-            }
-
-            if ($("#paloalto").prop('checked') == true) {
-                $('#paloalto').prop('checked', false);
-                DeleteMarker(1);
-            }
-
-            if ($("#santaclara").prop('checked') == true) {
-                $('#santaclara').prop('checked', false);
-                DeleteMarker(3);
-            }
-
-            if ($("#sanjose").prop('checked') == true) {
-                $('#sanjose').prop('checked', false);
-                DeleteMarker(4);
-            }
-
-            if ($("#oakland").prop('checked') == true) {
-                $('#oakland').prop('checked', false);
-                DeleteMarker(5);
-            }
-
-            loadMarkers(2, locations[2]);
-
-
-
-        } else {
-
-            DeleteMarker(2);
-
-
-        }
-
+        loadMarkers(3, locations[3]);
     });
 
-    $("#santaclara").click(function() {
-    	LocationValue = "Santa Clara";
+    $("#SanJose").click(function() {
+		LocationValue = "SanJose";
+
+		 getCategory();
+
 
     	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
-        if ($('#santaclara').is(':checked')) {
 
-            if ($("#sanfrancisco").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
-                DeleteMarker(0);
-            }
+         DeletingMarkers();
 
-            if ($("#mountainview").prop('checked') == true) {
-                $('#mountainview').prop('checked', false);
-                DeleteMarker(2);
-            }
-
-            if ($("#paloalto").prop('checked') == true) {
-                $('#paloalto').prop('checked', false);
-                DeleteMarker(1);
-            }
-
-            if ($("#sanjose").prop('checked') == true) {
-                $('#sanjose').prop('checked', false);
-                DeleteMarker(4);
-            }
-
-            if ($("#oakland").prop('checked') == true) {
-                $('#oakland').prop('checked', false);
-                DeleteMarker(5);
-            }
-
-            loadMarkers(3, locations[3]);
-
-
-
-        } else {
-
-            DeleteMarker(3);
-
-
-        }
-
-    });
-
-    $("#sanjose").click(function() {
-		LocationValue = "San Jose";
-
-    	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
-        if ($('#sanjose').is(':checked')) {
-
-            if ($("#sanfrancisco").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
-                DeleteMarker(0);
-            }
-
-            if ($("#mountainview").prop('checked') == true) {
-                $('#mountainview').prop('checked', false);
-                DeleteMarker(2);
-            }
-
-            if ($("#santaclara").prop('checked') == true) {
-                $('#santaclara').prop('checked', false);
-                DeleteMarker(3);
-            }
-
-            if ($("paloalto").prop('checked') == true) {
-                $('#paloalto').prop('checked', false);
-                DeleteMarker(1);
-            }
-
-            if ($("#oakland").prop('checked') == true) {
-                $('#oakland').prop('checked', false);
-                DeleteMarker(5);
-            }
-
-
-            loadMarkers(4, locations[4]);
-
-
-        } else {
-
-            DeleteMarker(4);
-
-        }
-
+         loadMarkers(4, locations[4]);
 
     });
 
 
 
-    $("#oakland").click(function() {
+    $("#Oakland").click(function() {
     	LocationValue = "Oakland";
 
+    	 getCategory();
+
+
+
+
     	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
-        if ($('#oakland').is(':checked')) {
-
-            if ($("#sanfrancisco").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
-                DeleteMarker(0);
-            }
-
-            if ($("#mountainview").prop('checked') == true) {
-                $('#mountainview').prop('checked', false);
-                DeleteMarker(2);
-            }
-
-            if ($("#santaclara").prop('checked') == true) {
-                $('#santaclara').prop('checked', false);
-                DeleteMarker(3);
-            }
-
-            if ($("#sanjose").prop('checked') == true) {
-                $('#sanfrancisco').prop('checked', false);
-                DeleteMarker(4);
-            }
-
-            if ($("#paloalto").prop('checked') == true) {
-                $('#paloalto').prop('checked', false);
-                DeleteMarker(1);
-            }
-
-            loadMarkers(5, locations[5]);
 
 
-        } else {
+        DeletingMarkers();
 
-            DeleteMarker(5);
-
-        }
+        loadMarkers(5, locations[5]);
 
     });
 
+       function DeletingMarkers(){
+                 for (var markerindex = 0; markerindex < (markers.length); markerindex++) {
+                    if (typeof markers[markerindex] !== 'undefined') {
+                        // does not exist
+                        markers[markerindex].setMap(null);
+                    }
 
-
-
-    function DeleteMarker(markerindex) {
-        //Find and remove the marker from the Array
-
-
-        markers[markerindex].setMap(null);
+                }
     };
+
+
+    function getCategory(){
+         radio_id1= getCategoryRadioSelected();
+        if(radio_id1 != null && radio_id1 != "AllCategories"){
+
+         CategoryValue = radio_id1;
+        }
+        else if(radio_id1 == "AllCategories"){
+       // radio_id1=null;
+
+            CategoryValue=null;
+        }
+        else{
+
+        CategoryValue=null;
+        }
+
+
+        return CategoryValue;
+
+    };
+
+
+     function getCategoryRadioSelected(){
+        var $radio1 = $('input[name=category]:checked');
+        var updateDay1 = $radio1.val();
+        var id1 = $radio1.attr('id');
+
+        return id1;
+    };
+
+
 
     function ClearAllMarkers() {
 
@@ -833,33 +796,11 @@ $(document).ready(function() {
 
 
 
-        if ($('input[name=startdate]').val() == $('input[name=enddate]').val()) {
-            //console.log($('input[name=startdate]').val());
-            // console.log( $('input[name=enddate]').val());
-            //alert('equal');
-            //console.log('eqal');
-        } else if ($('input[name=startdate]').val() >= $('input[name=enddate]').val()) {
 
-            // console.log($('input[name=startdate]').val());
-            //console.log( $('input[name=enddate]').val());
-            //alert('greater');
-            //console.log('greater');
-        } else {
-
-            //console.log($('input[name=startdate]').val());
-            //console.log( $('input[name=enddate]').val());
-            //alert('less');
-            ///console.log('less');
-
-        }
 
         if ($('input[name=startdate]').val() > $('input[name=enddate]').val()) {
 
-            //alert('hh');
-
-            $('#msgevent').removeClass('alert-success').addClass('alert-danger').html("Start Date is Greater than End Date").show();
-
-            //$('#createEventForm').data('bootstrapValidator').updateStatus('startdate','INVALID',' ')
+              $('#msgevent').removeClass('alert-success').addClass('alert-danger').html("Start Date is Greater than End Date").show();
 
 
             $('#createEventForm').data('bootstrapValidator').updateStatus('enddate', 'INVALID', ' ')
@@ -871,7 +812,9 @@ $(document).ready(function() {
 
 
 
-        } else {
+        }
+
+        else {
 
             if ($('input[name=startdate]').val() < $('input[name=enddate]').val()) {
 
@@ -905,6 +848,8 @@ $(document).ready(function() {
         $('#volunteers_interested').show('fast');
 
          $('#button6').show('fast');
+
+         $('#button13').hide('fast');
 
          $('#button14').hide('fast');
 
@@ -956,7 +901,7 @@ $(document).ready(function() {
             success: function(data) {
 
 				userData = data;
-                console.log(data.message);
+
 
                 $('#orgname_event').val(data.message.organizationName);
 
@@ -965,7 +910,7 @@ $(document).ready(function() {
             error: function(data) {
 
 
-                console.log(data.responseJSON.message);
+
 
 
             }
@@ -1231,9 +1176,6 @@ $(document).ready(function() {
 
 
             success: function(data) {
-                //console.log(data);
-
-                //console.log(data.message);
 
                 var txt2 = data.message;
 
@@ -1242,8 +1184,6 @@ $(document).ready(function() {
             },
             error: function(data) {
 
-                //console.log(data);
-                //console.log(data.responseJSON.message);
 
                 var txt2 = data.responseJSON.message;
 
@@ -1300,9 +1240,6 @@ $(document).ready(function() {
             error: function(data) {
 
 
-                //console.log(data.responseJSON.message);
-
-
             }
 
         });
@@ -1321,10 +1258,6 @@ $(document).ready(function() {
 
         var enddatebackend = $('input[name=enddate]').val();
 
-        //	console.log(startdatebackend);
-
-        //	console.log(enddatebackend);
-
 
         var eventlocbackend = $('input[name=eventloc]').val();
 
@@ -1338,15 +1271,11 @@ $(document).ready(function() {
 
         var volunteersrequiredbackend = $('input[name=event_volunteersreq]').val();
 
-        console.log(volunteersrequiredbackend);
+
 
         var expiredbackend = '';
 
-        //	console.log(profilelogout.toString().toLowerCase());
 
-
-
-        //$('#createEventForm').data('bootstrapValidator').updateStatus('startdate','VALID','null')
 
 
         $('#createEventForm').data('bootstrapValidator').updateStatus('enddate', 'VALID', 'null')
@@ -1387,9 +1316,7 @@ $(document).ready(function() {
 
 
             success: function(data) {
-                //console.log(data);
 
-                //console.log(data.message);
 
                 var txt2 = data.message;
 
@@ -1417,8 +1344,6 @@ $(document).ready(function() {
             },
             error: function(data) {
 
-                //console.log(data);
-                //console.log(data.responseJSON.message);
 
                 var txt2 = data.responseJSON.message;
 
@@ -1440,11 +1365,6 @@ $(document).ready(function() {
 
         emailorgname = data.message.organizationName;
 
-        //console.log(data.message);
-
-        //console.log(data.message.securityQuestion);
-
-        //console.log(data.message.organizationName+ 'uu' + data.message.website);
 
         $('#firstname').val(data.message.firstName);
 
@@ -1472,74 +1392,28 @@ $(document).ready(function() {
 
 
 
-    /*
-    								$('#myCarouselAnimalActive').carousel({
-    								  interval: 4000,
-    								  interval: false
-    								})
-
-    								$('#myCarouselChildrenActive').carousel({
-    								  interval: 4000,
-    								  interval: false
-    								})
-
-
-
-    								$('#myCarouselAnimalAwaitingApproval').carousel({
-    								  interval: 4000,
-    								  interval: false
-    								})
-
-    								$('#myCarouselChildrenAwaitingApproval').carousel({
-    								  interval: 4000,
-    								  interval: false
-    								})
-
-
-    								$('#myCarouselAnimalArchived').carousel({
-    								  interval: 4000,
-    								  interval: false
-    								})
-
-    								$('#myCarouselChildrenArchived').carousel({
-    								  interval: 4000,
-    								  interval: false
-    								})
-
-    								*/
-
-    $('.carousel .item').each(function() {
-        var next = $(this).next();
-        if (!next.length) {
-            next = $(this).siblings(':first');
-        }
-        next.children(':first-child').clone().appendTo($(this));
-
-        for (var i = 0; i < 2; i++) {
-            next = next.next();
-            if (!next.length) {
-                next = $(this).siblings(':first');
-            }
-
-            next.children(':first-child').clone().appendTo($(this));
-        }
-    });
-
-
 
     ///////////////////////Active Events
+     $("#AllLocations").prop("checked", true);
+     $("#AllCategories").prop("checked", true);
+
 
     $('#Active').click(function() {
-        // console.log('gello');
 
-        FlagActiveValue = "true";
-        FlagExpiredValue = "false";
-        FlagAwaitingValue = "false";
+        FlagActiveValue = true;
+        FlagExpiredValue = false;
+        FlagAwaitingValue = false;
 
-        getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
+
+
+        AllLoctionsActive(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
+
+
 
 
     });
+
+
 
 
 
@@ -1547,14 +1421,15 @@ $(document).ready(function() {
 
 
 
-
     $('#AwaitingAcceptance').click(function() {
 
-        FlagActiveValue = "false";
-        FlagExpiredValue = "false";
-        FlagAwaitingValue = "true";
+        FlagActiveValue = false;
+        FlagExpiredValue = false;
+        FlagAwaitingValue = true;
 
-        getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
+        AllLoctionsActive(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
+
+      //  getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
 
     });
 
@@ -1567,11 +1442,14 @@ $(document).ready(function() {
 
     $('#Archive').click(function() {
 
-        FlagActiveValue = "false";
-        FlagExpiredValue = "true";
-        FlagAwaitingValue = "false";
+        FlagActiveValue = false;
+        FlagExpiredValue = true;
+        FlagAwaitingValue = false;
 
-        getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
+
+        AllLoctionsActive(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
+
+      //  getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
 
     });
 
@@ -1585,7 +1463,7 @@ $(document).ready(function() {
 
     function getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue) {
         var eventCategory = null;
-        var nearbyLocation = null;
+        var LocationValue = null;
 
         $.ajax({
             type: 'POST',
@@ -1602,7 +1480,7 @@ $(document).ready(function() {
                 getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, eventCategory, LocationValue, data);
             },
             error: function(data) {
-                console.log(data.responseJSON.message);
+
             }
         });
     }
@@ -1664,14 +1542,14 @@ $(document).ready(function() {
 		this.volunteersContact = e_volunteersContact;
 
 		var red = Math.round(Math.random()*(255));
-    	var blue = Math.round(Math.random()*(255));
+    	var blue = gMath.round(Math.random()*(255));
     	var green = Math.round(Math.random()*(255));
 
 		this.color = 'rgb(' + [red,green,blue].join(',') + ')';
     }
 
     function displayEvent(Event, newEventItem) {
-    console.log(Event+'updated');
+    console.log(Event.isAwaitingApproval+'updated');
     	var userType = profilelogout.toString().toLowerCase();
 
     	newEventItem.setAttribute("data-toggle", "modal");
@@ -1693,9 +1571,8 @@ $(document).ready(function() {
 
 			$('#eventloc').val(Event.event_location);
 			$("#eventlocnearby").val(Event.event_location_nearby);
-			console.log(Event);
-			console.log(Event.event_location_nearby);
-			console.log(Event.desc);
+
+
 
 			$("#category").val(Event.category);
 			$('textarea#eventdesc').val(Event.desc);
@@ -1706,34 +1583,26 @@ $(document).ready(function() {
 
 			$('#event_userparticipating').val(Event.usersParticipating);
 
-            console.log(Event.category);
-            console.log(Event.volunteersParticipating);
-            console.log(Event.volunteersInterested);
-            console.log(Event.usersParticipating);
-            //console.log(Event.volunteersContact.length);
-
 
 
             if(Event.volunteersContact){
 
                 for(var i = 0; i < Event.volunteersContact.length ; i++ ){
 
-                // console.log(Event.volunteersContact[i].username+'retrieveing');
 
                      if(Event.volunteersContact[i].username ==  usernamelogout || Event.volunteersParticipating == '0'){
-                    // countVolunteers = 1;
-                           //  if (countVolunteers == 1 ){
+
                                 $('#volunteers_interested').hide('fast');
                                 $('#button9').hide('fast');
-                                   console.log('existing');
+
                              }
                              else{
-                                 //countVolunteers = 0;
+
                                 $('#volunteers_interested').show('fast');
                                 $('#button9').show('fast');
 
                              }
-                      //}
+
 
 
 
@@ -1758,13 +1627,12 @@ $(document).ready(function() {
 
              if(attendhashmap[Event.event_title]){
 
-               console.log('key is there');
+
 
                 $('#button10').hide('fast');
              }
              else{
 
-             console.log('key is not there');
 
                   $('#button10').show('fast');
 
@@ -1802,6 +1670,38 @@ $(document).ready(function() {
 				}
 			}
 
+				if (userType === "admin") {
+				document.getElementById("modtitle_event").innerHTML="View Event";
+	$('#button5').hide('fast');
+				$('#button6').hide('fast');
+				$('#button9').hide('fast');
+				$('#button10').hide('fast');
+
+				if(Event.isAwaitingApproval == "true"){
+				$('#button13').show('fast');
+				$('#button12').show('fast');
+				$('#button15').hide('fast');
+
+
+				}
+				if(Event.isDenied == "true"){
+
+				//$('#button13').hide('fast');
+				// $('#button12').hide('fast');
+				}
+
+				if(Event.isActive == "true"){
+
+				$('#button13').hide('fast');
+				 $('#button12').hide('fast');
+				}
+
+				var readonlyFields = $('#createEventForm .form-control');
+				for (var i = 0; i < readonlyFields.length; i++) {
+					readonlyFields[i].setAttribute("readOnly","true");
+				}
+			}
+
 		}
 
 
@@ -1809,8 +1709,9 @@ $(document).ready(function() {
 
 
     	newEventItem.innerHTML =
-    	 "<div style='height:inherit;width:inherit;background-color:" + Event.color + "'>" + "<div class = 'event_shade'>" +
-    	 "<h3 class = 'event_title'>"+Event.event_title +"</h3>"+ "<div class = event_desc> Category: "+Event.category + "</div>" + "<br>"+"<div class = event_desc> Location: "+Event.event_location + "</div>" + "<br>"+
+
+    	 "<div style='height:inherit;width:inherit ;background-color:" + Event.color + " '>" + "<div class = 'event_shade'>" +
+    	 "<h3 class = 'event_title'>"+Event.event_title +"</h3>"+ "<div class = event_desc> Category: "+Event.category + "</div>" + "<br>"+"<div class = event_desc> Location: "+Event.event_location_nearby + "</div>" + "<br>"+
     	 "<div class = event_desc> Organization: " + Event.organization + "</div>" + "<br>"+"<div class = event_desc> Participants: " + Event.usersParticipating + "</div>" + "<br>"+
     	 "<div class = event_desc> Requires " + Event.volunteersParticipating + " volunteers</div>" + "</div>" + "</div>";
 
@@ -1820,13 +1721,12 @@ $(document).ready(function() {
 
 
 
-    function getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, eventCategory, nearbyLocation, data) {
+    function getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, eventCategory, LocationValue, data) {
         eraseResults();
-        orgnamelogout = data.message.organizationName;
+          orgnamelogout = data.message.organizationName;
         var userType = profilelogout.toString().toLowerCase();
 
         if (userType === "student") {
-            $('#createEventButton')[0].setAttribute("style", "display:none !important");
 			document.getElementById("modtitle_event").textContent="RSVP";
 			$('#button5').hide('fast');
 			$('#button6').hide('fast');
@@ -1844,44 +1744,42 @@ $(document).ready(function() {
 			$('#button9').hide('fast');
 			$('#button10').hide('fast');
 			$('#button12').hide('fast');
-			$('#button13').hide('fast');
+			//$('#button13').hide('fast');
 		}
 
         if (userType === "admin") {
-            $('#button5').hide('fast');
-			$('#button6').hide('fast');
-			$('#button9').hide('fast');
-			$('#button10').hide('fast');
 
-			    if(FlagAwaitingValue == 'true'){
-
-			     $('#button12').show('fast');
-			    $('#button13').show('fast');
-			    $('#button15').hide('fast');
-
-			    }
-			    else{
-
-			    $('#button15').show('fast');
-			    $('#button12').hide('fast');
-			    $('#button13').hide('fast');
-
-			    }
-
+        if(Event.isAwaitingApproval == "true"){
+            $('#button15').hide('fast');
+        }
+        else{
+        if(Event.isActive == "true"){
+            $('#button13').show('fast');
+            }else{
+            $('#button15').hide('fast');
+            }
+        }
+        	//$('#createEventButton')[0].setAttribute("style", "display:none !important");
         }
 
         var stringifiedParams;
 
         if (userType === "ngo") {
-            if ((eventCategory != null)||(nearbyLocation != null)) {
-                if ((nearbyLocation != null)&&(eventCategory == null)) {
-                    stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'location':nearbyLocation});
-                } else if ((nearbyLocation == null)&&(eventCategory != null)) {
+                     if ((eventCategory != null)||(LocationValue != null)) {
+                if ((LocationValue != null)&&(eventCategory == null)) {
+
+                    stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'locationNearby':LocationValue});
+
+                } else if ((LocationValue == null)&&(eventCategory != null)) {
+
                     stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory});
                 } else  {
-                    stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory, 'location':nearbyLocation});
+
+                    stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory, 'locationNearby':LocationValue});
                 }
             } else {
+
+
                 stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString()});
             }
 
@@ -1901,15 +1799,24 @@ $(document).ready(function() {
                 }
             });
         } else if ((userType === "student")||(userType === "admin")) {
-        	if ((eventCategory != null)||(nearbyLocation != null)) {
-                if ((nearbyLocation != null)&&(eventCategory == null)) {
-                    stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'location':nearbyLocation});
-                } else if ((nearbyLocation == null)&&(eventCategory != null)) {
+
+        	if ((eventCategory != null)||(LocationValue != null)) {
+
+                if ((LocationValue != null)&&(eventCategory == null)) {
+
+                    stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'locationNearby':LocationValue});
+
+
+                } else if ((LocationValue == null)&&(eventCategory != null)) {
+
                     stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory});
                 } else  {
-                    stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory, 'location':nearbyLocation});
+
+                    stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory, 'locationNearby':LocationValue});
+
                 }
             } else {
+
                 stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString()});
             }
 
@@ -1938,7 +1845,9 @@ $(document).ready(function() {
 		var organizationName = $('#orgname_event').val();
 
         EventVolunteerAction(userData, organizationName);
-        alert("Your response has been recorded. Thank you!");
+      //  alert("Your response has been recorded. Thank you!");
+       $( "#dialog-4" ).dialog( "open" );
+
 
     });
 
@@ -1948,7 +1857,7 @@ $(document).ready(function() {
 
     function EventVolunteerAction(data, orgName) {
 
-            console.log(data.message);
+
 
         emaillogout = data.message.emailId;
 
@@ -1982,7 +1891,6 @@ $(document).ready(function() {
             error: function(data) {
 
 
-                //	console.log(data);
 
 
             }
@@ -1996,9 +1904,12 @@ $(document).ready(function() {
 
 
 
-		alert("Your response has been recorded. Thank you!");
+		//alert("Your response has been recorded. Thank you!");
+
 
 		 EventAttendAction(userData, organizationName );
+
+		     $( "#dialog-4" ).dialog( "open" );
 
 
 
@@ -2030,24 +1941,16 @@ $(document).ready(function() {
             success: function() {
 
 
-                //console.log(usercount);
 
                 //  $('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Participating in this Event").show();
 
                   attendhashmap[eventnamebackend] = usernamelogout;
 
 
-                   console.log(Object.keys(attendhashmap)+'greatattend'+attendhashmap[eventnamebackend]);
-
-
-
-
                 getvolusercount(eventnamebackend, orgName);
             },
             error: function(data) {
 
-
-                //	console.log(data);
 
 
             }
@@ -2060,7 +1963,7 @@ $(document).ready(function() {
 
 
     function getvolusercount(eventnamebackend, orgnamelogout) {
-    console.log(orgnamelogout);
+
 
         $.ajax({
             type: 'POST',
@@ -2076,14 +1979,8 @@ $(document).ready(function() {
 
             success: function(data) {
 
-                console.log(data.message[0]);
-                console.log(data.message[0].volunteersInterested+'added');
-
                 $('#event_volunteersinterested').val(data.message[0].volunteersInterested);
 
-
-
-              //  $('#event_userparticipating').val(data.message[0].usersParticipating);
 
 
             },
@@ -2138,20 +2035,12 @@ $(document).ready(function() {
             success: function(data) {
 
 
-                //console.log(data.message);
-
-
                 $('#msgevent').removeClass('alert-danger').addClass('alert-success').html(data.message).show();
 
 
 
             },
             error: function(data) {
-
-
-                //console.log(data.responseJSON.message);
-
-
 
 
             }
@@ -2200,20 +2089,12 @@ $(document).ready(function() {
 
             success: function(data) {
 
-
-                //	console.log(data.message);
-
-
                 $('#msgevent').removeClass('alert-success').addClass('alert-danger').html(data.message).show();
 
 
 
             },
             error: function(data) {
-
-
-                //	console.log(data.responseJSON.message);
-
 
 
 
@@ -2240,16 +2121,6 @@ $(document).ready(function() {
 
         var enddatebackend = $('input[name=enddate]').val();
 
-        var eventlocbackend = $('input[name=eventloc]').val();
-
-         var volunteersrequiredbackend = $('input[name=event_volunteersreq]').val();
-
-          var userparticipatingbackend = $('input[name=event_userparticipating]').val();
-
-
-console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startdatebackend+" "+ enddatebackend+" "+volunteersrequiredbackend+" "+userparticipatingbackend);
-
-
 
 
 
@@ -2268,12 +2139,6 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
                 "from": startdatebackend.toString(),
 
                 "to": enddatebackend.toString(),
-                "volunteersRequired" : volunteersrequiredbackend.toString(),
-                "volunteersParticipating": userparticipatingbackend.toString(),
-                 "location": eventlocbackend.toString(),
-
-                "expired" : "false",
-
 
 
 
@@ -2283,23 +2148,12 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 
             success: function(data) {
 
-
-                //	console.log(data.message);
-
-
                 $('#msgevent').removeClass('alert-success').addClass('alert-danger').html(data.message).show();
-
-                console.log('delete event');
 
 
 
             },
             error: function(data) {
-
-
-                //console.log(data.responseJSON.message);
-
-
 
 
             }
@@ -2361,42 +2215,77 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
         $(this).siblings('input:checkbox').prop('checked', false);
     });
 
+
+
+
+
 });
 
 </script>
 
 
+
+
 <style>
-	body { padding-top: 25px; }
 
-	html,
-	body,
-	.container.advsearch{
-	height: 83%;
-	max-width: none;
-	border-color:green;
-	},
 
-	#map-canvas {
-	height: 83%;
-	max-width: none;
-	position:relative;
-	overflow:hidden;
-	margin: 0px;
-	padding: 0px;
-	border-color:red;
-	}
+
+    body{
+
+    //background-image: url('http://74211.com/wallpaper/picture_big/White-and-Green-Flowers-You-Feel-Great-Freshness-and-Clearness-is-Such-a-Good-Looking-and-Pleasant-Scene-Indoor-Scenery-Wallpaper.jpg');
+
+    background-color:  white;
+
+    };
+
+    .ui-widget-header, .ui-state-default, ui-button {
+    background: #b9cd6d;
+    border: 1px solid #b9cd6d;
+    color: #FFFFFF;
+    font-weight: bold;
+    }
+    ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix
+
+  /*
+    .ui-dialog-title{
+    background:#FFA500;
+    border: 1px solid #b9cd6d;
+    color: #FFFFFF;
+    font-weight: bold;
+    }
+*/
+
+
+    body { padding-top: 25px; }
+
+    html,
+    body,
+    .container.advsearch{
+    height: 83%;
+    max-width: none;
+    border-color:green;
+    },
+
+    #map-canvas {
+    height: 83%;
+    max-width: none;
+    position:relative;
+    overflow:hidden;
+    margin: 0px;
+    padding: 0px;
+    border-color:red;
+    }
 
     .categories_list {
-        list-style-type:none;
-        display:block;
-        height: 200px;
+    list-style-type:none;
+    display:block;
+    height: 200px;
     }
 
     .categories_list li {
-        float:left;
-        margin:0 5px 0 0;
-        position:relative;
+    float:left;
+    margin:0 5px 0 0;
+    position:relative;
     width: 100px;
     height: 100px;
     text-align: center;
@@ -2407,34 +2296,48 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
     }
 
     .categories_list input[type="radio"] {
-    
+
     z-index:100;
     }
 
     .categories_list input[type="radio"]:checked + label {
-    background-image: url('http://www.servicedogstories.com/images/small_paw.gif');
+    //  background-image: url('http://www.servicedogstories.com/images/small_paw.gif');
     }
 
     #error_message {
-        padding:10px;
-        color:red;
-        visibility: hidden;
+    padding:10px;
+    color:red;
+    visibility: hidden;
     }
 
     .eventItem {
     width:300px;
     height:248px;
     margin:10px;
+
     display:inline-block !important;
     }
 
+    .eventItem:hover {
+    width:330px;
+    height:248px;
+    margin:10px;
+    font-size:16px;
+
+    display:inline-block !important;
+    }
+
+
+
+
+
     .event_body {
-        padding 5px 15px;
-        font-size: 15px;
-        line-height: 22px;
-        font-weight: 400;
-        letter-spacing: .5px;
-        font-family: "Benton Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+    padding 5px 15px;
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 400;
+    letter-spacing: .5px;
+    font-family: "Benton Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
 
     }
 
@@ -2470,136 +2373,137 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
     cursor: pointer;
     }
 
-	.jumbotron{
-	padding:1em 1em;
-	}
+    .jumbotron{
+    padding:1em 1em;
+    }
 
-	.jumbotron.c2 h1{
-		font-size: 15px;
-	}
+    .jumbotron.c2 h1{
+    font-size: 15px;
+    }
 
-	.jbbg {
-	background-color: green ;
-	}
+    .jbbg {
+    background-color: green ;
+    }
 
-	.scrollToTop{
-	width:40px;
-	height: 40px;
-	background-image: url('http://cdn.webdesignerhut.com/wp-content/uploads/2015/06/arrow.png');
-	position:fixed;
-	right:30px;
-	bottom:30px;
-	display:none;
-	}
-	#topnav{
-	min-height:40px !important;
-	background-color: darkgreen ;
-	}
+    .scrollToTop{
+    width:40px;
+    height: 40px;
+    background-image: url('http://cdn.webdesignerhut.com/wp-content/uploads/2015/06/arrow.png');
+    position:fixed;
+    right:30px;
+    bottom:30px;
+    display:none;
+    }
+    #topnav{
+    min-height:40px !important;
+    background-color: darkgreen ;
+    }
 
-	.navbar-brand .nb{
-	color: white;
-	}
-
-	#brand {
-	text-align: center;
-	padding-top:60px;
-	}
-
-	#brand h1{
-
-	color: white;
-	font-size: 40px;
-
-	}
-	.tooltip > .tooltip-inner {background-color: grey;}
-
-	.has-success .form-control{ border-color:grey !important;}
-	.has-success .form-control:focus { border-color:grey !important;}
-
-	.has-success .control-label{ color:black !important;}
-
-	.ui-datepicker-today {
-	background: #fcc !important;
-	}
-
-	#resetForm{
-	margin: 0 auto;
-	width:80%
-	}
-
-	#modtitle_event, #modtitle_profile{
-	padding-top:30px;
-	text-align:center;
-	}
-
-	.close{
-	position:absolute;
-	top:10px;
-	right: 10px;
-	font-weight: bold;
-	}
-
-	.c2{
-	background-color:#01401e;
-	color:white;
-	margin-left: auto ;
-	margin-right: auto ;
-	border-radius: 6px;
-
-	}
+    .navbar-brand .nb{
+    color: white;
+    }
 
 
+    #brand {
+    text-align: center;
+    padding-top:60px;
+    }
 
-	#createEventButton, #advsearchbutton{
-	background: green !important;
-	color: white !important;
-	border-radius: 24px;
-	}
+    #brand h1{
 
-	.places{
-	background: pink !important;
-	}
+    color: white;
+    font-size: 40px;
 
-	.form-group.locmap{
-	background: red !important;
-	}
+    }
+    .tooltip > .tooltip-inner {background-color: grey;}
 
-	#gear{
-	font-size:25px;
-	}
+    .has-success .form-control{ border-color:grey !important;}
+    .has-success .form-control:focus { border-color:grey !important;}
+
+    .has-success .control-label{ color:black !important;}
+
+    .ui-datepicker-today {
+    background: #fcc !important;
+    }
+
+    #resetForm{
+    margin: 0 auto;
+    width:80%
+    }
+
+    #modtitle_event, #modtitle_profile{
+    padding-top:30px;
+    text-align:center;
+    }
+
+    .close{
+    position:absolute;
+    top:10px;
+    right: 10px;
+    font-weight: bold;
+    }
+
+    .c2{
+    background-color:#01401E;
+    color:white;
+    margin-left: auto ;
+    margin-right: auto ;
+    border-radius: 6px;
+    font-weight: bold;
+
+    }
 
 
-	#options
-	{
-	text-align: right;
-	}
 
-	.nav .navbar-nav .navbar-right{
-	float:right;
-	}
+    #createEventButton, #advsearchbutton{
+    background: green !important;
+    color: white !important;
+    border-radius: 24px;
+    }
 
-	.btn-circle {
-	width: 30px;
-	height: 30px;
-	text-align: center;
-	padding: 6px 0;
-	font-size: 12px;
-	line-height: 1.428571429;
-	border-radius: 15px;
-	}
+    .places{
+    background: pink !important;
+    }
+
+    .form-group.locmap{
+    background: red !important;
+    }
+
+    #gear{
+    font-size:25px;
+    }
 
 
-	.btn-circle.btn-xl {
-	width: 70px;
-	height: 70px;
-	padding: 10px 16px;
-	font-size: 24px;
-	line-height: 1.33;
-	border-radius: 35px;
-	background-image: url('http://www.servicedogstories.com/images/small_paw.gif');
-	background-repeat: no-repeat;
-	}
+    #options
+    {
+    text-align: right;
+    }
 
+    .nav .navbar-nav .navbar-right{
+    float:right;
+    }
+
+    .btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+    }
+
+
+    .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+
+    background-repeat: no-repeat;
+    }
 
     .drinkcard-cc {
     cursor: pointer;
@@ -2691,618 +2595,625 @@ console.log(orgnamelogout + " "+eventnamebackend+" "+eventlocbackend+" "+startda
 
     }
 
+    .helppills .active a,
+    .helppills .active a:hover {
+    background-color: green !important;
 
-	.helppills .active a,
-	.helppills .active a:hover {
-	background-color: green !important;
+    }
 
-	}
+    .helppills  a:hover {
+    background-color: lightgreen !important;
 
-	.helppills  a:hover {
-	background-color: lightgreen !important;
+    }
 
-	}
-
-	.btn.btn-default.btn-md.createEventS,.btn.btn-default.btn-md.VolunteerEvent, .btn.btn-default.btn-md.AttendEvent,.btn.btn-default.btn-md.Search,
-	.btn.btn-default.btn-md.ApproveEvent, .btn.btn-default.btn-md.editProfileS{
-	background: green !important;
-	color: white !important;
-	border-radius: 24px;
-	}
+    .btn.btn-default.btn-md.createEventS,.btn.btn-default.btn-md.VolunteerEvent, .btn.btn-default.btn-md.AttendEvent,.btn.btn-default.btn-md.Search,
+    .btn.btn-default.btn-md.ApproveEvent, .btn.btn-default.btn-md.editProfileS{
+    background: green !important;
+    color: white !important;
+    border-radius: 24px;
+    }
 
 
-	.btn.btn-default.btn-mdclose.createEventClose, .btn.btn-default.btn-md.DenyEvent,.btn.btn-default.btn-md.DeleteEvent,.btn.btn-default.btn-mdclose.editProfileClose{
-	background: red !important;
-	color: white !important;
-	border-radius: 24px;
-	}
+    .btn.btn-default.btn-mdclose.createEventClose, .btn.btn-default.btn-md.DenyEvent,.btn.btn-default.btn-md.DeleteEvent,.btn.btn-default.btn-mdclose.editProfileClose{
+    background: red !important;
+    color: white !important;
+    border-radius: 24px;
+    }
 
 
 </style>
 
 <body>
 
-<nav id ='topnav' class="navbar navbar-inverse navbar-fixed-top " >
+<nav id ='topnav' class="navbar navbar-inverse navbar-fixed-top heading" >
 
-	<div class="container">
-		<ul id="welcome" class="navbar-brand nb">Welcome</ul>
+    <div class="container">
+        <ul id="welcome" class="navbar-brand nb">Welcome</ul>
         <ul id="user_logged" class="navbar-brand nb"></ul>
-        <ul id="options" class="nav navbar-nav navbar-right options">
-            <li id="options" class="dropdown-right">
+        <ul class="nav navbar-nav navbar-right options">
+            <li  class="dropdown-right">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span id="gear" class="glyphicon glyphicon-cog"></span></a>
                 <ul role="menu" class="dropdown-menu">
-                    <li><a href="#" data-toggle="modal"  data-target="#edit_profile_modal-1" >Edit Profile</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Log Out</a></li>
+                    <li><a href="#" id="editprofile" data-toggle="modal"  data-target="#edit_profile_modal-1" >Edit Profile</a></li>
+                    <li class="divider" id="divider"></li>
+                    <li><a href="#" id="logout">Log Out</a></li>
                 </ul>
             </li>
         </ul>
-	</div>
+    </div>
 </nav>
 
 <div class="container">
-	<div id='brand' class="jumbotron jbbg">
-		<div class='clearfix'>
-			<div class="container">
-				<img class='pull-left' id='logo' src='https://github.com/sophiataskova/HelpingHands/blob/master/helpingHandsFE/WebContent/logo.png?raw=true' width='130' height='130'>
-				<h1>Helping Hands</h1>
-			</div>
-		</div>
-	</div>
+    <div id='brand' class="jumbotron jbbg">
+        <div class='clearfix'>
+            <div class="container">
+                <img class='pull-left' id='logo' src='https://github.com/sophiataskova/HelpingHands/blob/master/helpingHandsFE/WebContent/logo.png?raw=true' width='130' height='130'>
+                <h1>Helping Hands</h1>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container" >
-	<div class="jumbotron c2">
-		<h1 style="text-align:center">Helping Hands is a community service application, designed specially for the ITUs. It will open doors for the ITUs, to volunteer for different community service activities and drives organized by the NGOs in the Bay Area. ITU and its SGA organizes several drives and community service activities every year. Helping Hands will help them in acquiring more information about the upcoming events and will be able to be help the society in more efficient manner!</h1>
-	</div>
+    <div class="jumbotron c2">
+
+        <marquee  direction="up" scrolldelay="300">
+        <h1 style="text-align:center;line-height:200%; font-size:18px">Helping Hands is a community service application, designed specially for the ITUs. It will open doors for the ITUs, to volunteer for different community service activities and drives organized by the NGOs in the Bay Area. ITU and its SGA organizes several drives and community service activities every year. Helping Hands will help them in acquiring more information about the upcoming events and will be able to be help the society in more efficient manner!</h1>
+        </marquee>
+    </div>
 
 
-	<div>
-		<div class="form-group">
-			<div class="col-md-3 col-md-offset-4 hidden">
-				<input type="text" id="searchtext" class="form-control" placeholder="Search" name="search">
-			</div>
+    <div>
+        <div class="form-group">
+            <div class="col-md-3 col-md-offset-4 hidden">
+                <input type="text" id="searchtext" class="form-control" placeholder="Search" name="search">
+            </div>
 
-			<div class="col-md-1 hidden">
+            <div class="col-md-1 hidden">
 
-				<button id='search' type="button" class="btn btn-default btn-md Search">Search</button>
-			</div>
+                <button id='search' type="button" class="btn btn-default btn-md Search">Search</button>
+            </div>
 
-		</div>
-
-
+        </div>
 
 
 
 
-		<div id = "main_content">
-			<div class="col-md-12 " >
-				<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
-				<button id='advsearchbutton' type="button" class="btn btn-default btn-md advancedsearch">Filtering Events</button>
-
-				<button id='createEventButton'  type="button" class="btn btn-default btn-md create_event  pull-right" data-toggle="modal"  data-target="#create_event_modal-1" >Create Event</button>
-			</div>
 
 
-			<div id="advsearchcontainer"  >
-				<div >
-					<div >
-						<form autocomplete="off" id="AdvSearchForm" method="post" class="form-horizontal col-md-4" action="" >
-							<div ><h4 style="text-align:center;font-weight:bold;background-color:#01401e ;color:white">Location</h4></div>
-							<div class="col-md-6" style="">
-								<label >
-									<input type="radio" class="myCheckbox" id="sanfrancisco" name="location" value="SanFrancisco" /> San Francisco
-								</label>
+        <div id = "main_content">
+            <div class="col-md-12 " >
+                <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+                <button id='advsearchbutton' type="button" class="btn btn-default btn-md advancedsearch">Event Filter</button>
 
-								<label >
-									<input type="radio" id="sanjose" class="myCheckbox" name="location" value="SanJose" /> San Jose
-								</label>
-								<label >
-									<input type="radio" id="santaclara" class="myCheckbox" name="location" value="SantaClara" /> Santa Clara
+                <button id='createEventButton'  type="button" class="btn btn-default btn-md create_event  pull-right" data-toggle="modal"  data-target="#create_event_modal-1" >Create Event</button>
+            </div>
 
-								</label>
 
-							</div>
-							<div class="col-md-6" style="">
-								<label >
-									<input type="radio" id="mountainview" class="myCheckbox" name="location" value="MountainView" /> Mountain View
+            <div id="advsearchcontainer"  >
+                <div >
+                    <div >
+                        <form autocomplete="off" id="AdvSearchForm" name="locationForm" method="post" class="form-horizontal col-md-4" action="" >
+                            <div ><h4 style="text-align:center;font-weight:bold;background-color:#01401e ;color:white">Location</h4></div>
+                            <div class="col-md-6" style="">
+                                <label >
+                                    <input type="radio" class="myCheckbox" id="SanFrancisco" name="location" value="SanFrancisco" /> San Francisco
+                                </label>
 
-								</label>
-								<label >
-									<input type="radio" id="paloalto" class="myCheckbox" name="location" value="PaloAlto" /> Palo Alto
+                                <label >
+                                    <input type="radio" id="SanJose" class="myCheckbox" name="location" value="SanJose" /> San Jose
+                                </label>
+                                <label >
+                                    <input type="radio" id="SantaClara" class="myCheckbox" name="location" value="SantaClara" /> Santa Clara
 
-								</label>
-								<label >
-									<input type="radio" id="oakland" class="myCheckbox" name="location" value="Oakland" /> Oakland
-								</label>
-								<label >
-									<input type="radio" class="myCheckbox" id="all_locations" name="location" value="All" /> All locations
-								</label>
-							</div>
-						</form>
-					</div>
+                                </label>
 
-					<div class="container advsearch col-md-4" style="margin: auto;">
-						<div style="background-color:#01401e "><h4 style="text-align:center;font-weight:bold;color:white">Google Map</h4></div>
-						<div  id="map-canvas" style="border: 2px solid #3872ac;height: 300px; width: 300px;
+                            </div>
+                            <div class="col-md-6" style="">
+                                <label >
+                                    <input type="radio" id="MountainView" class="myCheckbox" name="location" value="MountainView" /> Mountain View
+
+                                </label>
+                                <label >
+                                    <input type="radio" id="PaloAlto" class="myCheckbox" name="location" value="PaloAlto" /> Palo Alto
+
+                                </label>
+                                <label >
+                                    <input type="radio" id="Oakland" class="myCheckbox" name="location" value="Oakland" /> Oakland
+                                </label>
+                                <label >
+                                    <input type="radio" class="myCheckbox" id="AllLocations" name="location" value="All" />All Locations
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="container advsearch col-md-4" style="margin: auto;">
+                        <div style="background-color:#01401e "><h4 style="text-align:center;font-weight:bold;color:white">Google Map</h4></div>
+                        <div  id="map-canvas" style="border: 2px solid #3872ac;height: 300px; width: 300px;
 											overflow:hidden;  margin: auto;"></div>
-					</div>
-				</div>
+                    </div>
+                </div>
 
-				<div>
+                <div>
 
-					<form autocomplete="off" id="AdvSearchForm2" method="post" class="form-horizontal col-md-4" action="" >
-						<div><h4 style="text-align:center;font-weight:bold;background-color:#01401e;color:white ">Category</h4></div>
-                            <div>
-                                <ul class="categories_list" style="padding:10px 2px 10px 22px;" >
-                                    <li id="cat1">
-                                        <input type="radio"  id="cat1" name="category" />
-                                        <label for="cat1"  class="drinkcard-cc cat1bckgrnd" title="Disaster Relief"></label>
-                                    </li>
+                    <form autocomplete="off" name="categoryForm" id="AdvSearchForm2" method="post" class="form-horizontal col-md-4" action="" >
+                        <div><h4 style="text-align:center;font-weight:bold;background-color:#01401e;color:white ">Category</h4></div>
+                        <div>
+                            <ul class="categories_list" style="padding:10px 2px 10px 22px;" >
+                                <li >
+                                    <input type="radio"  id="DisasterRelief" name="category" />
+                                    <label for="DisasterRelief"  class="drinkcard-cc cat1bckgrnd" title="Disaster Relief"></label>
+                                </li>
 
-                                    <li id="cat2">
-                                        <input  type="radio"  id="cat2" name="category" />
-                                        <label for="cat2" class="drinkcard-cc cat2bckgrnd" title="Animals"></label>
-                                    </li>
+                                <li >
+                                    <input  type="radio"  id="Animal" name="category" />
+                                    <label for="Animal" class="drinkcard-cc cat2bckgrnd" title="Animal"></label>
+                                </li>
 
 
-                                    <li  id="cat3">
-                                        <input type="radio" id="cat3" name="category"/>
-                                        <label for="cat3" class="drinkcard-cc cat3bckgrnd" title="Hunger"></label>
-                                    </li>
-                                    <li id="cat4">
-                                        <input type="radio" id="cat4" name="category" />
-                                        <label for="cat4" class="drinkcard-cc cat4bckgrnd" title="People with Disabilities">></label>
-                                    </li>
+                                <li  >
+                                    <input type="radio" id="Hunger" name="category"/>
+                                    <label for="Hunger" class="drinkcard-cc cat3bckgrnd" title="Hunger"></label>
+                                </li>
+                                <li >
+                                    <input type="radio" id="PeoplewithDisabilities" name="category" />
+                                    <label for="PeoplewithDisabilities" class="drinkcard-cc cat4bckgrnd" title="People with Disabilities">></label>
+                                </li>
 
-                                    <li id="cat5">
-                                        <input type="radio" id="cat5" name="category"/>
-                                        <label for="cat5" class="drinkcard-cc cat5bckgrnd" title="Seniors"></label>
-                                    </li>
-                                    <li id="cat6">
-                                        <input type="radio" id="cat6" name="category"/>
-                                        <label for="cat6" class="drinkcard-cc cat6bckgrnd" title="Service for Homeless"></label>
-                                    </li>
-                                    <li  id="cat7">
-                                        <input type="radio" id="cat7" name="category"/>
-                                        <label for="cat7" class="drinkcard-cc cat7bckgrnd" title="Children"></label>
-                                    </li>
-                                    <li id="cat8">
-                                        <input type="radio" id="cat8" name="category"/>
-                                        <label for="cat8" class="drinkcard-cc cat8bckgrnd" title="Education"></label>
-                                    </li>
+                                <li >
+                                    <input type="radio" id="Seniors" name="category"/>
+                                    <label for="Seniors" class="drinkcard-cc cat5bckgrnd" title="Seniors"></label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="ServiceforHomeless" name="category"/>
+                                    <label for="ServiceforHomeless" class="drinkcard-cc cat6bckgrnd" title="Service for Homeless"></label>
+                                </li>
+                                <li  >
+                                    <input type="radio" id="Children" name="category"/>
+                                    <label for="Children" class="drinkcard-cc cat7bckgrnd" title="Children"></label>
+                                </li>
+                                <li >
+                                    <input type="radio" id="Education" name="category"/>
+                                    <label for="Education" class="drinkcard-cc cat8bckgrnd" title="Education"></label>
+                                </li>
 
-                                    <li id="cat9">
-                                        <input type="radio" id="cat9" name="category"/>
-                                        <label for="cat9" class="drinkcard-cc cat9bckgrnd" title="Environment"></label>
-                                    </li>
-                                    <li id="cat10">
-                                        <input type="radio" id="cat10" name="category" />
-                                        <label for="cat10" class="drinkcard-cc cat10bckgrnd" title="Sports"></label>
-                                    </li>
-                                    <li id="cat11">
-                                        <input type="radio" id="cat11" name="category"/>
-                                        <label for="cat11" class="drinkcard-cc cat11bckgrnd" title="Creativity Arts"></label>
-                                    </li>
-                                    <li id="cat12">
-                                        <input type="radio" id="cat12" name="category"/>
-                                        <label for="cat12" class="drinkcard-cc cat12bckgrnd" title="Community"></label>
-                                    </li>
+                                <li >
+                                    <input type="radio" id="Environment" name="category"/>
+                                    <label for="Environment" class="drinkcard-cc cat9bckgrnd" title="Environment"></label>
+                                </li>
+                                <li >
+                                    <input type="radio" id="Sports" name="category" />
+                                    <label for="Sports" class="drinkcard-cc cat10bckgrnd" title="Sports"></label>
+                                </li>
+                                <li >
+                                    <input type="radio" id="CreativityArts" name="category"/>
+                                    <label for="CreativityArts" class="drinkcard-cc cat11bckgrnd" title="Creativity Arts"></label>
+                                </li>
+                                <li >
+                                    <input type="radio" id="Community" name="category"/>
+                                    <label for="Community" class="drinkcard-cc cat12bckgrnd" title="Community"></label>
+                                </li>
 
-                                    <li id="cat13">
-                                        <input type="radio" id="cat13" name="category"/>
-                                        <label for="cat13" class="drinkcard-cc " title="All Categories" style="font-size:12px; ">ALL CATEGORIES</label>
+                                <li >
+                                    <input type="radio" id="AllCategories" name="category"/>
+                                    <label for="AllCategories" class="drinkcard-cc " title="All Categories" style="font-size:12px; ">ALL CATEGORIES</label>
 
-                                    </li>
-                                </ul>
+                                </li>
+                            </ul>
+
                         </div>
                         <br>
-					</form>
-				</div>
-			</div>
+                    </form>
+                </div>
+            </div>
 
 
-			<div id="usernamelogged"></div>
+            <div id="usernamelogged"></div>
 
 
 
-			<!-- Create Event Modal Window -->
+            <!-- Create Event Modal Window -->
 
-			<div class="modal fade" id="create_event_modal-1">
+            <div class="modal fade" id="create_event_modal-1">
 
-				<div class="modal-dialog modal-md">
+                <div class="modal-dialog modal-md">
 
-					<div class="modal-content">
+                    <div class="modal-content">
 
-						<div class="model-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 id="modtitle_event" class="modal-title">Create Event</h4>
-						</div>
+                        <div class="model-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 id="modtitle_event" class="modal-title">Create Event</h4>
+                        </div>
 
-						<div class="modal-body">
-							<form id="createEventForm" method="post" class="form-horizontal" action="">
+                        <div class="modal-body">
+                            <form id="createEventForm" method="post" class="form-horizontal" action="">
 
-								<div class="form-group">  </div>
+                                <div class="form-group">  </div>
 
-								<div class="form-group">
-									<div class=" col-md-9 col-md-offset-2 alert alert" id="msgevent" style="display: none;">
-										<a href="#" class="close" data-dismiss="alert">&times;</a>
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <div class=" col-md-9 col-md-offset-2 alert alert" id="msgevent" style="display: none;">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                    </div>
+                                </div>
 
 
 
-								<div class="form-group">
-									<label class="col-lg-5 control-label">Name of Event<sup>*</sup></label>
-									<div class="col-lg-6">
-										<input id='eventname' type="text" class="form-control" name="eventname" />
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Name of Event<sup>*</sup></label>
+                                    <div class="col-lg-6">
+                                        <input id='eventname' type="text" class="form-control" name="eventname" />
+                                    </div>
+                                </div>
 
-								<div class="form-group">
-									<label class="col-lg-5 control-label">Name of Organization <sup>*</sup></label>
-									<div class="col-lg-6">
-										<input id='orgname_event' type="text" class="form-control" name="orgname_event" disabled/>
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Name of Organization <sup>*</sup></label>
+                                    <div class="col-lg-6">
+                                        <input id='orgname_event' type="text" class="form-control" name="orgname_event" disabled/>
+                                    </div>
+                                </div>
 
-								<div class="form-group">
-									<label class="col-lg-5 control-label">Start Date<sup>*</sup></label>
-									<div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Start Date<sup>*</sup></label>
+                                    <div class="col-lg-6">
 
-										<input type="date" id="startdate" class="form-control" name="startdate" placeholder="date">
+                                        <input type="date" id="startdate" class="form-control" name="startdate" placeholder="date">
 
-									</div>
-								</div>
+                                    </div>
+                                </div>
 
 
-								<div class="form-group">
-									<label class="col-lg-5 control-label">End Date<sup>*</sup></label>
-									<div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">End Date<sup>*</sup></label>
+                                    <div class="col-lg-6">
 
-										<input type="date" id="enddate" class="form-control" name="enddate" placeholder="date">
+                                        <input type="date" id="enddate" class="form-control" name="enddate" placeholder="date">
 
-									</div>
-								</div>
+                                    </div>
+                                </div>
 
-								<div class="form-group">
-									<label class="col-lg-5 control-label">Location<sup>*</sup></label>
-									<div class="col-lg-6">
-										<input id='eventloc' type="text" class="form-control" name="eventloc" />
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Location<sup>*</sup></label>
+                                    <div class="col-lg-6">
+                                        <input id='eventloc' type="text" class="form-control" name="eventloc" />
+                                    </div>
+                                </div>
 
-								<div class="form-group">
-									<label class="col-lg-5 control-label">Location Near By<sup>*</sup></label>
-									<div class="col-lg-6">
-										<select class="form-control" id='eventlocnearby'  name="eventlocnearby">
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Location Near By<sup>*</sup></label>
+                                    <div class="col-lg-6">
+                                        <select class="form-control" id='eventlocnearby'  name="eventlocnearby">
 
-											<option value=" "></option>
+                                            <option value=" "></option>
 
-											<option value="SanFrancisco">San Francisco</option>
-											<option value="SanJose">San Jose</option>
-											<option value="SantaClara">Santa Clara</option>
-											<option value="MountainView">Mountain View</option>
-											<option value="PaloAlto">Palo Alto</option>
-											<option value="Oakland">Oakland</option>
+                                            <option value="SanFrancisco">San Francisco</option>
+                                            <option value="SanJose">San Jose</option>
+                                            <option value="SantaClara">Santa Clara</option>
+                                            <option value="MountainView">Mountain View</option>
+                                            <option value="PaloAlto">Palo Alto</option>
+                                            <option value="Oakland">Oakland</option>
 
-										</select>
+                                        </select>
 
-									</div>
-								</div>
+                                    </div>
+                                </div>
 
-								<div class="form-group">
-									<label class="col-lg-5 control-label">Descriptions<sup>*</sup></label>
-									<div class="col-lg-6">
-										<textarea class="form-control" rows="5" id="eventdesc" name="eventdesc"></textarea>
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Descriptions<sup>*</sup></label>
+                                    <div class="col-lg-6">
+                                        <textarea class="form-control" rows="5" id="eventdesc" name="eventdesc"></textarea>
+                                    </div>
+                                </div>
 
 
-								<div class="form-group ">
-									<label class="col-lg-5 control-label">Number of Volunteers Required<sup>*</sup></label>
-									<div class="col-lg-6">
-										<input id='event_volunteersreq' type="number" min = '0' class="form-control" name="event_volunteersreq" />
-									</div>
-								</div>
+                                <div class="form-group ">
+                                    <label class="col-lg-5 control-label">Number of Volunteers Required<sup>*</sup></label>
+                                    <div class="col-lg-6">
+                                        <input id='event_volunteersreq' type="number" min = '0' class="form-control" name="event_volunteersreq" />
+                                    </div>
+                                </div>
 
-								<div class="form-group">
-									<label class="col-lg-5 control-label">Number of Users Participating<sup>*</sup></label>
-									<div class="col-lg-6">
-										<input id='event_userparticipating' type="text" min='0' class="form-control" name="event_userparticipating"
-											   placeholder="0" disabled />
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Number of Users Participating<sup>*</sup></label>
+                                    <div class="col-lg-6">
+                                        <input id='event_userparticipating' type="text" min='0' class="form-control" name="event_userparticipating"
+                                               placeholder="0" disabled />
+                                    </div>
+                                </div>
 
-								<div class="form-group" id="volunteers_interested">
-									<label class="col-lg-5 control-label">Number of Volunteers Interested<sup>*</sup></label>
-									<div class="col-lg-6">
-										<input id='event_volunteersinterested' type="text" min='0' class="form-control" name="event_volunteersinterested"
-											   placeholder="0" disabled />
-									</div>
-								</div>
+                                <div class="form-group" id="volunteers_interested">
+                                    <label class="col-lg-5 control-label">Number of Volunteers Interested<sup>*</sup></label>
+                                    <div class="col-lg-6">
+                                        <input id='event_volunteersinterested' type="text" min='0' class="form-control" name="event_volunteersinterested"
+                                               placeholder="0" disabled />
+                                    </div>
+                                </div>
 
 
 
 
-								<div class="form-group">
-									<label class="col-lg-5 control-label">Category <sup>*</sup></label>
-									<div class="col-lg-6">
-										<select class="form-control" id='category'  name="category">
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Category <sup>*</sup></label>
+                                    <div class="col-lg-6">
+                                        <select class="form-control" id='category'  name="category">
 
-											<option value=" "></option>
-											<option value="DisasterRelief">Disaster Relief</option>
-											<option value="Seniors">Seniors</option>
-											<option value="Environment">Environment</option>
-											<option value="Animal">Animal</option>
-											<option value="ServiceHomeless">Service for Homeless</option>
-											<option value="Sports">Sports</option>
-											<option value="Hunger">Hunger</option>
-											<option value="Children">Children</option>
-											<option value="CreativityArts">Creativity Arts</option>
-											<option value="PeoplewithDisabilities">People with Disabilities</option>
-											<option value="Education">Education</option>
-											<option value="Community">Community</option>
+                                            <option value=" "></option>
+                                            <option value="DisasterRelief">Disaster Relief</option>
+                                            <option value="Seniors">Seniors</option>
+                                            <option value="Environment">Environment</option>
+                                            <option value="Animal">Animal</option>
+                                            <option value="ServiceHomeless">Service for Homeless</option>
+                                            <option value="Sports">Sports</option>
+                                            <option value="Hunger">Hunger</option>
+                                            <option value="Children">Children</option>
+                                            <option value="CreativityArts">Creativity Arts</option>
+                                            <option value="PeoplewithDisabilities">People with Disabilities</option>
+                                            <option value="Education">Education</option>
+                                            <option value="Community">Community</option>
 
 
-										</select>
-									</div>
-								</div>
+                                        </select>
+                                    </div>
+                                </div>
 
 
 
 
 
 
-								<div class="form-group">
-									<div class="col-lg-5 col-lg-offset-4">
-										<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
-										<button id='button5' type="submit" class="btn btn-default btn-md createEventS">Submit</button>
-									</div>
+                                <div class="form-group">
+                                    <div class="col-lg-5 col-lg-offset-4">
+                                        <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+                                        <button id='button5' type="submit" class="btn btn-default btn-md createEventS">Submit</button>
+                                    </div>
 
-									<button id='button6' type="button" class="btn btn-default btn-mdclose createEventClose" data-dismiss="modal">Close</button>
-								</div>
+                                    <button id='button6' type="button" class="btn btn-default btn-mdclose createEventClose" data-dismiss="modal">Close</button>
+                                </div>
 
 
 
-								<div class="form-group" id="ApprovedEvents">
-									<div class="col-lg-5 col-lg-offset-4">
+                                <div class="form-group" id="ApprovedEvents">
+                                    <div class="col-lg-5 col-lg-offset-4">
 
-										<button id='button9' type="button" class="btn btn-default btn-md VolunteerEvent" data-dismiss="modal">Volunteer Event</button>
-									</div>
+                                        <button id='button9' type="button" class="btn btn-default btn-md VolunteerEvent" data-dismiss="modal">Volunteer Event</button>
+                                    </div>
 
 
 
-									<button id='button10' type="button" class="btn btn-default btn-md AttendEvent" data-dismiss="modal">Attend Event</button>
+                                    <button id='button10' type="button" class="btn btn-default btn-md AttendEvent" data-dismiss="modal">Attend Event</button>
 
 
 
-								</div>
+                                </div>
 
-								<div class="form-group" id="ApprovalWaitingEvents">
-									<div class="col-lg-5 col-lg-offset-4">
+                                <div class="form-group" id="ApprovalWaitingEvents">
+                                    <div class="col-lg-5 col-lg-offset-4">
 
-										<button id='button12' type="button" class="btn btn-default btn-md ApproveEvent">Approve</button>
-									</div>
+                                        <button id='button12' type="button" class="btn btn-default btn-md ApproveEvent">Approve</button>
+                                    </div>
 
 
 
-									<button id='button13' type="button" class="btn btn-default btn-md DenyEvent" >Deny</button>
+                                    <button id='button13' type="button" class="btn btn-default btn-md DenyEvent" >Deny</button>
 
 
-								</div>
+                                </div>
 
 
-								<div class="form-group" id="AllgEvents">
+                                <div class="form-group" id="AllgEvents">
 
-									<div class="col-lg-5 col-lg-offset-4">
+                                    <div class="col-lg-5 col-lg-offset-4">
 
-										<button id='button15' type="button" class="btn btn-default btn-md DeleteEvent" >Delete</button>
+                                        <button id='button15' type="button" class="btn btn-default btn-md DeleteEvent" >Delete</button>
 
 
-									</div>
+                                    </div>
 
 
 
 
 
 
-									<button id='button14' type="button" class="btn btn-default btn-mdclose createEventClose" data-dismiss="modal">Close</button>
+                                    <button id='button14' type="button" class="btn btn-default btn-mdclose createEventClose" data-dismiss="modal">Close</button>
 
 
 
 
-								</div>
+                                </div>
 
 
 
 
-							</form>
+                            </form>
 
-						</div>
+                        </div>
 
-						<div>
+                        <div>
 
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
 
-			</div>
+            </div>
 
-			<br/>
-			<!-- Edit Profile Modal Window -->
+            <br/>
+            <!-- Edit Profile Modal Window -->
 
-			<div class="modal fade" id="edit_profile_modal-1">
-				<div class="modal-dialog modal-md">
-					<div class="modal-content">
-						<div class="model-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 id="modtitle_profile" class="modal-title">Edit Profile</h4>
-						</div>
-						<div class="modal-body">
+            <div class="modal fade" id="edit_profile_modal-1">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="model-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 id="modtitle_profile" class="modal-title">Edit Profile</h4>
+                        </div>
+                        <div class="modal-body">
 
-							<form id="editProfileForm" method="post" class="form-horizontal" action="">
+                            <form id="editProfileForm" method="post" class="form-horizontal" action="">
 
-								<div class="form-group">  </div>
+                                <div class="form-group">  </div>
 
-								<div class="form-group">
-									<div class=" col-md-8 col-md-offset-2 alert" id="msgprofile" style="display: none;">
-										<a href="#" class="close" data-dismiss="alert">&times;</a>
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <div class=" col-md-8 col-md-offset-2 alert" id="msgprofile" style="display: none;">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                    </div>
+                                </div>
 
 
-								<div class="form-group">
-									<label class="col-md-4 control-label">First Name<sup>*</sup></label>
-									<div class="col-md-6">
-										<input id='firstname' type="text" class="form-control" name="firstname" />
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">First Name<sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input id='firstname' type="text" class="form-control" name="firstname" />
+                                    </div>
+                                </div>
 
-								<div class="form-group">
-									<label class="col-md-4 control-label">Last Name<sup>*</sup></label>
-									<div class="col-md-6">
-										<input id='lastname' type="text" class="form-control" name="lastname" />
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Last Name<sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input id='lastname' type="text" class="form-control" name="lastname" />
+                                    </div>
+                                </div>
 
 
 
 
-								<div class="form-group">
-									<label class="col-md-4 control-label">Gender</label>
-									<div class="col-md-6">
-										<select class="form-control" name="gender" id="gender">
-											<option value="Male">Male</option>
-											<option value="Female">Female</option>
-											<option value="Don't Want To Specify">Don't Want To Specify</option>
-										</select>
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Gender</label>
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="gender" id="gender">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Don't Want To Specify">Don't Want To Specify</option>
+                                        </select>
+                                    </div>
+                                </div>
 
 
 
-								<div class="form-group" id='phonereg'>
-									<label class="col-md-4 control-label">Phone Number<sup>*</sup></label>
-									<div class="col-md-6">
-										<input type="text" class="form-control" name="phonenumber" id="phonenumber"/>
-									</div>
-								</div>
+                                <div class="form-group" id='phonereg'>
+                                    <label class="col-md-4 control-label">Phone Number<sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="phonenumber" id="phonenumber"/>
+                                    </div>
+                                </div>
 
-								<div class="form-group" id='orgname'>
-									<label class="col-md-4 control-label">Organization Name<sup>*</sup></label>
-									<div class="col-md-6">
-										<input type="text" class="form-control" name="organizationname" id="organizationname"/>
-									</div>
-								</div>
+                                <div class="form-group" id='orgname'>
+                                    <label class="col-md-4 control-label">Organization Name<sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="organizationname" id="organizationname"/>
+                                    </div>
+                                </div>
 
-								<div class="form-group" id='orgurl'>
-									<label class="col-md-4 control-label">Website<sup>*</sup></label>
-									<div class="col-md-6">
-										<input type="text" class="form-control" name="website" id="website" />
-									</div>
-								</div>
+                                <div class="form-group" id='orgurl'>
+                                    <label class="col-md-4 control-label">Website<sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="website" id="website" />
+                                    </div>
+                                </div>
 
-								<div class="form-group" id='desc'>
-									<label class="col-md-4 control-label">Description<sup>*</sup></label>
-									<div class="col-md-6">
+                                <div class="form-group" id='desc'>
+                                    <label class="col-md-4 control-label">Description<sup>*</sup></label>
+                                    <div class="col-md-6">
 
-										<textarea class="form-control" rows="5" id="description" name="description"></textarea>
-									</div>
-								</div>
+                                        <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                                    </div>
+                                </div>
 
 
 
-								<div class="form-group">
-									<label class="col-md-4 control-label">Security Question<sup>*</sup></label>
-									<div class="col-md-6 selectContainer">
-										<select name="question" class="form-control" id="question">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Security Question<sup>*</sup></label>
+                                    <div class="col-md-6 selectContainer">
+                                        <select name="question" class="form-control" id="question">
 
-											<option value="What is your Mother's maiden name?">What is your Mother's maiden name?</option>
-										</select>
-									</div>
-								</div>
+                                            <option value="What is your Mother's maiden name?">What is your Mother's maiden name?</option>
+                                        </select>
+                                    </div>
+                                </div>
 
 
-								<div class="form-group">
-									<label class="col-md-4 control-label">Answer<sup>*</sup></label>
-									<div class="col-md-6">
-										<input id='answer' type="text" class="form-control" name="answer" />
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Answer<sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input id='answer' type="text" class="form-control" name="answer" />
+                                    </div>
+                                </div>
 
-								<div class="form-group">
-									<div class="col-lg-5 col-lg-offset-4">
-										<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
-										<button id='button7' type="submit" class="btn btn-default btn-md editProfileS">Submit</button>
-									</div>
+                                <div class="form-group">
+                                    <div class="col-lg-5 col-lg-offset-4">
+                                        <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+                                        <button id='button7' type="submit" class="btn btn-default btn-md editProfileS">Submit</button>
+                                    </div>
 
-									<button id='button8' type="button" class="btn btn-default btn-mdclose editProfileClose" data-dismiss="modal">Close</button>
-								</div>
+                                    <button id='button8' type="button" class="btn btn-default btn-mdclose editProfileClose" data-dismiss="modal">Close</button>
+                                </div>
 
-							</form>
+                            </form>
 
-						</div>
+                        </div>
 
-						<div></div>
-					</div>
-				</div>
+                        <div></div>
+                    </div>
+                </div>
 
-			</div>
+            </div>
 
-			<div style="height:50px;"><br/></div>
+            <div style="height:50px;"><br/></div>
 
-			<div id = "tabs" >
-				<ul class="nav nav-pills helppills">
-					<li class="active" ><a href="#tab1" id="Active" data-toggle="pill">Active</a></li>
-					<li ><a href="#tab2" id="AwaitingAcceptance" data-toggle="pill">Awaiting Acceptance</a></li>
-					<li ><a href="#tab3" id="Archive" data-toggle="pill">Archive</a></li>
-				</ul>
-			</div>
+            <div id = "tabs" >
+                <ul class="nav nav-pills helppills">
+                    <li class="active" ><a href="#tab1" id="Active" data-toggle="pill">Active</a></li>
+                    <li ><a href="#tab2" id="AwaitingAcceptance" data-toggle="pill">Awaiting Acceptance</a></li>
+                    <li ><a href="#tab3" id="Archive" data-toggle="pill">Archive</a></li>
+                </ul>
+            </div>
 
             <div id="error_message">It appears that you have no events under this category.</div>
-			<div  >
-				<div class="tab-content fors" >
-					<div class="tab-pane active" id="tab1" >
+            <div  >
+                <div class="tab-content fors" >
+                    <div class="tab-pane active" id="tab1" >
 
-					</div>
+                    </div>
 
-					<div class="tab-pane" id="tab2" >
+                    <div class="tab-pane" id="tab2" >
 
-					</div>
-
-
-
-
-					<div class="tab-pane" id="tab3" >
-
-					</div>
-				</div>
-			</div>
-
-			<!--<div class="col-md-12 text-center"><h3>Bootstrap 3 Multiple Slide Carousel</h3></div>-->
-			<div class="col-md-6 col-md-offset-3">
-
-			</div>
+                    </div>
 
 
 
 
-		</div>
+                    <div class="tab-pane" id="tab3" >
 
-	</div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="col-md-12 text-center"><h3>Bootstrap 3 Multiple Slide Carousel</h3></div>-->
+            <div class="col-md-6 col-md-offset-3">
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
 
 
 
 
 
 
+
+</div>
 
 </div>
 
-</div>
+<div id="dialog-4" title="Thank You!">Your response has been recorded.</div>
 
 </body>
+
+
 
 
 
