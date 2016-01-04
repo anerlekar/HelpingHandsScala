@@ -124,7 +124,7 @@ var latlngbounds = new google.maps.LatLngBounds();
 var infoWindow = new google.maps.InfoWindow();
 var markerId;
 var myID;
-var LocationValue ;
+var LocationValue;
 var radio_id;
 var data;
 var d = new Date()
@@ -178,16 +178,17 @@ function loadMarkers(markerindex, data) {
 
 $(document).ready(function() {
 
-  $(function() {
-            $( "#dialog-4" ).dialog({
-               autoOpen: false,
-               modal: true,
-               buttons: {
-                  OK: function() {$(this).dialog("close");
-                  }
-               }
-               });
-               });
+    $(function() {
+        $("#dialog-4").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                OK: function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
 
 
     var usernamelogout = sessionStorage.getItem("loggedusername");
@@ -252,9 +253,9 @@ $(document).ready(function() {
 
         $("#createEventButton").show('fast');
 
-       /* $('#editprofile').hide('fast');
+        /* $('#editprofile').hide('fast');
 
-        $('#divider').hide('fast');*/
+         $('#divider').hide('fast');*/
 
         $('#orgname').hide('fast');
 
@@ -320,7 +321,7 @@ $(document).ready(function() {
 
         getLocation();
 
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
@@ -329,7 +330,7 @@ $(document).ready(function() {
 
         getLocation();
 
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
@@ -338,7 +339,7 @@ $(document).ready(function() {
 
         getLocation();
 
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
@@ -347,62 +348,62 @@ $(document).ready(function() {
 
         getLocation();
 
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
     $('#ServiceforHomeless').click(function() {
         CategoryValue = "ServiceforHomeless";
 
-       getLocation();
+        getLocation();
 
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
 
     $('#Children').click(function() {
         CategoryValue = "Children";
-       getLocation();
-         data = null;
+        getLocation();
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
     $('#Education').click(function() {
         CategoryValue = "Education";
         getLocation();
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
     $('#Environment').click(function() {
         CategoryValue = "Environment";
         getLocation();
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
     $('#Sports').click(function() {
         CategoryValue = "Sports";
         getLocation();
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
     $('#CreativityArts').click(function() {
         CategoryValue = "CreativityArts";
         getLocation();
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
     $('#Community').click(function() {
         CategoryValue = "Community";
         getLocation();
-         data = null;
+        data = null;
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
-       $('#AllCategories').click(function() {
+    $('#AllCategories').click(function() {
         CategoryValue = null;
         getLocation();
 
@@ -410,20 +411,18 @@ $(document).ready(function() {
         getEvents(FlagActiveValue.toString(), FlagExpiredValue.toString(), FlagAwaitingValue.toString(), CategoryValue, LocationValue, userData);
     });
 
-    function getLocation(){
-         radio_id= getLocationRadioSelected();
-        if(radio_id != null && radio_id != "AllLocations" ){
+    function getLocation() {
+        radio_id = getLocationRadioSelected();
+        if (radio_id != null && radio_id != "AllLocations") {
 
-         LocationValue = radio_id;
-        }
-        else if(radio_id == "AllLocations"){
+            LocationValue = radio_id;
+        } else if (radio_id == "AllLocations") {
 
 
-        //radio_id=null;
-            LocationValue=null;
-        }
-        else{
-        LocationValue=null
+            //radio_id=null;
+            LocationValue = null;
+        } else {
+            LocationValue = null
         }
 
         return LocationValue;
@@ -431,7 +430,7 @@ $(document).ready(function() {
     };
 
 
-     function getLocationRadioSelected(){
+    function getLocationRadioSelected() {
         var $radio = $('input[name=location]:checked');
         var updateDay = $radio.val();
         var id = $radio.attr('id');
@@ -456,37 +455,37 @@ $(document).ready(function() {
 
     });
 
-var alllocations = document.getElementById("AllLocations");
-        var mountainview = document.getElementById("mountainview");
-        var santaclara = document.getElementById("santaclara");
-        var sanjose = document.getElementById("sanjose");
-          var oakland = document.getElementById("oakland");
+    var alllocations = document.getElementById("AllLocations");
+    var mountainview = document.getElementById("mountainview");
+    var santaclara = document.getElementById("santaclara");
+    var sanjose = document.getElementById("sanjose");
+    var oakland = document.getElementById("oakland");
 
 
-	$("#AllLocations").click(function() {
+    $("#AllLocations").click(function() {
 
-	    AllLoctions();
+        AllLoctions();
 
-	    DeletingMarkers();
+        DeletingMarkers();
 
-	 	});
+    });
 
 
 
-		 function AllLoctionsActive(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue) {
+    function AllLoctionsActive(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue) {
 
-       LocationValue = null;
+        LocationValue = null;
 
-    	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+        getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
 
     };
 
-	   function AllLoctions() {
+    function AllLoctions() {
 
-       LocationValue = null;
+        LocationValue = null;
 
-    	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+        getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
 
     };
@@ -494,93 +493,91 @@ var alllocations = document.getElementById("AllLocations");
 
     $("#SanFrancisco").click(function() {
 
-            LocationValue = "SanFrancisco";
+        LocationValue = "SanFrancisco";
 
-            getCategory();
-
-
-            getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
-
-            DeletingMarkers();
-
-             loadMarkers(0, locations[0]);
-     });
+        getCategory();
 
 
+        getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+
+        DeletingMarkers();
+
+        loadMarkers(0, locations[0]);
+    });
 
 
 
 
     $("#PaloAlto").click(function() {
 
-    		LocationValue = "PaloAlto";
+        LocationValue = "PaloAlto";
 
-    		 getCategory();
-
-
-    	    getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+        getCategory();
 
 
-            DeletingMarkers();
+        getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
-             loadMarkers(1, locations[1]);
+
+        DeletingMarkers();
+
+        loadMarkers(1, locations[1]);
 
 
     });
 
     $("#MountainView").click(function() {
 
-    	LocationValue = "MountainView";
+        LocationValue = "MountainView";
 
-    	 getCategory();
+        getCategory();
 
 
-    	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+        getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
-          DeletingMarkers();
+        DeletingMarkers();
 
-         loadMarkers(2, locations[2]);
+        loadMarkers(2, locations[2]);
 
     });
 
     $("#SantaClara").click(function() {
-    	LocationValue = "SantaClara";
+        LocationValue = "SantaClara";
 
-    	 getCategory();
+        getCategory();
 
 
-    	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+        getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
-       DeletingMarkers();
+        DeletingMarkers();
 
         loadMarkers(3, locations[3]);
     });
 
     $("#SanJose").click(function() {
-		LocationValue = "SanJose";
+        LocationValue = "SanJose";
 
-		 getCategory();
+        getCategory();
 
 
-    	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+        getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
-         DeletingMarkers();
+        DeletingMarkers();
 
-         loadMarkers(4, locations[4]);
+        loadMarkers(4, locations[4]);
 
     });
 
 
 
     $("#Oakland").click(function() {
-    	LocationValue = "Oakland";
+        LocationValue = "Oakland";
 
-    	 getCategory();
-
-
+        getCategory();
 
 
-    	getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
+
+
+        getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, CategoryValue, LocationValue, userData);
 
 
         DeletingMarkers();
@@ -589,31 +586,29 @@ var alllocations = document.getElementById("AllLocations");
 
     });
 
-       function DeletingMarkers(){
-                 for (var markerindex = 0; markerindex < (markers.length); markerindex++) {
-                    if (typeof markers[markerindex] !== 'undefined') {
-                        // does not exist
-                        markers[markerindex].setMap(null);
-                    }
+    function DeletingMarkers() {
+        for (var markerindex = 0; markerindex < (markers.length); markerindex++) {
+            if (typeof markers[markerindex] !== 'undefined') {
+                // does not exist
+                markers[markerindex].setMap(null);
+            }
 
-                }
+        }
     };
 
 
-    function getCategory(){
-         radio_id1= getCategoryRadioSelected();
-        if(radio_id1 != null && radio_id1 != "AllCategories"){
+    function getCategory() {
+        radio_id1 = getCategoryRadioSelected();
+        if (radio_id1 != null && radio_id1 != "AllCategories") {
 
-         CategoryValue = radio_id1;
-        }
-        else if(radio_id1 == "AllCategories"){
-       // radio_id1=null;
+            CategoryValue = radio_id1;
+        } else if (radio_id1 == "AllCategories") {
+            // radio_id1=null;
 
-            CategoryValue=null;
-        }
-        else{
+            CategoryValue = null;
+        } else {
 
-        CategoryValue=null;
+            CategoryValue = null;
         }
 
 
@@ -622,7 +617,7 @@ var alllocations = document.getElementById("AllLocations");
     };
 
 
-     function getCategoryRadioSelected(){
+    function getCategoryRadioSelected() {
         var $radio1 = $('input[name=category]:checked');
         var updateDay1 = $radio1.val();
         var id1 = $radio1.attr('id');
@@ -796,25 +791,21 @@ var alllocations = document.getElementById("AllLocations");
 
 
 
-
-
         if ($('input[name=startdate]').val() > $('input[name=enddate]').val()) {
 
-              $('#msgevent').removeClass('alert-success').addClass('alert-danger').html("Start Date is Greater than End Date").show();
+            $('#msgevent').removeClass('alert-success').addClass('alert-danger').html("Start Date is Greater than End Date").show();
 
 
             $('#createEventForm').data('bootstrapValidator').updateStatus('enddate', 'INVALID', ' ')
 
             e.preventDefault();
 
-            $('#button5').removeAttr('enabled');
+            $('#submitEventButton').removeAttr('enabled');
 
 
 
 
-        }
-
-        else {
+        } else {
 
             if ($('input[name=startdate]').val() < $('input[name=enddate]').val()) {
 
@@ -843,28 +834,28 @@ var alllocations = document.getElementById("AllLocations");
 
     $('#createEventButton').click(function() {
 
-        $('#button5').show('fast');
+        $('#submitEventButton').show('fast');
 
         $('#volunteers_interested').show('fast');
 
-         $('#button6').show('fast');
+        $('#closeButton').show('fast');
 
-         $('#button13').hide('fast');
+        $('#denyEventButton').hide('fast');
 
-         $('#button14').hide('fast');
+        $('#closeEventButton').hide('fast');
 
-          $('#button15').hide('fast');
+        $('#deleteEventButton').hide('fast');
 
-        document.getElementById("modtitle_event").innerHTML="Create Event";
+        document.getElementById("modtitle_event").innerHTML = "Create Event";
 
 
 
         var editableFields = $('#createEventForm .form-control');
-				for (var i = 0; i < editableFields.length; i++) {
-					editableFields[i].removeAttribute("readonly");
-				}
+        for (var i = 0; i < editableFields.length; i++) {
+            editableFields[i].removeAttribute("readonly");
+        }
 
-    	var userType = profilelogout.toString().toLowerCase();
+        var userType = profilelogout.toString().toLowerCase();
 
         $('#createEventForm').bootstrapValidator('resetForm', true);
 
@@ -875,12 +866,11 @@ var alllocations = document.getElementById("AllLocations");
 
 
 
-
     });
 
-    function getOrgName(){
+    function getOrgName() {
 
-      $.ajax({
+        $.ajax({
             type: 'POST',
             url: '/populateEditProfile',
             contentType: "application/json",
@@ -890,7 +880,7 @@ var alllocations = document.getElementById("AllLocations");
 
                 'username': usernamelogout.toString(),
                 'userType': profilelogout.toString().toLowerCase()
-                //'emailId': emaillogout.toString()
+                    //'emailId': emaillogout.toString()
 
 
 
@@ -900,7 +890,7 @@ var alllocations = document.getElementById("AllLocations");
 
             success: function(data) {
 
-				userData = data;
+                userData = data;
 
 
                 $('#orgname_event').val(data.message.organizationName);
@@ -908,7 +898,6 @@ var alllocations = document.getElementById("AllLocations");
 
             },
             error: function(data) {
-
 
 
 
@@ -923,7 +912,7 @@ var alllocations = document.getElementById("AllLocations");
 
 
 
-    $('#button6').click(function() {
+    $('#closeButton').click(function() {
         $('#createEventForm').bootstrapValidator('resetForm', true);
 
     });
@@ -1190,7 +1179,7 @@ var alllocations = document.getElementById("AllLocations");
                 $form.find('#msgprofile').removeClass('alert-success').addClass('alert-danger').html(txt2).show();
 
 
-                $('#button7').removeAttr('disabled');
+                $('#submitProfileButton').removeAttr('disabled');
 
 
             }
@@ -1225,7 +1214,7 @@ var alllocations = document.getElementById("AllLocations");
 
                 'username': usernamelogout.toString(),
                 'userType': profilelogout.toString().toLowerCase()
-                //'emailId': emaillogout.toString()
+                    //'emailId': emaillogout.toString()
 
             }),
 
@@ -1332,13 +1321,13 @@ var alllocations = document.getElementById("AllLocations");
                 var pCar = document.createElement("p");
                 pCar.innerHTML = "WORKING WOLA";
 
-                  $('#eventname').focus(function() {
-							     $('#msgevent').removeClass('alert-success alert-danger').hide();
-							     $('#createEventForm').bootstrapValidator('resetForm', true);
-							     getOrgName();
-							   //  $('#orgname_event').val(data.message.organizationName);
+                $('#eventname').focus(function() {
+                    $('#msgevent').removeClass('alert-success alert-danger').hide();
+                    $('#createEventForm').bootstrapValidator('resetForm', true);
+                    getOrgName();
+                    //  $('#orgname_event').val(data.message.organizationName);
 
-					});
+                });
 
 
             },
@@ -1349,7 +1338,7 @@ var alllocations = document.getElementById("AllLocations");
 
                 $('#msgevent').removeClass('alert-success').addClass('alert-danger').html(txt2).show();
 
-                $('#button5').removeAttr('disabled');
+                $('#submitEventButton').removeAttr('disabled');
 
 
             }
@@ -1392,10 +1381,9 @@ var alllocations = document.getElementById("AllLocations");
 
 
 
-
     ///////////////////////Active Events
-     $("#AllLocations").prop("checked", true);
-     $("#AllCategories").prop("checked", true);
+    $("#AllLocations").prop("checked", true);
+    $("#AllCategories").prop("checked", true);
 
 
     $('#Active').click(function() {
@@ -1416,7 +1404,6 @@ var alllocations = document.getElementById("AllLocations");
 
 
 
-
     //// Awatiing for Aproval
 
 
@@ -1429,7 +1416,7 @@ var alllocations = document.getElementById("AllLocations");
 
         AllLoctionsActive(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
 
-      //  getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
+        //  getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
 
     });
 
@@ -1449,7 +1436,7 @@ var alllocations = document.getElementById("AllLocations");
 
         AllLoctionsActive(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
 
-      //  getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
+        //  getTabEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue);
 
     });
 
@@ -1496,226 +1483,219 @@ var alllocations = document.getElementById("AllLocations");
 
             newEventItem.className = "eventItem";
 
-			var event = new Event(
-			    categoryObjectArray[i].eventName,
-			    categoryObjectArray[i].category,
-			    categoryObjectArray[i].organization,
-			    categoryObjectArray[i].description,
-			    categoryObjectArray[i].from,
-			    categoryObjectArray[i].to,
-			    categoryObjectArray[i].volunteersInterested,
-			    categoryObjectArray[i].usersParticipating,
-			    categoryObjectArray[i].volunteersParticipating,
-			    categoryObjectArray[i].locationNearby,
-			    categoryObjectArray[i].location,
+            var event = new Event(
+                categoryObjectArray[i].eventName,
+                categoryObjectArray[i].category,
+                categoryObjectArray[i].organization,
+                categoryObjectArray[i].description,
+                categoryObjectArray[i].from,
+                categoryObjectArray[i].to,
+                categoryObjectArray[i].volunteersInterested,
+                categoryObjectArray[i].usersParticipating,
+                categoryObjectArray[i].volunteersParticipating,
+                categoryObjectArray[i].locationNearby,
+                categoryObjectArray[i].location,
 
-			    categoryObjectArray[i].isActive,
-			    categoryObjectArray[i].isDenied,
-			    categoryObjectArray[i].isAwaitingApproval,
-			    categoryObjectArray[i].expired,
-			    categoryObjectArray[i].volunteersContact
-			     );
+                categoryObjectArray[i].isActive,
+                categoryObjectArray[i].isDenied,
+                categoryObjectArray[i].isAwaitingApproval,
+                categoryObjectArray[i].expired,
+                categoryObjectArray[i].volunteersContact
+            );
 
-			displayEvent(event, newEventItem);
+            displayEvent(event, newEventItem);
             parent.appendChild(newEventItem);
 
         }
     }
 
-    function Event(e_title, e_category, e_organization, e_desc, e_start, e_end, e_volunteersInterested, e_usersParticipating, e_volunteersParticipating, e_location_nearby, e_location
-    ,e_isActive, e_isAwaitingApproval, e_expired, e_isDenied, e_volunteersContact) {
-		this.event_title = e_title;
-		this.category = e_category;
-		this.organization = e_organization;
-		this.usersParticipating = e_usersParticipating;
-		this.volunteersParticipating = e_volunteersParticipating;
-		this.volunteersInterested = e_volunteersInterested;
-		this.event_location = e_location;
-		this.event_location_nearby = e_location_nearby;
-		this.desc = e_desc;
-		this.startDate = e_start;
-		this.endDate = e_end;
-		this.isAwaitingApproval = e_isAwaitingApproval;
-		this.isActive = e_isActive;
-		this.isDenied = e_isDenied;
-		this.expired = e_expired;
-		this.volunteersContact = e_volunteersContact;
+    function Event(e_title, e_category, e_organization, e_desc, e_start, e_end, e_volunteersInterested, e_usersParticipating, e_volunteersParticipating, e_location_nearby, e_location, e_isActive, e_isAwaitingApproval, e_expired, e_isDenied, e_volunteersContact) {
+        this.event_title = e_title;
+        this.category = e_category;
+        this.organization = e_organization;
+        this.usersParticipating = e_usersParticipating;
+        this.volunteersParticipating = e_volunteersParticipating;
+        this.volunteersInterested = e_volunteersInterested;
+        this.event_location = e_location;
+        this.event_location_nearby = e_location_nearby;
+        this.desc = e_desc;
+        this.startDate = e_start;
+        this.endDate = e_end;
+        this.isAwaitingApproval = e_isAwaitingApproval;
+        this.isActive = e_isActive;
+        this.isDenied = e_isDenied;
+        this.expired = e_expired;
+        this.volunteersContact = e_volunteersContact;
 
-		var red = Math.round(Math.random()*(255));
-    	var blue = Math.round(Math.random()*(255));
-    	var green = Math.round(Math.random()*(255));
+        var red = Math.round(Math.random() * (255));
+        var blue = Math.round(Math.random() * (255));
+        var green = Math.round(Math.random() * (255));
 
-		this.color = 'rgb(' + [red,green,blue].join(',') + ')';
+        this.color = 'rgb(' + [red, green, blue].join(',') + ')';
     }
 
     function displayEvent(Event, newEventItem) {
-    console.log(Event.isAwaitingApproval+'updated');
-    	var userType = profilelogout.toString().toLowerCase();
+        console.log(Event.isAwaitingApproval + 'updated');
+        var userType = profilelogout.toString().toLowerCase();
 
-    	newEventItem.setAttribute("data-toggle", "modal");
-    	newEventItem.setAttribute("data-target", "#create_event_modal-1");
-    	var clickHandler =  function(event) {
-
-
-
-
-
-    		$('#createEventForm').show();
-
-			$('#createEventForm').bootstrapValidator('resetForm', true);
-			$('#eventname').val(Event.event_title);
-			$('#orgname_event').val(Event.organization);
-
-			$('#startdate').val(Event.startDate);
-			$('#enddate').val(Event.endDate);
-
-			$('#eventloc').val(Event.event_location);
-			$("#eventlocnearby").val(Event.event_location_nearby);
-
-
-
-			$("#category").val(Event.category);
-			$('textarea#eventdesc').val(Event.desc);
-
-			$('#event_volunteersreq').val(Event.volunteersParticipating);
-
-			$('#event_volunteersinterested').val(Event.volunteersInterested);
-
-			$('#event_userparticipating').val(Event.usersParticipating);
-
-
-
-            if(Event.volunteersContact){
-
-                for(var i = 0; i < Event.volunteersContact.length ; i++ ){
-
-
-                     if(Event.volunteersContact[i].username ==  usernamelogout || Event.volunteersParticipating == '0'){
-
-                                $('#volunteers_interested').hide('fast');
-                                $('#button9').hide('fast');
-
-                             }
-                             else{
-
-                                $('#volunteers_interested').show('fast');
-                                $('#button9').show('fast');
-
-                             }
+        newEventItem.setAttribute("data-toggle", "modal");
+        newEventItem.setAttribute("data-target", "#create_event_modal-1");
+        var clickHandler = function(event) {
 
 
 
 
-                 }
+            $('#createEventForm').show();
 
-             }
-             else{
+            $('#createEventForm').bootstrapValidator('resetForm', true);
+            $('#eventname').val(Event.event_title);
+            $('#orgname_event').val(Event.organization);
+
+            $('#startdate').val(Event.startDate);
+            $('#enddate').val(Event.endDate);
+
+            $('#eventloc').val(Event.event_location);
+            $("#eventlocnearby").val(Event.event_location_nearby);
 
 
-                if(Event.volunteersParticipating == '0'){
-                $('#volunteers_interested').hide('fast');
-                $('#button9').hide('fast');
+
+            $("#category").val(Event.category);
+            $('textarea#eventdesc').val(Event.desc);
+
+            $('#event_volunteersreq').val(Event.volunteersParticipating);
+
+            $('#event_volunteersinterested').val(Event.volunteersInterested);
+
+            $('#event_userparticipating').val(Event.usersParticipating);
+
+
+
+            if (Event.volunteersContact) {
+
+                for (var i = 0; i < Event.volunteersContact.length; i++) {
+
+
+                    if (Event.volunteersContact[i].username == usernamelogout || Event.volunteersParticipating == '0') {
+
+                        $('#volunteers_interested').hide('fast');
+                        $('#volunteerEventButton').hide('fast');
+
+                    } else {
+
+                        $('#volunteers_interested').show('fast');
+                        $('#volunteerEventButton').show('fast');
+
+                    }
+
+
+
 
                 }
-                else{
-                $('#volunteers_interested').show('fast');
-                $('#button9').show('fast');
+
+            } else {
+
+
+                if (Event.volunteersParticipating == '0') {
+                    $('#volunteers_interested').hide('fast');
+                    $('#volunteerEventButton').hide('fast');
+
+                } else {
+                    $('#volunteers_interested').show('fast');
+                    $('#volunteerEventButton').show('fast');
 
                 }
-             }
+            }
 
 
-             if(attendhashmap[Event.event_title]){
-
-
-
-                $('#button10').hide('fast');
-             }
-             else{
-
-
-                  $('#button10').show('fast');
-
-             }
+            if (attendhashmap[Event.event_title]) {
 
 
 
-
-			if (userType === "student") {
-				document.getElementById("modtitle_event").innerHTML="RSVP";
-				$('#button5').hide('fast');
-				$('#button6').hide('fast');
-				$('#button12').hide('fast');
-				$('#button13').hide('fast');
-				$('#button15').hide('fast');
-				var readonlyFields = $('#createEventForm .form-control');
-				for (var i = 0; i < readonlyFields.length; i++) {
-					readonlyFields[i].setAttribute("readOnly","true");
-				}
-			}
-			if (userType === "ngo") {
-				document.getElementById("modtitle_event").innerHTML="View Event";
-				$('#button5').hide('fast');
-				$('#button6').hide('fast');
-				$('#button9').hide('fast');
-				$('#button10').hide('fast');
-				$('#button12').hide('fast');
-				$('#button13').hide('fast');
-				$('#button14').show('fast');
-				$('#button15').show('fast');
-
-				var readonlyFields = $('#createEventForm .form-control');
-				for (var i = 0; i < readonlyFields.length; i++) {
-					readonlyFields[i].setAttribute("readOnly","true");
-				}
-			}
-
-				if (userType === "admin") {
-				document.getElementById("modtitle_event").innerHTML="View Event";
-	$('#button5').hide('fast');
-				$('#button6').hide('fast');
-				$('#button9').hide('fast');
-				$('#button10').hide('fast');
-
-				if(Event.isAwaitingApproval == "true"){
-				$('#button13').show('fast');
-				$('#button12').show('fast');
-				$('#button15').hide('fast');
+                $('#attendEventButton').hide('fast');
+            } else {
 
 
-				}
-				if(Event.isDenied == "true"){
+                $('#attendEventButton').show('fast');
 
-				//$('#button13').hide('fast');
-				// $('#button12').hide('fast');
-				}
-
-				if(Event.isActive == "true"){
-
-				$('#button13').hide('fast');
-				 $('#button12').hide('fast');
-				}
-
-				var readonlyFields = $('#createEventForm .form-control');
-				for (var i = 0; i < readonlyFields.length; i++) {
-					readonlyFields[i].setAttribute("readOnly","true");
-				}
-			}
-
-		}
+            }
 
 
 
 
+            if (userType === "student") {
+                document.getElementById("modtitle_event").innerHTML = "RSVP";
+                $('#submitEventButton').hide('fast');
+                $('#closeButton').hide('fast');
+                $('#approveEventButton').hide('fast');
+                $('#denyEventButton').hide('fast');
+                $('#deleteEventButton').hide('fast');
+                var readonlyFields = $('#createEventForm .form-control');
+                for (var i = 0; i < readonlyFields.length; i++) {
+                    readonlyFields[i].setAttribute("readOnly", "true");
+                }
+            }
+            if (userType === "ngo") {
+                document.getElementById("modtitle_event").innerHTML = "View Event";
+                $('#submitEventButton').hide('fast');
+                $('#closeButton').hide('fast');
+                $('#volunteerEventButton').hide('fast');
+                $('#attendEventButton').hide('fast');
+                $('#approveEventButton').hide('fast');
+                $('#denyEventButton').hide('fast');
+                $('#closeEventButton').show('fast');
+                $('#deleteEventButton').show('fast');
 
-    	newEventItem.innerHTML =
+                var readonlyFields = $('#createEventForm .form-control');
+                for (var i = 0; i < readonlyFields.length; i++) {
+                    readonlyFields[i].setAttribute("readOnly", "true");
+                }
+            }
 
-    	 "<div style='height:inherit;width:inherit ;background-color:" + Event.color + " '>" + "<div class = 'event_shade'>" +
-    	 "<h3 class = 'event_title'>"+Event.event_title +"</h3>"+ "<div class = event_desc> Category: "+Event.category + "</div>" + "<br>"+"<div class = event_desc> Location: "+Event.event_location_nearby + "</div>" + "<br>"+
-    	 "<div class = event_desc> Organization: " + Event.organization + "</div>" + "<br>"+"<div class = event_desc> Participants: " + Event.usersParticipating + "</div>" + "<br>"+
-    	 "<div class = event_desc> Requires " + Event.volunteersParticipating + " volunteers</div>" + "</div>" + "</div>";
+            if (userType === "admin") {
+                document.getElementById("modtitle_event").innerHTML = "View Event";
+                $('#submitEventButton').hide('fast');
+                $('#closeButton').hide('fast');
+                $('#volunteerEventButton').hide('fast');
+                $('#attendEventButton').hide('fast');
 
-    	 newEventItem.addEventListener("click", clickHandler, false);
+                if (Event.isAwaitingApproval == "true") {
+                    $('#denyEventButton').show('fast');
+                    $('#approveEventButton').show('fast');
+                    $('#deleteEventButton').hide('fast');
+
+
+                }
+                if (Event.isDenied == "true") {
+
+                    //$('#denyEventButton').hide('fast');
+                    // $('#approveEventButton').hide('fast');
+                }
+
+                if (Event.isActive == "true") {
+
+                    $('#denyEventButton').hide('fast');
+                    $('#approveEventButton').hide('fast');
+                }
+
+                var readonlyFields = $('#createEventForm .form-control');
+                for (var i = 0; i < readonlyFields.length; i++) {
+                    readonlyFields[i].setAttribute("readOnly", "true");
+                }
+            }
+
+        }
+
+
+
+
+        newEventItem.innerHTML =
+
+            "<div style='height:inherit;width:inherit ;background-color:" + Event.color + " '>" + "<div class = 'event_shade'>" +
+            "<h3 class = 'event_title'>" + Event.event_title + "</h3>" + "<div class = event_desc> Category: " + Event.category + "</div>" + "<br>" + "<div class = event_desc> Location: " + Event.event_location_nearby + "</div>" + "<br>" +
+            "<div class = event_desc> Organization: " + Event.organization + "</div>" + "<br>" + "<div class = event_desc> Participants: " + Event.usersParticipating + "</div>" + "<br>" +
+            "<div class = event_desc> Requires " + Event.volunteersParticipating + " volunteers</div>" + "</div>" + "</div>";
+
+        newEventItem.addEventListener("click", clickHandler, false);
 
     }
 
@@ -1723,64 +1703,87 @@ var alllocations = document.getElementById("AllLocations");
 
     function getEvents(FlagActiveValue, FlagExpiredValue, FlagAwaitingValue, eventCategory, LocationValue, data) {
         eraseResults();
-          orgnamelogout = data.message.organizationName;
+        orgnamelogout = data.message.organizationName;
         var userType = profilelogout.toString().toLowerCase();
 
         if (userType === "student") {
-			document.getElementById("modtitle_event").textContent="RSVP";
-			$('#button5').hide('fast');
-			$('#button6').hide('fast');
-			$('#button12').hide('fast');
-			$('#button13').hide('fast');
-			$('#button15').hide('fast');
-			var readonlyFields = $('#createEventForm .form-control');
-			for (var i = 0; i < readonlyFields.length; i++) {
-				readonlyFields[i].setAttribute("readOnly","true");
-			}
-		}
-		if (userType === "ngo") {
-		$('#button5').hide('fast');
-			$('#button6').hide('fast');
-			$('#button9').hide('fast');
-			$('#button10').hide('fast');
-			$('#button12').hide('fast');
-			//$('#button13').hide('fast');
-		}
+            document.getElementById("modtitle_event").textContent = "RSVP";
+            $('#submitEventButton').hide('fast');
+            $('#closeButton').hide('fast');
+            $('#approveEventButton').hide('fast');
+            $('#denyEventButton').hide('fast');
+            $('#deleteEventButton').hide('fast');
+            var readonlyFields = $('#createEventForm .form-control');
+            for (var i = 0; i < readonlyFields.length; i++) {
+                readonlyFields[i].setAttribute("readOnly", "true");
+            }
+        }
+        if (userType === "ngo") {
+            $('#submitEventButton').hide('fast');
+            $('#closeButton').hide('fast');
+            $('#volunteerEventButton').hide('fast');
+            $('#attendEventButton').hide('fast');
+            $('#approveEventButton').hide('fast');
+            //$('#denyEventButton').hide('fast');
+        }
 
         if (userType === "admin") {
 
-        if(Event.isAwaitingApproval == "true"){
-            $('#button15').hide('fast');
-        }
-        else{
-        if(Event.isActive == "true"){
-            $('#button13').show('fast');
-            }else{
-            $('#button15').hide('fast');
+            if (Event.isAwaitingApproval == "true") {
+                $('#deleteEventButton').hide('fast');
+            } else {
+                if (Event.isActive == "true") {
+                    $('#denyEventButton').show('fast');
+                } else {
+                    $('#deleteEventButton').hide('fast');
+                }
             }
-        }
-        	//$('#createEventButton')[0].setAttribute("style", "display:none !important");
+            //$('#createEventButton')[0].setAttribute("style", "display:none !important");
         }
 
         var stringifiedParams;
 
         if (userType === "ngo") {
-                     if ((eventCategory != null)||(LocationValue != null)) {
-                if ((LocationValue != null)&&(eventCategory == null)) {
+            if ((eventCategory != null) || (LocationValue != null)) {
+                if ((LocationValue != null) && (eventCategory == null)) {
 
-                    stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'locationNearby':LocationValue});
+                    stringifiedParams = JSON.stringify({
+                        'organization': orgnamelogout.toString(),
+                        'isActive': FlagActiveValue.toString(),
+                        'isAwaitingApproval': FlagAwaitingValue.toString(),
+                        'expired': FlagExpiredValue.toString(),
+                        'locationNearby': LocationValue
+                    });
 
-                } else if ((LocationValue == null)&&(eventCategory != null)) {
+                } else if ((LocationValue == null) && (eventCategory != null)) {
 
-                    stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory});
-                } else  {
+                    stringifiedParams = JSON.stringify({
+                        'organization': orgnamelogout.toString(),
+                        'isActive': FlagActiveValue.toString(),
+                        'isAwaitingApproval': FlagAwaitingValue.toString(),
+                        'expired': FlagExpiredValue.toString(),
+                        'category': eventCategory
+                    });
+                } else {
 
-                    stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory, 'locationNearby':LocationValue});
+                    stringifiedParams = JSON.stringify({
+                        'organization': orgnamelogout.toString(),
+                        'isActive': FlagActiveValue.toString(),
+                        'isAwaitingApproval': FlagAwaitingValue.toString(),
+                        'expired': FlagExpiredValue.toString(),
+                        'category': eventCategory,
+                        'locationNearby': LocationValue
+                    });
                 }
             } else {
 
 
-                stringifiedParams = JSON.stringify({'organization': orgnamelogout.toString(), 'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString()});
+                stringifiedParams = JSON.stringify({
+                    'organization': orgnamelogout.toString(),
+                    'isActive': FlagActiveValue.toString(),
+                    'isAwaitingApproval': FlagAwaitingValue.toString(),
+                    'expired': FlagExpiredValue.toString()
+                });
             }
 
             $.ajax({
@@ -1798,26 +1801,46 @@ var alllocations = document.getElementById("AllLocations");
                     document.getElementById("error_message").style.visibility = "visible";
                 }
             });
-        } else if ((userType === "student")||(userType === "admin")) {
+        } else if ((userType === "student") || (userType === "admin")) {
 
-        	if ((eventCategory != null)||(LocationValue != null)) {
+            if ((eventCategory != null) || (LocationValue != null)) {
 
-                if ((LocationValue != null)&&(eventCategory == null)) {
+                if ((LocationValue != null) && (eventCategory == null)) {
 
-                    stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'locationNearby':LocationValue});
+                    stringifiedParams = JSON.stringify({
+                        'isActive': FlagActiveValue.toString(),
+                        'isAwaitingApproval': FlagAwaitingValue.toString(),
+                        'expired': FlagExpiredValue.toString(),
+                        'locationNearby': LocationValue
+                    });
 
 
-                } else if ((LocationValue == null)&&(eventCategory != null)) {
+                } else if ((LocationValue == null) && (eventCategory != null)) {
 
-                    stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory});
-                } else  {
+                    stringifiedParams = JSON.stringify({
+                        'isActive': FlagActiveValue.toString(),
+                        'isAwaitingApproval': FlagAwaitingValue.toString(),
+                        'expired': FlagExpiredValue.toString(),
+                        'category': eventCategory
+                    });
+                } else {
 
-                    stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString() , 'category':eventCategory, 'locationNearby':LocationValue});
+                    stringifiedParams = JSON.stringify({
+                        'isActive': FlagActiveValue.toString(),
+                        'isAwaitingApproval': FlagAwaitingValue.toString(),
+                        'expired': FlagExpiredValue.toString(),
+                        'category': eventCategory,
+                        'locationNearby': LocationValue
+                    });
 
                 }
             } else {
 
-                stringifiedParams = JSON.stringify({'isActive': FlagActiveValue.toString() , 'isAwaitingApproval': FlagAwaitingValue.toString() , 'expired': FlagExpiredValue.toString()});
+                stringifiedParams = JSON.stringify({
+                    'isActive': FlagActiveValue.toString(),
+                    'isAwaitingApproval': FlagAwaitingValue.toString(),
+                    'expired': FlagExpiredValue.toString()
+                });
             }
 
             $.ajax({
@@ -1841,12 +1864,12 @@ var alllocations = document.getElementById("AllLocations");
     }
 
     ///Volunteer Event
-    $('#button9').click(function() {
-		var organizationName = $('#orgname_event').val();
+    $('#volunteerEventButton').click(function() {
+        var organizationName = $('#orgname_event').val();
 
         EventVolunteerAction(userData, organizationName);
-      //  alert("Your response has been recorded. Thank you!");
-       $( "#dialog-4" ).dialog( "open" );
+        //  alert("Your response has been recorded. Thank you!");
+        $("#dialog-4").dialog("open");
 
 
     });
@@ -1898,19 +1921,18 @@ var alllocations = document.getElementById("AllLocations");
         });
     }
 
-        $('#button10').click(function() {
+    $('#attendEventButton').click(function() {
 
-		var organizationName = $('#orgname_event').val();
-
-
-
-		//alert("Your response has been recorded. Thank you!");
+        var organizationName = $('#orgname_event').val();
 
 
-		 EventAttendAction(userData, organizationName );
 
-		     $( "#dialog-4" ).dialog( "open" );
+        //alert("Your response has been recorded. Thank you!");
 
+
+        EventAttendAction(userData, organizationName);
+
+        $("#dialog-4").dialog("open");
 
 
 
@@ -1919,11 +1941,11 @@ var alllocations = document.getElementById("AllLocations");
 
 
 
-    function  EventAttendAction(data, orgName ){
+    function EventAttendAction(data, orgName) {
 
-       var eventnamebackend = $('input[name=eventname]').val();
+        var eventnamebackend = $('input[name=eventname]').val();
 
-            $.ajax({
+        $.ajax({
             type: 'POST',
             url: '/attendEvent',
             contentType: "application/json",
@@ -1944,7 +1966,7 @@ var alllocations = document.getElementById("AllLocations");
 
                 //  $('#msgevent').removeClass('alert-danger').addClass('alert-success').html("You are Participating in this Event").show();
 
-                  attendhashmap[eventnamebackend] = usernamelogout;
+                attendhashmap[eventnamebackend] = usernamelogout;
 
 
                 getvolusercount(eventnamebackend, orgName);
@@ -2002,7 +2024,7 @@ var alllocations = document.getElementById("AllLocations");
 
 
 
-    $('#button12').click(function() {
+    $('#approveEventButton').click(function() {
 
 
         orgnamelogout = $('input[name=orgname_event]').val();
@@ -2058,7 +2080,7 @@ var alllocations = document.getElementById("AllLocations");
 
 
 
-    $('#button13').click(function() {
+    $('#denyEventButton').click(function() {
 
 
         orgnamelogout = $('input[name=orgname_event]').val();
@@ -2109,7 +2131,7 @@ var alllocations = document.getElementById("AllLocations");
 
     ///////////Delete Event
 
-    $('#button15').click(function() {
+    $('#deleteEventButton').click(function() {
 
 
         orgnamelogout = $('input[name=orgname_event]').val();
@@ -2214,7 +2236,6 @@ var alllocations = document.getElementById("AllLocations");
     $('.myCheckbox').click(function() {
         $(this).siblings('input:checkbox').prop('checked', false);
     });
-
 
 
 
@@ -2964,10 +2985,10 @@ var alllocations = document.getElementById("AllLocations");
                                 <div class="form-group">
                                     <div class="col-lg-5 col-lg-offset-4">
                                         <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
-                                        <button id='button5' type="submit" class="btn btn-default btn-md createEventS">Submit</button>
+                                        <button id='submitEventButton' type="submit" class="btn btn-default btn-md createEventS">Submit</button>
                                     </div>
 
-                                    <button id='button6' type="button" class="btn btn-default btn-mdclose createEventClose" data-dismiss="modal">Close</button>
+                                    <button id='closeButton' type="button" class="btn btn-default btn-mdclose createEventClose" data-dismiss="modal">Close</button>
                                 </div>
 
 
@@ -2975,12 +2996,12 @@ var alllocations = document.getElementById("AllLocations");
                                 <div class="form-group" id="ApprovedEvents">
                                     <div class="col-lg-5 col-lg-offset-4">
 
-                                        <button id='button9' type="button" class="btn btn-default btn-md VolunteerEvent" data-dismiss="modal">Volunteer Event</button>
+                                        <button id='volunteerEventButton' type="button" class="btn btn-default btn-md VolunteerEvent" data-dismiss="modal">Volunteer Event</button>
                                     </div>
 
 
 
-                                    <button id='button10' type="button" class="btn btn-default btn-md AttendEvent" data-dismiss="modal">Attend Event</button>
+                                    <button id='attendEventButton' type="button" class="btn btn-default btn-md AttendEvent" data-dismiss="modal">Attend Event</button>
 
 
 
@@ -2989,12 +3010,12 @@ var alllocations = document.getElementById("AllLocations");
                                 <div class="form-group" id="ApprovalWaitingEvents">
                                     <div class="col-lg-5 col-lg-offset-4">
 
-                                        <button id='button12' type="button" class="btn btn-default btn-md ApproveEvent">Approve</button>
+                                        <button id='approveEventButton' type="button" class="btn btn-default btn-md ApproveEvent">Approve</button>
                                     </div>
 
 
 
-                                    <button id='button13' type="button" class="btn btn-default btn-md DenyEvent" >Deny</button>
+                                    <button id='denyEventButton' type="button" class="btn btn-default btn-md DenyEvent" >Deny</button>
 
 
                                 </div>
@@ -3004,7 +3025,7 @@ var alllocations = document.getElementById("AllLocations");
 
                                     <div class="col-lg-5 col-lg-offset-4">
 
-                                        <button id='button15' type="button" class="btn btn-default btn-md DeleteEvent" >Delete</button>
+                                        <button id='deleteEventButton' type="button" class="btn btn-default btn-md DeleteEvent" >Delete</button>
 
 
                                     </div>
@@ -3014,7 +3035,7 @@ var alllocations = document.getElementById("AllLocations");
 
 
 
-                                    <button id='button14' type="button" class="btn btn-default btn-mdclose createEventClose" data-dismiss="modal">Close</button>
+                                    <button id='closeEventButton' type="button" class="btn btn-default btn-mdclose createEventClose" data-dismiss="modal">Close</button>
 
 
 
@@ -3141,7 +3162,7 @@ var alllocations = document.getElementById("AllLocations");
                                 <div class="form-group">
                                     <div class="col-lg-5 col-lg-offset-4">
                                         <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
-                                        <button id='button7' type="submit" class="btn btn-default btn-md editProfileS">Submit</button>
+                                        <button id='submitProfileButton' type="submit" class="btn btn-default btn-md editProfileS">Submit</button>
                                     </div>
 
                                     <button id='button8' type="button" class="btn btn-default btn-mdclose editProfileClose" data-dismiss="modal">Close</button>
